@@ -1,0 +1,17 @@
+.card {
+    background-color: red;
+    width: 15rem;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    display: inline-flex;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 5px;
+
+}
+
+.sprite {
+    display: flex;
+    margin-left: auto;
+    background-image: url('https://purepng.com/public/uploads/medium/purepng.com-pokeballpokeballdevicepokemon-ballpokemon-capture-ball-1701527825902nvf7o.png');
+}

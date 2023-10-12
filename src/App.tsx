@@ -1,13 +1,28 @@
 import React from 'react';
+import Post from "./components/Post/Post";
+import { useSelector } from 'react-redux';
+import { RootState } from './utility/reduxTypes'; // Import your RootState type
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import Navbar from './components/Navbar/Navbar';
+import Home from './pages/Home';
+
 import Profiles from './Components/Profiles/Profiles';
 
 function App() {
+  const authState = useSelector((state: RootState) => state.auth);
+  const token = authState.token;
+  const name = authState.name;
+  const user_id = authState.user_id;
+  
   return (
-    <div className="App">
-      Hello World!
-      Updated from VSCode to GitHub to AWS
-      <Profiles />
-    </div>
+    <Routes>
+      <div className="App">
+        <Navbar />
+          <Route path="/" element={<Home />}/>
+          <Route path="/posts" element={<Post/>}/>
+      </div>
+    </Routes>
+    
   );
 }
 

@@ -1,0 +1,40 @@
+#post_container {
+    width: 40%;
+    margin: auto;
+    padding: 10px;
+}
+#post_button {
+    width: 100%;
+    background-color: #035096;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px; /* Adjust padding for button size */
+    border: none; /* Remove button border */
+    cursor: pointer; 
+}
+#upload_image {
+    background-image: url(../../images/rainbow.jpg);
+    background-size: cover;
+    margin-bottom: 20px;
+    color: white;
+}
+#post_body {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: both;
+  min-height: 40px;
+  line-height: 20px;
+}
+#add_tags {
+    position: relative; 
+    float: right;
+    color: white;
+    background-color: #035096;
+}
+#tag_img {
+    margin-left: 5px; /* Add spacing between text and image */
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}

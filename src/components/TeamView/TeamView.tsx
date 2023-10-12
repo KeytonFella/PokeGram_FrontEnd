@@ -4,6 +4,12 @@ import './TeamView.css'
 import PokemonInTeam from '../PokemonInTeam/PokemonInTeam'
 
 function TeamView() {
+    type Pokemon = {
+        name: String,
+        level: Number,
+        nickname?: String
+        }
+
     let [state, setState] = useState({
         loading: true,
         team_id: "",
@@ -13,7 +19,7 @@ function TeamView() {
 
 
     //test id
-    const id = "806075bc-44be-4486-a2a2-86c85b929ab9" 
+    const id = "079821a3-3262-4b0e-b8fe-3a1022727e82" 
     const url = `http://localhost:3000/teams/${id}`
 
     // var requestOptions = {
@@ -50,9 +56,9 @@ function TeamView() {
         <div>
             <h1>{state.team_name}</h1>
             <div>
-                {state.pokemon_list.map((pokemon) => 
+                {state.pokemon_list.map((pokemon: Pokemon) => 
                 //pokemon get rendered here
-                <PokemonInTeam key={state.pokemon_list.indexOf(pokemon)} pokemonName={pokemon}/>
+                <PokemonInTeam pokemonName={pokemon.name}/>
                 )}
             </div>
         </div>

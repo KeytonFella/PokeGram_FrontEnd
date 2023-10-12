@@ -2,13 +2,13 @@ import React from 'react';
 
 import TeamView from './components/TeamView/TeamView';
 
-
-//import Post from "./Components/Post/Post";
-import { useSelector } from 'react-redux';
-import {RootState} from './utility/reduxTypes'; // Import your RootState type
-
-
 import Post from "./components/Post/Post";
+import { useSelector } from 'react-redux';
+import { RootState } from './utility/reduxTypes'; // Import your RootState type
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import Navbar from './components/Navbar/Navbar';
+import Home from './pages/Home';
+
 
 
 function App() {
@@ -16,21 +16,16 @@ function App() {
   const token = authState.token;
   const name = authState.name;
   const user_id = authState.user_id;
+  
   return (
-    <div className="App">
-
-      Hello World!
-      Updated from VSCode to GitHub to AWS
-      
-
-      
-      <h1>User Details</h1>
-      <p>User ID: {user_id}</p>
-      <p>Name: {name}</p>
-      <p>Token: {token}</p>
-      <TeamView />
-      <Post />
-    </div>
+    <Routes>
+      <div className="App">
+        <Navbar />
+          <Route path="/" element={<Home />}/>
+          <Route path="/posts" element={<Post/>}/>
+      </div>
+    </Routes>
+    
   );
 }
 

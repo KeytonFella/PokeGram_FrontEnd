@@ -1,12 +1,22 @@
 import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes'; // Import your RootState type
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../../utility/auth'; // Im+
+import { AppDispatch } from '../../utility/store';
+
 import './Post.scss';
 //import { Event } from 'aws-sdk/clients/s3';
 function Post() {
   const AuthState = useSelector((state: RootState) => state.auth);
   const [textareaValue, setTextareaValue] = useState('');
-
+  const dispatch: AppDispatch = useDispatch(); // Use AppDispatch for dispatching actions
+  const updatedInfo = {
+    name: "NOT_JOSH",
+    user_id: 'something reasonable', // You can update other fields as well
+    token: 'sha256--23',
+  };
+  dispatch(setUserInfo(updatedInfo));
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(e.target.value);
   };

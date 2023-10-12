@@ -16,11 +16,7 @@ const authSlice = createSlice({
     },
   }
 });
-// export const rootReducer = combineReducers({
-//   auth: authSlice.reducer
-// });
 
-// export type RootState = ReturnType<typeof rootReducer>
 
 export const { setUserInfo } = authSlice.actions;
 

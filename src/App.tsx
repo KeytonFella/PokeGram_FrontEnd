@@ -3,7 +3,7 @@ import Post from "./Components/Post/Post";
 import { useSelector } from 'react-redux';
 import { RootState } from './utility/reduxTypes'; // Import your RootState type
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './Components/Navbar/Navbar';
 import Home from './pages/Home';
 
 

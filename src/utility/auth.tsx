@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState } from './reduxTypes'; // Import your AuthState type
 
 const initialState: AuthState = {
-    name: "JOSH",
+    name: "pokeTrainer",
     user_id: "1237283usd-1-sdf--sd-qw-das",
     token: null,
 };

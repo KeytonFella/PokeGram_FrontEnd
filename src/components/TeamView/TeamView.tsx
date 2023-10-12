@@ -1,9 +1,23 @@
 import React, { useState} from 'react'
 import axios from 'axios'
-import './TeamView.css'
+import './TeamView.scss'
 import PokemonInTeam from '../PokemonInTeam/PokemonInTeam'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../utility/reduxTypes'; // Import your RootState type
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../../utility/auth'; // Im+
+import { AppDispatch } from '../../utility/store';
 
 function TeamView() {
+    const AuthState = useSelector((state: RootState) => state.auth)
+    const dispatch: AppDispatch = useDispatch();
+    
+    const userInfo = {
+        name: "pokeTrainer",
+        user_id: "2b34474-666d-4c18-a0bf-6474bbb2f342",
+        token: "sha256-23"
+    }
+    dispatch(setUserInfo(userInfo))
     type Pokemon = {
         name: String,
         level: Number,
@@ -22,10 +36,7 @@ function TeamView() {
     const id = "079821a3-3262-4b0e-b8fe-3a1022727e82" 
     const url = `http://localhost:3000/teams/${id}`
 
-    // var requestOptions = {
-    //     method: "GET",
-    //     redirect: "follow"
-    // }
+    
 
     
     React.useEffect(() => {

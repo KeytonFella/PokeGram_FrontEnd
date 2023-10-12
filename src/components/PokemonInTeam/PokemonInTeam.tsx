@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import "./PokemonInTeam.css"
+import "./PokemonInTeam.scss"
 
 function PokemonInTeam(props: {pokemonName: String}) {
     console.log(props)

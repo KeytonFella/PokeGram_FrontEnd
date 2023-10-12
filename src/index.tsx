@@ -6,13 +6,18 @@ import { Provider } from 'react-redux';
 import store from './utility/store'; // Import your correctly configured Redux store
 //import 'bootstrap/dist/css/bootstrap.css';
 import './index.scss'
+
+import { BrowserRouter } from "react-router-dom"
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

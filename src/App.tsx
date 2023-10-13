@@ -5,6 +5,7 @@ import { RootState } from './utility/reduxTypes'; // Import your RootState type
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar';
 import Home from './pages/Home';
+import Trades from './pages/Trades';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     <Navbar />
     <Routes>
         <Route path="/" element={<Home />}/>
+        <Route path="/trades" element={<Trades/>}/>
         <Route path="/posts" element={<Post/>}/>
     </Routes>
     </div>

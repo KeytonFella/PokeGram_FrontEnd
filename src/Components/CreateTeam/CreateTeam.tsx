@@ -1,19 +1,61 @@
 import React, {useState} from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../utility/reduxTypes'; // Import your RootState type
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../../utility/auth'; // Im+
+import { AppDispatch } from '../../utility/store';
+import axios from 'axios';
+
 
 function CreateTeam() {
+    const AuthState = useSelector((state: RootState) => state.auth)
+    const dispatch: AppDispatch = useDispatch();
+
     const [team, setTeam] = useState({
         teamName: "",
         pokemonList: [""]
     })
 
-    function handleSubmit() {
-        const newTeam = {teamName: team.teamName, pokemonList: team.pokemonList}
-        fetch('http://localhost:5500/teams', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify(newTeam)
-        })
+    const handleTeamNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setTeam((team) => ({
+            ...team,
+            [name]: value
+        }))
+    }
+
+    const handlePokemonListChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setTeam((team) => ({ 
+            ...team,
+            [name]: value
+        }))
+    }
+
+    async function handleSubmit() {
+        const userInfo = {
+            name: "poketrainer",
+            user_id: "42b34474-666d-4c18-a0bf-6474bbb2f342",
+            token: "sha256-23"
+        }
+        dispatch(setUserInfo(userInfo))
+        const newTeam = {teamName: team.teamName, pokemonList: team.pokemonList, user_id: userInfo.user_id}
+        console.log('fetching...')
+        // fetch('http://localhost:5500/teams', {
+        //     method: 'POST',
+        //     mode: 'cors',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: JSON.stringify(newTeam)
+        // })
+        try { 
+            
+            const response = await axios.post('http://localhost:5500/api/teams', newTeam)
+            console.log("Successfully posted data: ", response.data)
+        } catch(err) {
+            
+            console.error('Error: ', err)
+        }
+        
     }
     //TODO: Implement team without splitting by space
     return (
@@ -21,10 +63,10 @@ function CreateTeam() {
             <h1>Create Team</h1>
             <form>
                 <label>Team Name:
-                    <input type="text" value={team.teamName} onChange={(i) => setTeam({...team, teamName: i.target.value})}/>
+                    <input type="text" name="teamName" value={team.teamName} onChange={handleTeamNameChange}/>
                 </label>
-                <label>Pokemon(separate by spaces):
-                    <input type="text" onChange={(i) => setTeam({...team, pokemonList: i.target.value.split(' ')})}/>
+                <label>Pokemon:
+                    <input type="text" name="pokemon" onChange={handlePokemonListChange}/>
                 </label>
                 <br/>
                 <button type="submit" onClick={handleSubmit}>Submit</button>

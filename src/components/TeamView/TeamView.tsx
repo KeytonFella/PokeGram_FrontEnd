@@ -9,15 +9,10 @@ import { setUserInfo } from '../../utility/auth'; // Im+
 import { AppDispatch } from '../../utility/store';
 
 function TeamView() {
-    const AuthState = useSelector((state: RootState) => state.auth)
-    const dispatch: AppDispatch = useDispatch();
+   
     
-    const userInfo = {
-        name: "pokeTrainer",
-        user_id: "2b34474-666d-4c18-a0bf-6474bbb2f342",
-        token: "sha256-23"
-    }
-    dispatch(setUserInfo(userInfo))
+    
+    
     type Pokemon = {
         name: String,
         level: Number,
@@ -34,7 +29,7 @@ function TeamView() {
 
     //test id
     const id = "079821a3-3262-4b0e-b8fe-3a1022727e82" 
-    const url = `http://localhost:3000/teams/${id}`
+    const url = `http://localhost:3000/api/teams/${id}`
 
     
 
@@ -46,7 +41,7 @@ function TeamView() {
             console.log('Data: ', response.data);
             const team = response.data.body
             console.log('Team: ', team)
-            console.log("pokemon list: " + team.pokemonList)
+            console.log("Pokemon list: " + team.pokemonList)
             
             
             setState({...state, loading: false, team_id: team.team_id, team_name: team.name, pokemon_list: team.pokemonList})

@@ -8,6 +8,7 @@ import { RootState } from './utility/reduxTypes'; // Import your RootState type
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home';
+import CreateTeam from './components/CreateTeam/CreateTeam';
 
 
 
@@ -18,13 +19,17 @@ function App() {
   const user_id = authState.user_id;
   
   return (
-    <Routes>
-      <div className="App">
-        <Navbar />
+    <div className="App">
+      <Navbar />
+      <Routes>
+      
           <Route path="/" element={<Home />}/>
           <Route path="/posts" element={<Post/>}/>
-      </div>
-    </Routes>
+          <Route path="/team" element={<TeamView/>}/>
+          <Route path="/createTeam" element={<CreateTeam/>}/>
+      
+      </Routes>
+    </div>
     
   );
 }

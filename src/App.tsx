@@ -14,15 +14,14 @@ function App() {
   const user_id = authState.user_id;
   
   return (
-    <div className='App'>
-      <Navbar />
-      <Routes>
-          <Route path="/" element={<Home />}/>
-          <Route path="/profiles" element={<Profiles />}/>
-          <Route path="/posts" element={<Post/>}/>
-      </Routes>
-    </div>
-    
+    <div className="App">
+    <Navbar />
+    <Routes>
+        <Route path="/" element={<Home />}/>
+        <Route path="/profiles" element={<Profiles />}/>
+        <Route path="/posts" element={<Post/>}/>
+    </Routes>
+    </div>    
   );
 }
 

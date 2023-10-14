@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './utility/reduxTypes'; // Import your RootState type
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar';
-import Home from './pages/Home';
+import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import Trades from './pages/Trades';
@@ -21,9 +21,6 @@ function App() {
   return (
     <div className="App">
     <Navbar />
-      <div className='globalName'>
-        <p>Hello! {username}</p>
-      </div>
     <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/trades" element={<Trades/>}/>

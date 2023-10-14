@@ -2,9 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState } from './reduxTypes'; // Import your AuthState type
 
 const initialState: AuthState = {
-    name: "poketrainer",
-    user_id: "42b34474-666d-4c18-a0bf-6474bbb2f342",
-    token: null
+    user_id: "empty",
+    name: "noname",
+    username: "no username yet",
+    token: null,
 };
 
 const authSlice = createSlice({
@@ -14,10 +15,13 @@ const authSlice = createSlice({
     setUserInfo: (state, action: PayloadAction<AuthState>) => {
       return { ...state, ...action.payload };
     },
+    setToken: (state:any, action: PayloadAction<string | null>) => {
+      state.token = action.payload;
+    }
   }
 });
 
 
-export const { setUserInfo } = authSlice.actions;
+export const { setUserInfo, setToken } = authSlice.actions;
 
 export default authSlice.reducer;

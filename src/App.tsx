@@ -7,6 +7,7 @@ import Navbar from './Components/Navbar/Navbar';
 import Home from './pages/Home';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
+import Trades from './pages/Trades';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       </div>
     <Routes>
         <Route path="/" element={<Home />}/>
+        <Route path="/trades" element={<Trades/>}/>
         <Route path="/posts" element={<Post/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/users" element={<Register/>}/>

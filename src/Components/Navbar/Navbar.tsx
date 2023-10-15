@@ -1,12 +1,11 @@
 import React from 'react'
-import Home from '../../pages/Home';
+import Home from '../Home/Home';
 import './Navbar.scss';
 
 function Navbar() {
-  
-  
+
   return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light" id='navbar'>
+      <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-light" id='navbar'>
         <div className="container">
           <a className="navbar-brand" href="/">
           <img src= {require("../../images/pokegram.png")} alt ="pokegram logo" id="brand_img" width={"240px"} height={"60px"}/>

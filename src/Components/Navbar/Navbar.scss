@@ -3,7 +3,6 @@
     height: 70px;
 }
 
-
 .navbar .navbar-nav {
     display: flex;
     float: none;
@@ -15,6 +14,10 @@
 .navbar .navbar-collapse {
     text-align: center;
     height: 100%;
+}
+
+#navbarNavAltMarkup {
+    transition: 0.3s;
 }
 
 .navbar .navbar-nav .nav-item {

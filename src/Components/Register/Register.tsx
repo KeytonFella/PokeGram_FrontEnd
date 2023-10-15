@@ -117,7 +117,7 @@ function Register() {
         <br/>
         <div className='showMessage'>
           {<p>{showMessage?.message} </p>}
-          {showMessage.res_username && <p>Rediricting {showMessage.res_username} to the login page</p>}
+          {showMessage.res_username && <p>Rediricting {showMessage.res_username} to the Confirmation page</p>}
         </div>
     </>
   )

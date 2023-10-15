@@ -1,15 +1,22 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AuthState } from '../../utility/reduxTypes';
 import { AppDispatch } from '../../utility/store';
 import { setUserInfo, setToken } from '../../utility/auth';
 import { access } from 'fs';
+import { useNavigate } from 'react-router';
 
 
 function Login() {
     const user = useSelector((state: RootState) => state.auth);
     const dispatch: AppDispatch = useDispatch(); // Use AppDispatch for dispatching actions
+    const DEFAULT_SHOW_MESSAGE = {
+      message: "",
+      res_username: ""
+    };
+    const [showMessage, setShowMessage] = useState(DEFAULT_SHOW_MESSAGE);
+    const navigate = useNavigate();
 
     let [state, setState] = useState({
         username: "",
@@ -93,6 +100,22 @@ function Login() {
         }
     }
 
+
+     //display a message of registered users username and navigates to confirm/login
+     useEffect(() => {
+      if (showMessage.message || showMessage.res_username) {
+        // Hide the  message after 5 seconds and redirect user
+        const timer = setTimeout(() => {
+          console.log("in timeout");
+          setShowMessage(DEFAULT_SHOW_MESSAGE);
+          navigate('/confirm'); // Redirect to login page
+        }, 6000);
+  
+        // Cleanup function to clear the timer
+        return () => clearTimeout(timer);
+      }
+
+    }, [showMessage.message, navigate]);  // Dependency on username and navigate so it cleans up 
   return (
     <>
         <br/>
@@ -104,6 +127,10 @@ function Login() {
             <button type="submit" disabled={!state.username || !state.password} >Login</button>
         </form>
         <br/>
+        <div className='showMessage'>
+          {<p>{showMessage?.message} </p>}
+          {showMessage.res_username && <p>Rediricting {showMessage.res_username} to the Confirmation page</p>}
+        </div>
     </>
   )
 }

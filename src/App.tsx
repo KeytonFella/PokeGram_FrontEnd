@@ -29,7 +29,7 @@ function App() {
         <Route path="/profiles" element={<Profiles />}/>
         <Route path="/posts" element={<Post/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/users" element={<Register/>}/>
+        <Route path="/register" element={<Register/>}/>
         <Route path='/confirm' element={<Confirm/>}/>
         
     </Routes>

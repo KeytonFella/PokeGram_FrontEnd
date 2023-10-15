@@ -3,8 +3,13 @@ import ProfilePokemon from './ProfilePokemon'
 import './Profiles.css'
 import axios from 'axios'
 
+const USER_ID = 1;
+const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
+
+
 function Profiles() {
 
+  
   let [profile, setProfile] = useState({
       bio: '',
       image_url: ''
@@ -14,7 +19,7 @@ function Profiles() {
 
 
   useEffect(() => {
-    axios.get('http://localhost:5500/api/profiles/1')
+    axios.get(BASE_API)
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }, [])
@@ -30,10 +35,10 @@ function Profiles() {
   }
 
   // Function to submit bio
-  function submitBio(event: any){
+  async function submitBio(event: any){
     event.preventDefault()
     console.log(profile.bio)
-    axios.put('http://localhost:5500/api/profiles/1/update/bio', {bio: profile.bio})
+    await axios.put(`${BASE_API}/update/bio`, {bio: profile.bio})
     .then(response => alert('Bio updated!'))
     .catch(err => console.log(err))
     setEditBio(false)
@@ -45,9 +50,9 @@ function Profiles() {
 
     let formData = new FormData();
     formData.append('image', file)
-    await axios.put('http://localhost:5500/api/profiles/1/update/photo', formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    await axios.put(`${BASE_API}/update/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
 
-    axios.get('http://localhost:5500/api/profiles/1')
+    await axios.get(BASE_API)
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }

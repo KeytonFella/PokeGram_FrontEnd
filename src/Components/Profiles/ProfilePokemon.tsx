@@ -3,8 +3,8 @@ import axios from 'axios'
 
 import './ProfilePokemon.css'
 
-
-const API = 'http://localhost:5500/api/profiles/1/pokemon';
+const USER_ID = 1;
+const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}/pokemon`;
 const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
 
 const ProfilePokemon = () => {
@@ -16,7 +16,7 @@ const ProfilePokemon = () => {
 
     // Calls api for the list of pokemon and hands it to other helper function
     async function getPokemon() {
-        axios.get(API)
+        axios.get(BASE_API)
             .then(response => createPokemonObj(response.data.message))
             .catch(error => console.log(error));
     }
@@ -37,7 +37,7 @@ const ProfilePokemon = () => {
     }
 
     async function removePokemon(event: any) {
-        await axios.put(`${API}/remove`, {pokemon: event.target.value})
+        await axios.put(`${BASE_API}/remove`, {pokemon: event.target.value})
         .then(response => response.data.message)
         .catch(error => console.log(error));
         getPokemon();

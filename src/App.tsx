@@ -7,6 +7,7 @@ import Navbar from './Components/Navbar/Navbar';
 import Home from './pages/Home';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
+import Confirm from './Components/Confirm/Confirm';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/posts" element={<Post/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/users" element={<Register/>}/>
+        <Route path='/confirm' element={<Confirm/>}/>
         
     </Routes>
     </div>

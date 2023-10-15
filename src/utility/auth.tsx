@@ -17,15 +17,16 @@ const authSlice = createSlice({
     },
     setToken: (state:any, action: PayloadAction<string | null>) => {
       state.token = action.payload;
-    }
+    },
   }
 });
+
+export const { setUserInfo, setToken} = authSlice.actions;
+
+export default authSlice.reducer;
+
 // export const rootReducer = combineReducers({
 //   auth: authSlice.reducer
 // });
 
 // export type RootState = ReturnType<typeof rootReducer>
-
-export const { setUserInfo, setToken } = authSlice.actions;
-
-export default authSlice.reducer;

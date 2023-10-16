@@ -54,36 +54,8 @@ function Login() {
           } else {
             console.log("Response is empty")
           }
-<<<<<<< HEAD
-        
-        /* Calls a dispatch that will run the reducer/action we have defined 
-          in '../../utility/auth'
-         */
-   
-    }
-
-    //update the state of username with the textbox so that its ready for post
-    function usernameChange(event: any){
-        setState({...state, username: event.target.value}); 
-    }
-
-    function passwordChange(event: any){
-        setState({...state, password: event.target.value});
-    }
-
-
-    async function postLogin(){
-        try{
-            const URL = "http://localhost:5500/login";
-            const data = {username: state.username, password: state.password};
-            const returnedData = await axios.post(URL, data);
-            return returnedData;
-        }catch(err){
-            console.error(err);
-=======
         } catch (error) {
             console.log(error);
->>>>>>> main
         }
       
   

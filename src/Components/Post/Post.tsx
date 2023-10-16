@@ -39,22 +39,12 @@ function Post() {
   }
   function on_click_submit(e: React.MouseEvent<HTMLButtonElement>){
     console.log(textareaValue);
-<<<<<<< HEAD
-    const updatedInfo = {
-      name: 'josh',
-      username: 'username',
-      user_id: 'something reasonable', // You can update other fields as well
-      token: 'sha256--23',
-    };
-    dispatch(setUserInfo(updatedInfo));
-=======
     // const updatedInfo = {
     //   name: 'josh',
     //   user_id: 'something reasonable', // You can update other fields as well
     //   token: 'sha256--23',
     // };
     // dispatch(setUserInfo(updatedInfo));
->>>>>>> main
   }
 //credit https://css-tricks.com/auto-growing-inputs-textareas/ Chris Coyier on Mar 25, 2020
 function calcHeight(value: string) {

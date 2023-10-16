@@ -5,13 +5,13 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
-import Register from './components/Register/Register';
+import Register from './Components/Register/Register';
 import Trades from './pages/Trades';
-import Post from "./components/Post/Post";
+import Post from "./Components/Post/Post";
 import Profiles from './Components/Profiles/Profiles';
 import Confirm from './Components/Confirm/Confirm';
-import CreateTeam from './components/CreateTeam/CreateTeam';
-import TeamView from './components/TeamView/TeamView';
+import CreateTeam from './Components/CreateTeam/CreateTeam';
+import TeamView from './Components/TeamView/TeamView';
 
 function App() {
 /*   //values from the global redux store

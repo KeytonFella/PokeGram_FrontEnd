@@ -9,6 +9,7 @@ import Register from './Components/Register/Register';
 import Trades from './pages/Trades';
 import Post from "./Components/Post/Post";
 import Profiles from './Components/Profiles/Profiles';
+import FriendFinder from './Components/FriendFinder/FriendFinder';
 
 function App() {
   //values from the global redux store
@@ -28,7 +29,7 @@ function App() {
         <Route path="/posts" element={<Post/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/users" element={<Register/>}/>
-        
+        <Route path="/friendfinder" element={<FriendFinder/>}/>
     </Routes>
     </div>    
   );

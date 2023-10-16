@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState } from './reduxTypes'; // Import your AuthState type
-
+import { AuthState } from './reduxTypes';
 const initialState: AuthState = {
     name: "JOSH",
     user_id: "1237283usd-1-sdf--sd-qw-das",
     token: null,
 };
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -16,8 +14,5 @@ const authSlice = createSlice({
     },
   }
 });
-
-
 export const { setUserInfo } = authSlice.actions;
-
 export default authSlice.reducer;

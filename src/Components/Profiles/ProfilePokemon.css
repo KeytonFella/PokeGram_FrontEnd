@@ -1,0 +1,68 @@
+.title {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #000000;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 20px;
+}
+.entry {
+    padding: 10px;
+    border: #000000 2px solid;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
+    width: 15%;
+    background-color: #fcd8af;
+}
+.names {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 400;
+    font-family: fantasy;
+    font-style: italic;
+    color: #000000;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.sprite {
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.btn {
+    background-image: url('../../images/pokeball.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    color: black;
+    border: black 1px solid;
+    border-radius: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    font-size: 0px;
+    display: block;
+    height: 90px;
+    width: 90px;
+}
+.btn:hover{
+    background-color: rgb(255, 0, 0);
+    background-image: none;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: fantasy;
+    text-align: center;
+    border-width: 4px;
+}

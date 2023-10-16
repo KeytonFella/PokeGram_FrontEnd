@@ -1,43 +1,43 @@
-import React from 'react';
-
-import TeamView from './components/TeamView/TeamView';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
-import Post from "./components/Post/Post";
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from './utility/reduxTypes'; // Import your RootState type
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Navbar from './components/Navbar/Navbar';
-import Home from './pages/Home';
+import Navbar from './Components/Navbar/Navbar';
+import Home from './Components/Home/Home';
+import Login from './Components/Login/Login';
+import Register from './components/Register/Register';
+import Trades from './pages/Trades';
+import Post from "./components/Post/Post";
+import Profiles from './Components/Profiles/Profiles';
+import Confirm from './Components/Confirm/Confirm';
 import CreateTeam from './components/CreateTeam/CreateTeam';
-
-
+import TeamView from './components/TeamView/TeamView';
 
 function App() {
-  //values from the global redux store
+/*   //values from the global redux store
   const authState = useSelector((state: RootState) => state.auth);
   const token = authState.token;
   const name = authState.name;
   const username = authState.username;
-  const user_id = authState.user_id;
-  
+  const user_id = authState.user_id; */
   return (
-    <div className="App">
+    <div className="App">   
     <Navbar />
-      <div className='globalName'>
-        <p>Hello! {username}</p>
-      </div>
     <Routes>
         <Route path="/" element={<Home />}/>
+        <Route path="/trades" element={<Trades/>}/>
+        <Route path="/profiles" element={<Profiles />}/>
         <Route path="/posts" element={<Post/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/users" element={<Register/>}/>
+        
 
         <Route path="/team" element={<TeamView/>}/>
         <Route path="/createTeam" element={<CreateTeam/>}/>
+        <Route path="/register" element={<Register/>}/>
+        <Route path='/confirm' element={<Confirm/>}/>
         
     </Routes>
-    </div>
+    </div>    
   );
 }
 

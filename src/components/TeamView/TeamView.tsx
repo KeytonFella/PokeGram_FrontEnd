@@ -14,7 +14,7 @@ function TeamView() {
     
     
     type Pokemon = {
-        name: String,
+        pokemonName: String,
         level: Number,
         nickname?: String
         }
@@ -28,16 +28,12 @@ function TeamView() {
 
 
     //test id
-    const id = "079821a3-3262-4b0e-b8fe-3a1022727e82" 
-    const url = `http://localhost:3000/api/teams/${id}`
-
-    
+    const id = "fe12456f-137f-4969-9732-cc08bdf67ba1" 
+    const url = `http://localhost:5500/api/teams/${id}`
 
     
     React.useEffect(() => {
-    
         axios.get(url).then((response) => {
-                
             console.log('Data: ', response.data);
             const team = response.data.body
             console.log('Team: ', team)
@@ -64,7 +60,7 @@ function TeamView() {
             <div>
                 {state.pokemon_list.map((pokemon: Pokemon) => 
                 //pokemon get rendered here
-                <PokemonInTeam pokemonName={pokemon.name}/>
+                <PokemonInTeam pokemonName={pokemon.pokemonName}/>
                 )}
             </div>
         </div>

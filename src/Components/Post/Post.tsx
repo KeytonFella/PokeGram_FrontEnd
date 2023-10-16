@@ -41,6 +41,7 @@ function Post() {
     console.log(textareaValue);
     const updatedInfo = {
       name: 'josh',
+      username: 'username',
       user_id: 'something reasonable', // You can update other fields as well
       token: 'sha256--23',
     };

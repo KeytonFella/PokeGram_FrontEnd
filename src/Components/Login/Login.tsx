@@ -53,7 +53,7 @@ function Login() {
 
     async function postLogin(){
         try{
-            const URL = "http://localhost:3000/login";
+            const URL = "http://localhost:5500/login";
             const data = {username: state.username, password: state.password};
             const returnedData = await axios.post(URL, data);
             return returnedData;

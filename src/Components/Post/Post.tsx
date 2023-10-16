@@ -39,12 +39,12 @@ function Post() {
   }
   function on_click_submit(e: React.MouseEvent<HTMLButtonElement>){
     console.log(textareaValue);
-    const updatedInfo = {
-      name: 'josh',
-      user_id: 'something reasonable', // You can update other fields as well
-      token: 'sha256--23',
-    };
-    dispatch(setUserInfo(updatedInfo));
+    // const updatedInfo = {
+    //   name: 'josh',
+    //   user_id: 'something reasonable', // You can update other fields as well
+    //   token: 'sha256--23',
+    // };
+    // dispatch(setUserInfo(updatedInfo));
   }
 //credit https://css-tricks.com/auto-growing-inputs-textareas/ Chris Coyier on Mar 25, 2020
 function calcHeight(value: string) {
@@ -55,20 +55,19 @@ function calcHeight(value: string) {
 function on_keyup_textarea(e : React.KeyboardEvent<HTMLTextAreaElement>) {
   e.currentTarget.style.height = calcHeight(e.currentTarget.value) + "px";
 }
-
-const [selected, setSelected] = useState([]);
-return (
-    <div id = "post_container">
-      <span>{AuthState.name} </span>
-      <span>is feeling okay</span>
-      {/* Use the token as needed in this child component */}
-      <br/>
+  return (
+      <div id = "post_container">
+        <span>{AuthState.name} </span>
+        {<span>{AuthState.username} </span>}<br/>
+        <span>is feeling okay</span>
+        {/* Use the token as needed in this child component */}
+        <br/>
         <textarea placeholder="What's on your mind" id="post_body" onKeyUp={on_keyup_textarea} value={textareaValue}
         onChange={handleTextareaChange}></textarea>
       <br/>
      
       <button className="btn btn-info" id="upload_image">Upload Image</button>
-      <div id = "add_tags">
+      {/* <div id = "add_tags">
         <h1 id = "tag_header">Tags <img src= {require("../../images/tag.jpg")} alt ="" id="tag_img"/></h1>
         <MultiSelect
           options={tagoptions}
@@ -76,7 +75,8 @@ return (
           onChange={setSelected}
           labelledBy="Select"
         />
-      </div>
+      </div> */}
+      <button className="btn btn-info" id="add_tags">Tags <img src= {require("../../images/tag.jpg")} alt ="" id="tag_img"/></button>
       <button className="btn btn-info" id="post_button" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_submit}>Post</button>
     </div>
 );

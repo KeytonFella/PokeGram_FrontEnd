@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState } from './reduxTypes';
 const initialState: AuthState = {
-    name: "JOSH",
-    user_id: "1237283usd-1-sdf--sd-qw-das",
+    user_id: "empty",
+    name: "no name yet",
+    username: "no username yet",
     token: null,
 };
 const authSlice = createSlice({
@@ -12,7 +13,16 @@ const authSlice = createSlice({
     setUserInfo: (state, action: PayloadAction<AuthState>) => {
       return { ...state, ...action.payload };
     },
+    
   }
 });
-export const { setUserInfo } = authSlice.actions;
+
+export const { setUserInfo} = authSlice.actions;
+
 export default authSlice.reducer;
+
+// export const rootReducer = combineReducers({
+//   auth: authSlice.reducer
+// });
+
+// export type RootState = ReturnType<typeof rootReducer>

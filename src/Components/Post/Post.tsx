@@ -133,6 +133,14 @@ return (
         style={{display: 'none'}}
       />
       <br/>
+=======
+  return (
+      <div id = "post_container">
+        <span>{AuthState.name} </span>
+        {<span>{AuthState.username} </span>}<br/>
+        <span>is feeling okay</span>
+        {/* Use the token as needed in this child component */}
+        <br/>
         <textarea placeholder="What's on your mind" id="post_body" onKeyUp={on_keyup_textarea} value={textareaValue}
         onChange={handleTextareaChange}></textarea>
       <br/>

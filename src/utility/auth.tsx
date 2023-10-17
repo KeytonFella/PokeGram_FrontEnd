@@ -13,7 +13,6 @@ const authSlice = createSlice({
     setUserInfo: (state, action: PayloadAction<AuthState>) => {
       return { ...state, ...action.payload };
     },
-    
   }
 });
 

@@ -29,7 +29,7 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
   const [imageData, setImageData] = useState<string | null>(null);
 
   const fileInputRef =  useRef<HTMLInputElement | null>(null);
-  const dispatch: AppDispatch = useDispatch(); 
+  const dispatch: AppDispatch = useDispatch();
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(e.target.value);
   };
@@ -68,6 +68,7 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
   }
   async function on_click_submit(e: React.MouseEvent<HTMLButtonElement>){
     const updatedInfo = {
+      username: "joshy",
       name: 'Josh',
       user_id: 'something reasonable', 
       token: 'sha256--23',
@@ -116,7 +117,6 @@ const handleDownload = async () => {
   }
 };
 
-
 return (
   <div className={`modal ${isOpen ? 'open' : ''}`}>
     <div id = "post_container">
@@ -124,8 +124,6 @@ return (
         &times;
       </span>
       <h2>Make a Post</h2>
-      <span>{AuthState.name} </span>
-      <span>is feeling okay</span>
       <input
         type="file"
         accept="image/*"
@@ -133,9 +131,6 @@ return (
         style={{display: 'none'}}
       />
       <br/>
-=======
-  return (
-      <div id = "post_container">
         <span>{AuthState.name} </span>
         {<span>{AuthState.username} </span>}<br/>
         <span>is feeling okay</span>
@@ -151,9 +146,9 @@ return (
       <button className="btn btn-info" id="upload_image" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_image}>Upload Image</button>
       <button className="btn btn-info" id="post_button" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_submit}>Post</button>
       <button onClick={handleDownload}>Download Image</button>
-      {imageData && <img src={imageData} alt="Downloaded" />}
-      </div>
+      {imageData && <img src={imageData} alt="Downloaded"/>}
     </div>
+  </div>
 );
 }
 export default Post;

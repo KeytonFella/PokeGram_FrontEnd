@@ -5,12 +5,18 @@ import axios from 'axios'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 
+
+
+
 function Profiles() {
   
+ 
   const AuthState = useSelector((state: RootState) => state.auth);
+  //const USER_ID = AuthState.user_id;
   const id = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
-  const URL = `${process.env.REACT_APP_BASE_API_URL}/profiles/${id}}`;
-console.log(URL)
+  const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
+
+
   let [profile, setProfile] = useState({
       bio: '',
       image_url: ''
@@ -36,7 +42,7 @@ console.log(URL)
   }
 
   // Function to submit bio
-  function submitBio(event: any){
+  async function submitBio(event: any){
     event.preventDefault()
     console.log(profile.bio)
     axios.put(`${URL}/update/bio`, {bio: profile.bio})

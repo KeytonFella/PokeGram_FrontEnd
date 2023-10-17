@@ -3,10 +3,11 @@ import axios from 'axios'
 
 import './ProfilePokemon.scss'
 
+
 const ProfilePokemon = (props:any) => {
 
-    const URL = `${process.env.REACT_APP_BASE_API_URL}/profiles/${props.user_id}/pokemon`;
-    const POKE_API = process.env.REACT_APP_POKE_API_URL;
+    const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}/pokemon`;
+    const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
     let [pokemon, setPokemon] = useState([] as any);
 
     useEffect(() => {

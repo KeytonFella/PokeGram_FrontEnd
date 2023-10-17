@@ -25,6 +25,8 @@ function Navbar() {
               <Link className="nav-item nav-link" to="/trades">Trades</Link>
               <Link className="nav-item nav-link" to="/login">Login</Link>
               <Link className="nav-item nav-link" to="/register">Register</Link>
+              <Link className="nav-item nav-link" to="/friends">Friends</Link>
+
               </div>
           </div>
           </div>

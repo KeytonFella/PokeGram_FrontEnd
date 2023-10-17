@@ -10,6 +10,7 @@ import Trades from './pages/Trades';
 import Post from "./Components/Post/Post";
 import Profiles from './Components/Profiles/Profiles';
 import Confirm from './Components/Confirm/Confirm';
+import Friends from './Components/Friends/Friends';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path='/confirm' element={<Confirm/>}/>
+        <Route path='/friends' element={<Friends/>}/>
         
     </Routes>
     </div>    

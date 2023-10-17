@@ -7,6 +7,8 @@ import './ProfilePokemon.scss'
 const ProfilePokemon = (props:any) => {
 
     const USER_ID = props.user_id;
+    // id for testing purposes
+    // const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
     const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}/pokemon`;
     const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
     let [pokemon, setPokemon] = useState([] as any);

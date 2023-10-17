@@ -6,8 +6,9 @@ import { RootState } from '../../utility/reduxTypes';
 function FriendFinder() {
     const AuthState = useSelector((state: RootState) => state.auth);
     const USER_ID = AuthState.user_id;
+    // id for testing purposes
+    // const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
     const URL = `http://52.90.96.133:5500/api/addresses/user/${USER_ID}`;
-    const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
 
     type Coordinates = {
         lat: number,

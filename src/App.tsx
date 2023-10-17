@@ -6,7 +6,7 @@ import Navbar from './Components/Navbar/Navbar';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
-import Trades from './pages/Trades';
+import Trades from './Components/Trades/Trades';
 import Post from "./Components/Post/Post";
 import Profiles from './Components/Profiles/Profiles';
 import Confirm from './Components/Confirm/Confirm';

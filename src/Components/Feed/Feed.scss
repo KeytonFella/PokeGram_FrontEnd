@@ -1,0 +1,25 @@
+#feed_container{
+    width: 100%
+}
+.post-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    max-width: 600px; /* Adjust as needed */
+    margin: 0 auto; /* Center the container */
+  }
+  
+  .post-text {
+    width: 100%;
+  }
+  
+  .post-image {
+    margin-top: 20px; /* Adjust the spacing between text and image */
+  }
+  
+  .post-image img {
+    max-width: 100%;
+    height: auto;
+  }

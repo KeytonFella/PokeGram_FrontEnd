@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 
-import './ProfilePokemon.css'
+import './ProfilePokemon.scss'
 
+const ProfilePokemon = (props:any) => {
 
-const API = 'http://localhost:5500/api/profiles/1/pokemon';
-const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
-
-const ProfilePokemon = () => {
+    const URL = `${process.env.REACT_APP_BASE_API_URL}/profiles/${props.user_id}/pokemon`;
+    const POKE_API = process.env.REACT_APP_POKE_API_URL;
     let [pokemon, setPokemon] = useState([] as any);
 
     useEffect(() => {
@@ -16,7 +15,7 @@ const ProfilePokemon = () => {
 
     // Calls api for the list of pokemon and hands it to other helper function
     async function getPokemon() {
-        axios.get(API)
+        axios.get(URL)
             .then(response => createPokemonObj(response.data.message))
             .catch(error => console.log(error));
     }
@@ -37,7 +36,7 @@ const ProfilePokemon = () => {
     }
 
     async function removePokemon(event: any) {
-        await axios.put(`${API}/remove`, {pokemon: event.target.value})
+        await axios.put(`${URL}/remove`, {pokemon: event.target.value})
         .then(response => response.data.message)
         .catch(error => console.log(error));
         getPokemon();

@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../utility/reduxTypes';
 
 function FriendFinder() {
+    const AuthState = useSelector((state: RootState) => state.auth);
     
     const BASE_URL = 'http://localhost:5500/api/addresses/user'
     const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
@@ -12,8 +15,6 @@ function FriendFinder() {
     }
 
     let [nearbyUsers, setNearbyUsers] = useState([] as any);
-  
-
 
     useEffect(() => {
         getAllAddresses();
@@ -42,8 +43,13 @@ function FriendFinder() {
         const nearby: any = [];
         for(let i = 0; i < others.length; i++){
             const distance = calculateDistance(origin, others[i].address);
+            let user = {
+                user_id: others[i].user_id,
+                username: others[i].username,
+                distance: distance
+            }
             if (distance <= 25) {
-            nearby.push(others[i]);
+            nearby.push(user);
             }
         };
         console.log(nearby)
@@ -87,6 +93,7 @@ function FriendFinder() {
             {nearbyUsers.map((user: any) => (
                  <div key={user.user_id}>
                     <h3>{user.username}</h3>
+                    <p>{user.distance.toFixed(4)} miles away</p>
                 </div>
             ))}
         </div>

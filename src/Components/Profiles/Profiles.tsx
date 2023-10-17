@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import ProfilePokemon from './ProfilePokemon'
-import './Profiles.css'
+import './Profiles.scss'
 import axios from 'axios'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../utility/reduxTypes';
 
 function Profiles() {
-
+  
+  const AuthState = useSelector((state: RootState) => state.auth);
+  const id = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
+  const URL = `${process.env.REACT_APP_BASE_API_URL}/profiles/${id}}`;
+console.log(URL)
   let [profile, setProfile] = useState({
       bio: '',
       image_url: ''
@@ -14,7 +20,7 @@ function Profiles() {
 
 
   useEffect(() => {
-    axios.get('http://localhost:5500/api/profiles/1')
+    axios.get(URL)
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }, [])
@@ -33,7 +39,7 @@ function Profiles() {
   function submitBio(event: any){
     event.preventDefault()
     console.log(profile.bio)
-    axios.put('http://localhost:5500/api/profiles/1/update/bio', {bio: profile.bio})
+    axios.put(`${URL}/update/bio`, {bio: profile.bio})
     .then(response => alert('Bio updated!'))
     .catch(err => console.log(err))
     setEditBio(false)
@@ -45,9 +51,9 @@ function Profiles() {
 
     let formData = new FormData();
     formData.append('image', file)
-    await axios.put('http://localhost:5500/api/profiles/1/update/photo', formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    await axios.put(`${URL}/update/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
 
-    axios.get('http://localhost:5500/api/profiles/1')
+    axios.get(URL)
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }
@@ -56,9 +62,9 @@ function Profiles() {
 
 
   return (
-    <div>
+    <div className='profile-container'>
         <div className='profile-info'>
-            <h1 className='username'>Username</h1>
+            <h1 className='username'>{AuthState.username}</h1>
             <p className='bio'>{profile.bio}</p>
             <button type='button' className='edit-profile' onClick={() => setEditBio(true)}>Edit bio</button>
             <br/>
@@ -77,7 +83,7 @@ function Profiles() {
               <button type='submit'>Upload</button>
             </form>
         </div>
-        <ProfilePokemon />
+        <ProfilePokemon user_id={AuthState.user_id}/>
     </div>
   )
 }

@@ -1,97 +1,91 @@
 import axios from 'axios';
-import React, { useState } from 'react'
-import { RootState } from '../../utility/reduxTypes';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../utility/store';
-import { setUserInfo, setToken } from '../../utility/auth';
-//import { useHistory } from 'react-router-dom';
+import React, {useState } from 'react'
+import { useDisplayError} from '../../Hooks/DisplayError';
+import { useShowUserMessage} from '../../Hooks/DisplayAndRedirect';
 
 function Register() {
-    //const user = useSelector((state: RootState) => state.auth);
-    const dispatch: AppDispatch = useDispatch(); // Use AppDispatch for dispatching actions
-    
+
     let [state, setState] = useState({
         username: "",
-        password: ""
-    })
-    const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
-  //  const history = useHistory();
+        password: "",
+        email: ""
+    });
 
+    const [userMessage, setUserMessage] = useShowUserMessage(undefined, "/confirm", 6000);
+    const [errorMessage, setErrorMessage] = useDisplayError();
+
+
+    //add error response to page
     async function handleSubmitRegister(event: any){
-        //prevent the default behavior of refreshing the password
-        event.preventDefault();
-        // will call an axios request that returns the http response 
+      //prevent the default behavior of refreshing the password
+      event.preventDefault();       
+      // Check if username and password are filled
+      if(!state.username || !state.password) {
+        console.log("Missing username or password");
+        setErrorMessage("Missing username or password");
+        return;
+      }
+      // will call an axios request that returns the http response 
+      const response = await postRegister();
+      //console.log(response);
+      if(response?.status === 400){
+        console.log("response status is ", JSON.stringify(response.status));
+        console.log("the response data ",response.data);
+        setErrorMessage(response.data || "some error");
+      }
+      if(response && response.data) {
         //spread the response body that we can get everything but the 
         //res.message in the data response
-        try {
-          const response = await postRegister();
-          console.log(state);
-          if(response && response.data) {
-            const {message, ...userObject} = response?.data;
-            console.log(userObject);
-          } else {
-            console.log("Response is empty")
-          }
-        } catch (error) {
-            console.log(error);
-        }
-        
-        /* Calls a dispatch that will run the reducer/action we have defined 
-            in '../../utility/auth'
-        */
-        //dispatch(setUserInfo(userObject));
+        const {message, ...userObject} = response?.data;
+        const userData = userObject.user;
+        setUserMessage({
+          message,
+          username: userData?.username
+        });
+
+      } else {
+        console.log("Response is empty")
+      }   
     }
-
-    /* useEffect(() => {
-        if (username) {
-          // Show the welcome message
-          setShowWelcomeMessage(true);
-          
-          // Trigger an analytics event (example)
-          // trackEvent('user_registered', { username });
-    
-          // Hide the welcome message after 5 seconds and redirect user
-          const timer = setTimeout(() => {
-            setShowWelcomeMessage(false);
-            history.push('/dashboard'); // Redirect to dashboard
-          }, 5000);
-    
-          // Cleanup function to clear the timer
-          return () => clearTimeout(timer);
-        }
-      }, [username, history]);  // Dependency on username and history */
-
-    function usernameChange(event: any){
-        setState({...state, username: event.target.value});
-    }
-
-    function passwordChange(event: any){
-        setState({...state, password: event.target.value});
-    }
-
 
     async function postRegister(){
-        const URL = "http://localhost:3000/users";
-        const data = {username: state.username, password: state.password};
-        try{
-            const returnedData = await axios.post(URL, data);
-            return returnedData;
-        }catch(err){
-            console.error(err);
+      const URL = "http://localhost:5500/api/users";
+      const data = {username: state.username, password: state.password, email: state.email};
+      try{
+        const returnedData = await axios.post(URL, data);
+        return returnedData;
+      }catch(err){
+        const error = err as any;
+        //console.error("printting axios error:", err);
+        if(error && error.response){
+          return error.response; 
         }
+        return null;
+      } 
     }
-
-  return (
+    
+    function handleFormInputChange(event: React.ChangeEvent<HTMLInputElement>){
+        const { name, value } = event.target; //takes the inputs name: and takes the value of the event
+        setState(prevState => ({ ...prevState, [name]: value })); //spreading allows us to edit the properties we want without losing the ones we didnt
+    }
+    return (
     <>
         <br/>
         <form onSubmit={handleSubmitRegister}>
-            <input type="text" placeholder='username' onChange={usernameChange}></input>
+            <input type="text" name="username" placeholder='username' onChange={handleFormInputChange}></input>
             <br/>
-            <input type="text" placeholder='password' onChange={passwordChange}></input>
+            <input type="text" name='password' placeholder='password' onChange={handleFormInputChange}></input>
             <br/>
-            <button type="submit">Register</button>
+            <input type="text" name='email' placeholder='email' onChange={handleFormInputChange}></input>
+            <br/>
+            <button type="submit"  disabled={!state.username || !state.password}>Register</button>
         </form>
         <br/>
+        <div className='showMessage'>
+          {<p>{errorMessage} </p>}
+          {<p>{userMessage?.message} </p>}
+          {userMessage.username && <p>Rediricting {userMessage.username} to the Confirmation page</p>}
+        </div>
     </>
   )
 }

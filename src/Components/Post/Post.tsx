@@ -31,6 +31,7 @@ function on_keyup_textarea(e : React.KeyboardEvent<HTMLTextAreaElement>) {
   return (
       <div id = "post_container">
         <span>{AuthState.name} </span>
+        {<span>{AuthState.username} </span>}<br/>
         <span>is feeling okay</span>
         {/* Use the token as needed in this child component */}
         <br/>

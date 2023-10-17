@@ -37,7 +37,7 @@ function CreateTeam() {
     const handleLevelChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const {name, value} = e.target;
         const newList = [...pokemonList]
-        newList[index] = {...newList[index], [name]: value}
+        newList[index] = {...newList[index], [name]: parseInt(value)}
         setPokemonList(newList)
         
     } 

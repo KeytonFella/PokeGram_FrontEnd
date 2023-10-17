@@ -5,8 +5,8 @@ import { RootState } from '../../utility/reduxTypes';
 
 function FriendFinder() {
     const AuthState = useSelector((state: RootState) => state.auth);
-    
-    const BASE_URL = 'http://localhost:5500/api/addresses/user'
+    const USER_ID = AuthState.user_id;
+    const URL = `http://52.90.96.133:5500/api/addresses/user/${USER_ID}`;
     const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
 
     type Coordinates = {
@@ -25,10 +25,10 @@ function FriendFinder() {
         let origin: Coordinates;
         let others: any;
         let requests = [];
-        const req1 = await  axios.get(`${BASE_URL}/${userID}`).then((response) => {
+        const req1 = await  axios.get(URL).then((response) => {
             origin = response.data
         }).catch((error) => {console.log(error)})
-        const req2 = await axios.get(`${BASE_URL}/${userID}/others`).then((response) => {
+        const req2 = await axios.get(`${URL}/others`).then((response) => {
             others = response.data
         }).catch((error) => {console.log(error)})
         requests.push(req1, req2);

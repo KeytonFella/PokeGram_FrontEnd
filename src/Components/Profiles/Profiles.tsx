@@ -12,8 +12,9 @@ function Profiles() {
   
  
   const AuthState = useSelector((state: RootState) => state.auth);
-  //const USER_ID = AuthState.user_id;
-  const id = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
+  const USER_ID = AuthState.user_id;
+  // ID for testintg
+  //const id = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
   const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
 
 

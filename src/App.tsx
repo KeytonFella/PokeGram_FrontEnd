@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
+import './App.scss';
 import { RootState } from './utility/reduxTypes'; // Import your RootState type
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar';
@@ -10,15 +11,10 @@ import Trades from './Components/Trades/Trades';
 import Post from "./Components/Post/Post";
 import Profiles from './Components/Profiles/Profiles';
 import Confirm from './Components/Confirm/Confirm';
-
+import UserProfile from './Components/UserProfile/UserProfile'; // Import a component for displaying user profiles
+import FriendFinder from './Components/FriendFinder/FriendFinder';
 
 function App() {
-/*   //values from the global redux store
-  const authState = useSelector((state: RootState) => state.auth);
-  const token = authState.token;
-  const name = authState.name;
-  const username = authState.username;
-  const user_id = authState.user_id; */
   return (
     <div className="App">   
     <Navbar />
@@ -26,14 +22,14 @@ function App() {
         <Route path="/" element={<Home />}/>
         <Route path="/trades" element={<Trades/>}/>
         <Route path="/profiles" element={<Profiles />}/>
-        <Route path="/posts" element={<Post/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path='/confirm' element={<Confirm/>}/>
-        
+        <Route path="/profile/:profile_id" element={<UserProfile />} />
+        <Route path="/users" element={<Register/>}/>
+        <Route path="/friendfinder" element={<FriendFinder/>}/>
     </Routes>
     </div>    
   );
 }
-
 export default App;

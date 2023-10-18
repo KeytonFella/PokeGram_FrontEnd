@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import "./PokemonInTeam.scss"
+import { Pokemon } from '../../utility/PokemonType'
 
-function PokemonInTeam(props: {pokemonName: String}) {
+function PokemonInTeam(props: {pokemon: Pokemon}) {
     console.log(props)
     //let loading = true
     let [pokemon, setPokemon] = useState({} as any)
     let [loading, setLoading] = useState(true)
     
     const pokeUrl = "https://pokeapi.co/api/v2/pokemon/"
-    let lower = props.pokemonName.toLowerCase()
+    let lower = props.pokemon.pokemonName.toLowerCase()
     useEffect(() => {
         //fetch pokemon from pokeapi
         fetch(`${pokeUrl}${lower}`)
@@ -27,7 +28,9 @@ function PokemonInTeam(props: {pokemonName: String}) {
     } else {
         return (
         <div className='card'>
-            <h2>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.substr(1).toLowerCase()}</h2>
+            <h4>{props.pokemon.nickname ? <span>{props.pokemon.nickname} the </span>: <></>}{pokemon.name.charAt(0).toUpperCase() + pokemon.name.substr(1).toLowerCase()}</h4>
+            <h6>Lv. {props.pokemon.level}</h6>
+            
             <div className='sprite'>
                 <img src={pokemon.sprites.front_default} alt="pokemon sprite"></img>
             </div>

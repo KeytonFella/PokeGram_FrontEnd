@@ -12,6 +12,7 @@ import Profiles from './Components/Profiles/Profiles';
 import Confirm from './Components/Confirm/Confirm';
 import CreateTeam from './Components/CreateTeam/CreateTeam';
 import TeamView from './Components/TeamView/TeamView';
+import EditTeam from './Components/Edit Team/EditTeam';
 
 function App() {
 /*   //values from the global redux store

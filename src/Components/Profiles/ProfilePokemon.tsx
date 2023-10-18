@@ -40,7 +40,7 @@ const ProfilePokemon = (props:any) => {
     }
 
     async function removePokemon(event: any) {
-        await axios.put(`${URL}/remove`, {pokemon: event.target.value})
+        await axios.put(`${URL}`, {action: "remove", pokemon: event.target.value})
         .then(response => response.data.message)
         .catch(error => console.log(error));
         getPokemon();

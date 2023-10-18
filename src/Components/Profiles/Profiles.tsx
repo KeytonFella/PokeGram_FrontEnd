@@ -10,7 +10,6 @@ import { RootState } from '../../utility/reduxTypes';
 
 function Profiles() {
   
- 
   const AuthState = useSelector((state: RootState) => state.auth);
   const USER_ID = AuthState.user_id;
   // ID for testintg
@@ -46,7 +45,7 @@ function Profiles() {
   async function submitBio(event: any){
     event.preventDefault()
     console.log(profile.bio)
-    axios.put(`${URL}/update/bio`, {bio: profile.bio})
+    axios.put(`${URL}/bio`, {bio: profile.bio})
     .then(response => alert('Bio updated!'))
     .catch(err => console.log(err))
     setEditBio(false)
@@ -58,7 +57,7 @@ function Profiles() {
 
     let formData = new FormData();
     formData.append('image', file)
-    await axios.put(`${URL}/update/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    await axios.put(`${URL}/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
 
     axios.get(URL)
     .then(response => setProfile(response.data))

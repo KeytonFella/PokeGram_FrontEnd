@@ -12,8 +12,7 @@ import Trades from './pages/Trades';
 import Profiles from './Components/Profiles/Profiles';
 import Confirm from './Components/Confirm/Confirm';
 import UserProfile from './Components/UserProfile/UserProfile'; // Import a component for displaying user profiles
-
-
+import FriendFinder from './Components/FriendFinder/FriendFinder';
 
 function App() {
   return (
@@ -27,6 +26,8 @@ function App() {
         <Route path="/register" element={<Register/>}/>
         <Route path='/confirm' element={<Confirm/>}/>
         <Route path="/profile/:profile_id" element={<UserProfile />} />
+        <Route path="/users" element={<Register/>}/>
+        <Route path="/friendfinder" element={<FriendFinder/>}/>
     </Routes>
     </div>    
   );

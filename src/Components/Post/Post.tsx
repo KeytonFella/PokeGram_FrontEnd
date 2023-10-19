@@ -27,17 +27,14 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
   const [textareaValue, setTextareaValue] = useState('');
   const [selected, setSelected] = useState([]);
   const [imageData, setImageData] = useState<string | null>(null);
-
   const fileInputRef =  useRef<HTMLInputElement | null>(null);
-  const dispatch: AppDispatch = useDispatch();
+  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+
+
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(e.target.value);
   };
-  const on_click_image = (e: React.MouseEvent<HTMLButtonElement>) =>{
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  }
+
   const on_hover_button = (e : React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.style.background = '#034480';
   }
@@ -48,12 +45,19 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
     if(fileInputRef.current && fileInputRef.current.files) {
       try {
           let imageFile = fileInputRef.current.files[0];
+          console.log("The image file is:", imageFile);
           if(imageFile) {
+            console.log(imageFile)
             const formData = new FormData();
             formData.append('image', imageFile);
-            const response = await axios.post('http://52.90.96.133:5500/api/post/image', formData, {
-              headers: {'Content-Type': 'multipart/form-data'}
-            })
+            console.log(formData)
+            const response = await axios.post('http://52.90.96.133:5500/api/post/image/', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                "Content-Disposition" : "form-data",
+                'Authorization': `Bearer ${AuthState.token}`
+              },   
+            });
             console.log('Image uploaded successfully:', response.data);
             return response.data.image_id
           } else {
@@ -67,27 +71,34 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
     }
   }
   async function on_click_submit(e: React.MouseEvent<HTMLButtonElement>){
-    const updatedInfo = {
-      username: "joshy",
-      name: 'Josh',
-      user_id: 'something reasonable', 
-      token: 'sha256--23',
-    };
-    dispatch(setUserInfo(updatedInfo));
+      //const dispatch: AppDispatch = useDispatch();
+    // const updatedInfo = {
+    //   username: "joshy",
+    //   name: 'Josh',
+    //   user_id: 'something reasonable', 
+    //   token: 'sha256--23',
+    // };
+    // dispatch(setUserInfo(updatedInfo));
     const image_id = await postImage();
-    fileInputRef.current = null;
     if(textareaValue) {
-      const data = {
+      const url = 'http://52.90.96.133:5500/api/post';
+      const headers = {
+        Authorization: `Bearer ${AuthState.token}`,
+        'Content-Type':'application/json'
+      };
+      const body = {
         current_userID: AuthState.user_id,
         text_body: textareaValue,
         image_s3_id: image_id,
         tags: selected
       };
-      axios.post('http://52.90.96.133:5500/api/post', data, {
-        headers: {'Content-Type':'application/json'}
-      })
+      axios.post(url, body, {headers })
       .then((response) => {
         console.log('Post Successfully Uploaded\n post_id: ', response.data.post_id);
+        setTextareaValue('');
+        setSelected([]);
+        setImageData(null);
+        setSelectedFileName(null);
         closeModal();
       })
       .catch((error) => {
@@ -104,32 +115,40 @@ function calcHeight(value: string) {
 function on_keyup_textarea(e : React.KeyboardEvent<HTMLTextAreaElement>) {
   e.currentTarget.style.height = calcHeight(e.currentTarget.value) + "px";
 }
-const handleDownload = async () => {
-  try {
-    const response = await axios.get('http://52.90.96.133:5500/api/post/image?image_id=7075f071-ac37-4503-96d4-5bea521eed11', {
-      responseType: 'blob'
-    });
-    const blob = new Blob([response.data], { type: response.headers['content-type'] });
-    const imageUrl = URL.createObjectURL(blob);
-    setImageData(imageUrl);
-  } catch (error) {
-    console.error('Error downloading image:', error);
+// const handleDownload = async () => {
+//   try {
+//     const response = await axios.get('http://localhost:5500/api/post/image?image_id=7075f071-ac37-4503-96d4-5bea521eed11', {
+//       responseType: 'blob'
+//     });
+//     const blob = new Blob([response.data], { type: response.headers['content-type'] });
+//     const imageUrl = URL.createObjectURL(blob);
+//     setImageData(imageUrl);
+//   } catch (error) {
+//     console.error('Error downloading image:', error);
+//   }
+// };
+//<button onClick={handleDownload}>Download Image</button>
+const on_click_image = () =>{
+if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+}
+const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  if (e.target.files && e.target.files.length > 0) {
+    // Handle the selected file here
+    const selectedFile = e.target.files[0];
+    setSelectedFileName(selectedFile.name);
+  } else {
+    setSelectedFileName(null);
   }
 };
-
 return (
   <div className={`modal ${isOpen ? 'open' : ''}`}>
     <div id = "post_container">
       <span className="close" onClick={closeModal}>
         &times;
       </span>
-      <h2>Make a Post</h2>
-      <input
-        type="file"
-        accept="image/*"
-        ref={fileInputRef}
-        style={{display: 'none'}}
-      />
+      <h2>Make a Post</h2>    
       <br/>
         <span>{AuthState.name} </span>
         {<span>{AuthState.username} </span>}<br/>
@@ -143,9 +162,20 @@ return (
         <h1 id = "tag_header">Tags <img src= {require("../../images/tag.jpg")} alt ="" id="tag_img"/></h1>
         <MultiSelect options={tagoptions} value={selected} onChange={setSelected} labelledBy="Select"/>
       </div>
-      <button className="btn btn-info" id="upload_image" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_image}>Upload Image</button>
+        <button className="btn btn-info" id="upload_image" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_image}>Upload Image</button>
+        <input
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={handleFileChange}
+          ref={fileInputRef}
+        />
+        {selectedFileName  && (
+        <div>
+          Selected File: {selectedFileName }
+        </div>
+      )}
       <button className="btn btn-info" id="post_button" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_submit}>Post</button>
-      <button onClick={handleDownload}>Download Image</button>
       {imageData && <img src={imageData} alt="Downloaded"/>}
     </div>
   </div>

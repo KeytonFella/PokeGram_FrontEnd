@@ -3,8 +3,7 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom';
 import './UserProfile.scss'
 
-const USER_ID = 1;
-const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
+//const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
 
 function UserProfile() {
     const { profile_id } = useParams();

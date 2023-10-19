@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../utility/reduxTypes';
 import  axios from 'axios';
 //credit https://github.com/hc-oss/react-multi-select-component/blob/master/README.md
 import './IndivPost.scss'; 
@@ -8,13 +10,18 @@ interface ElementComponentProps {
     image_s3_id: string;
 }
 const IndivPost: React.FC<ElementComponentProps> = ({ text_body, user_id_fk, image_s3_id }) => {
+    const AuthState = useSelector((state: RootState) => state.auth);
+
     const [imageData, setImageData] = useState('');
     useEffect(() => {
         async function getImage(image_s3_id: string) {
             if(image_s3_id) {
                 try {
-                    const response = await axios.get('http://localhost:5500/api/post/image?image_id=7075f071-ac37-4503-96d4-5bea521eed11', {
-                        responseType: 'blob'
+                    const response = await axios.get(`http://52.90.96.133:5500/api/post/image?image_id=${image_s3_id}`, {
+                        responseType: 'blob',
+                        headers: {
+                            Authorization: `Bearer ${AuthState.token}`,
+                        }
                     });
                 const blob = new Blob([response.data], { type: response.headers['content-type'] });
                 const imageUrl = URL.createObjectURL(blob);

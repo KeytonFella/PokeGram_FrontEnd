@@ -10,7 +10,6 @@ import { RootState } from '../../utility/reduxTypes';
 
 function Profiles() {
   
- 
   const AuthState = useSelector((state: RootState) => state.auth);
   const USER_ID = AuthState.user_id;
   // ID for testintg

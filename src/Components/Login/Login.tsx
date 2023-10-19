@@ -33,16 +33,19 @@ function Login() {
         console.log("response status is ", JSON.stringify(response.status));
         console.log("the response data ",response.data);
         setErrorMessage(response.data || "some error");
+        console.log("the response data 2  ",response.data);
         return;
       }
       try {
           if(response && response.data) {
             const {message, ...data} = response?.data;
+            console.log(data);
+            console.log(data.acessToken);
             const accessToken = data?.accessToken;
             const tokenPayload = accessToken?.payload;
             console.log("my acessToken ", accessToken);
             console.log("token payload:", tokenPayload);
-  
+            
             dispatch(setUserInfo({
               user_id: tokenPayload.sub,
               name: tokenPayload?.name || "",

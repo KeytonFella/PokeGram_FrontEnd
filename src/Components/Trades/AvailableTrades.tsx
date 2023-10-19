@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { get } from 'http';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../utility/reduxTypes';
 
-const USER_ID = "Jessie";
-const BASE_API = `http://localhost:5500/api/trades/${USER_ID}`;
+const BASE_API = `http://52.90.96.133:5500/api/trades`;
 const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
 
 function AvailableTrades() {
     const [availableTrades, setAvailableTrades] = useState(Array<any>);
-    const [givePokemon, setGivePokemon] = useState(Array<any>);
-    const [getPokemon, setGetPokemon] = useState(Array<any>)
+    const AuthState = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
         getAvailableTrades();
       },[]);
     
     async function getAvailableTrades() {
-        axios.get(BASE_API)
+        axios.get(BASE_API, {headers: {Authorization: 'Bearer ' + AuthState.token}})
         .then(function (response) {
             createTradesObj(response.data.trades);
         })
@@ -28,6 +28,7 @@ function AvailableTrades() {
 
     interface Trade {
         user_id: "",
+        username: "",
         give_pokemon: [number],
         get_pokemon: [number]
     }
@@ -35,20 +36,18 @@ function AvailableTrades() {
     async function createTradesObj(trade: [Trade]){
         let tradesArray = [];
         for(let i = 0; i < trade.length; i++){
-            const userId = trade[i].user_id;
+            const username = trade[i].username;
             const give_pokemon = await createPokemonObj(trade[i].give_pokemon);
-            setGivePokemon(give_pokemon)
             const get_pokemon = await createPokemonObj(trade[i].get_pokemon);
-            setGetPokemon(get_pokemon)
             let tradeObj = {
-                user: userId,
-                give_pokemon: givePokemon,
-                get_pokemon: getPokemon
+                username: username,
+                give_pokemon: give_pokemon,
+                get_pokemon: get_pokemon
             }
             console.log(tradeObj);
             tradesArray.push(tradeObj);
         }
-        setAvailableTrades(tradesArray)
+        setAvailableTrades([...tradesArray])
     }
 
     async function createPokemonObj(pokemon: any[]) {
@@ -71,20 +70,22 @@ function AvailableTrades() {
         <div className="container">
             <div className="row">
               <div className="header text-center">Available Trades</div>
+              <button className="button" onClick={getAvailableTrades}>See Trades</button>
             </div>
             <div className="row">
             {
+              availableTrades.length > 0 &&
               availableTrades.map((trade, index) => {
                 return (
-                  <div className="col text-center"key={trade.user}>
+                  <div className="col text-center"key={trade.username}>
                   <div className="tradeList" >
-                    <h3>{trade.user}</h3>
+                    <h3>{trade.username}</h3>
                     <h4>Give Pokemon</h4>
                     {
                         trade.give_pokemon.map((pokemon: any) => {
                             return (
                                 <div className="col text-center"key={pokemon.id}>
-                                <div className="surrenderList" >
+                                <div className="tradeList" >
                                   <h6>{pokemon.name}</h6>
                                   <img src={pokemon.image} alt="" />
                                 </div>
@@ -97,7 +98,7 @@ function AvailableTrades() {
                         trade.get_pokemon.map((pokemon: any) => {
                             return (
                                 <div className="col text-center"key={pokemon.id}>
-                                <div className="surrenderList" >
+                                <div className="tradeList" >
                                   <h6>{pokemon.name}</h6>
                                   <img src={pokemon.image} alt="" />
                                 </div>
@@ -109,7 +110,9 @@ function AvailableTrades() {
                   </div>
                 )
               })
-            }
+            
+          }
+
             </div>
           </div>  
         </>

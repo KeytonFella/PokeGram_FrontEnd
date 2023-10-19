@@ -1,19 +1,21 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../utility/reduxTypes';
 
-const USER_ID = "Jessie";
-const BASE_API = `http://localhost:5500/api/trades/${USER_ID}`;
+const BASE_API = `http://52.90.96.133:5500/api/trades`;
 const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
 
 function SurrenderList() {
   const [surrenderList, setsurrenderList] = useState(Array<any>);
+  const AuthState = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     getSurrenderList();
   },[]);
 
   async function getSurrenderList() {
-      axios.get(`${BASE_API}/data`)
+      axios.get(`${BASE_API}/data`, {headers: {Authorization: 'Bearer ' + AuthState.token}})
       .then(function (response) {
         createPokemonObj(response.data.trades.surrender_list);
       })
@@ -49,14 +51,14 @@ function SurrenderList() {
     const pokemon: String = formJson.myInput as String;
     
 
-    await axios.put(`${BASE_API}/surrender-list`, {action: "add", pokemon: pokemon})
+    await axios.put(`${BASE_API}/surrender-list`, {action: "add", pokemon: pokemon}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
     .then(response => response.data.message)
     .catch(error => console.log(error));
     getSurrenderList();
   }
 
   async function removePokemon(event: any) {
-    await axios.put(`${BASE_API}/surrender-list`, {action: "remove", pokemon: event.target.value})
+    await axios.put(`${BASE_API}/surrender-list`, {action: "remove", pokemon: event.target.value}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
     .then(response => response.data.message)
     .catch(error => console.log(error));
     getSurrenderList();

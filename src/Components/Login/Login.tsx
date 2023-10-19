@@ -7,6 +7,7 @@ import { setUserInfo } from '../../utility/auth';
 import { useNavigate } from 'react-router';
 import { useDisplayError } from '../../Hooks/DisplayError';
 import { useShowUserMessage } from '../../Hooks/DisplayAndRedirect';
+import "./Login.scss"
 
 
 function Login() {
@@ -52,7 +53,7 @@ function Login() {
               username: tokenPayload.username,
               token: accessToken.jwtToken
             }));
-            setUserMessage({message:"Successfull login!",username:tokenPayload.username})
+            setUserMessage({message:"Successful login!",username:tokenPayload.username})
             return;
           } else {
             console.log("Response is empty")
@@ -73,7 +74,7 @@ function Login() {
   }
 
   async function postLogin(){
-      const URL = "http://localhost:5500/api/login";
+      const URL = "http://52.90.96.133:5500/api/login";
         const data = {username: state.username, password: state.password};
         try{
           const returnedData = await axios.post(URL, data);
@@ -90,24 +91,20 @@ function Login() {
     }
 
   return (
-    <>
-        <br/>
+      <div id = "container">
         <form onSubmit={handleSubmitLogin}>
-            <input type="text" name='username' placeholder='username' onChange={handleFormInputChange}></input>
-            <br/>
-            <input type="text" name='password' placeholder='password' onChange={handleFormInputChange}></input>
-            <br/>
-            <button type="submit" disabled={!state.username || !state.password}  >Login</button>
-        </form>
-        <br/>
-        <div className='showMessage'>
-          {<p>{errorMessage} </p>}
-          {<p>{userMessage?.message}</p>}
-          {userMessage?.message && <p>Rediricting {userMessage.username} to the home page</p>}
-          
-          
-        </div>
-    </>
+              <input type="text" name='username' placeholder='username' onChange={handleFormInputChange}></input>
+              <br/>
+              <input type="text" name='password' placeholder='password' onChange={handleFormInputChange}></input>
+              <br/>
+              <button type="submit" disabled={!state.username || !state.password}  >Login</button>
+          </form>
+          <div className='showMessage'>
+            {<p>{errorMessage} </p>}
+            {<p>{userMessage?.message}</p>}
+            {userMessage?.message && <p>Redirecting {userMessage.username} to the home page</p>}
+          </div>
+      </div>
   )
 }
 

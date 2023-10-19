@@ -1,13 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../utility/reduxTypes';
 
-import './ProfilePokemon.css'
+import './ProfilePokemon.scss'
 
-const USER_ID = 1;
-const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}/pokemon`;
-const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
 
-const ProfilePokemon = () => {
+const ProfilePokemon = (props:any) => {
+    const AuthState = useSelector((state: RootState) => state.auth);
+    const USER_ID = props.user_id;
+    // id for testing purposes
+    // const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
+    const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}/pokemon`;
+    const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
     let [pokemon, setPokemon] = useState([] as any);
 
     useEffect(() => {
@@ -16,7 +21,7 @@ const ProfilePokemon = () => {
 
     // Calls api for the list of pokemon and hands it to other helper function
     async function getPokemon() {
-        axios.get(BASE_API)
+        axios.get(URL, {headers: {Authorization: 'Bearer ' + AuthState.token}})
             .then(response => createPokemonObj(response.data.message))
             .catch(error => console.log(error));
     }
@@ -37,7 +42,7 @@ const ProfilePokemon = () => {
     }
 
     async function removePokemon(event: any) {
-        await axios.put(`${BASE_API}/remove`, {pokemon: event.target.value})
+        await axios.put(`${URL}/remove`, {pokemon: event.target.value}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
         .then(response => response.data.message)
         .catch(error => console.log(error));
         getPokemon();

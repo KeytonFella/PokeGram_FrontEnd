@@ -1,15 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import ProfilePokemon from './ProfilePokemon'
-import './Profiles.css'
+import './Profiles.scss'
 import axios from 'axios'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../utility/reduxTypes';
 
-const USER_ID = 1;
-const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
+
 
 
 function Profiles() {
-
   
+  const AuthState = useSelector((state: RootState) => state.auth);
+  const USER_ID = AuthState.user_id;
+  // ID for testintg
+  //const id = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
+  const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
+
+
   let [profile, setProfile] = useState({
       bio: '',
       image_url: ''
@@ -19,7 +26,7 @@ function Profiles() {
 
 
   useEffect(() => {
-    axios.get(BASE_API)
+    axios.get(URL, {headers: {Authorization: 'Bearer ' + AuthState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }, [])
@@ -38,7 +45,7 @@ function Profiles() {
   async function submitBio(event: any){
     event.preventDefault()
     console.log(profile.bio)
-    await axios.put(`${BASE_API}/update/bio`, {bio: profile.bio})
+    axios.put(`${URL}/bio`, {bio: profile.bio}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
     .then(response => alert('Bio updated!'))
     .catch(err => console.log(err))
     setEditBio(false)
@@ -50,9 +57,9 @@ function Profiles() {
 
     let formData = new FormData();
     formData.append('image', file)
-    await axios.put(`${BASE_API}/update/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    await axios.put(`${URL}/photo`, formData, {headers: {'Content-Type': 'multipart/form-data', Authorization: 'Bearer ' + AuthState.token}})
 
-    await axios.get(BASE_API)
+    axios.get(URL, {headers: {Authorization: 'Bearer ' + AuthState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }
@@ -61,9 +68,9 @@ function Profiles() {
 
 
   return (
-    <div>
+    <div className='profile-container'>
         <div className='profile-info'>
-            <h1 className='username'>Username</h1>
+            <h1 className='username'>{AuthState.username}</h1>
             <p className='bio'>{profile.bio}</p>
             <button type='button' className='edit-profile' onClick={() => setEditBio(true)}>Edit bio</button>
             <br/>
@@ -82,7 +89,7 @@ function Profiles() {
               <button type='submit'>Upload</button>
             </form>
         </div>
-        <ProfilePokemon />
+        <ProfilePokemon user_id={AuthState.user_id}/>
     </div>
   )
 }

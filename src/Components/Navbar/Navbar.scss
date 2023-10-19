@@ -1,5 +1,20 @@
  .navbar-brand {
-    width: 240px;
+    height: 70px;
+    // align-self: center;
+    // padding-left: 5%;
+}
+
+@media only screen and (min-width: 1198px){
+    .navbar {
+        max-height: 100px;
+    }
+}
+
+// .navbar {
+//     background-color: rgb(240, 240, 240);
+// }
+
+.navbar-profile-pic {
     height: 70px;
 }
 
@@ -8,6 +23,7 @@
     float: none;
     vertical-align: top;
     width: 100%;
+    height: 100%;
     justify-content: space-around;
 }
 
@@ -22,10 +38,12 @@
 
 .navbar .navbar-nav .nav-item {
     width: 100%;
-    height: 100%;
+    height: 70px;
+    align-self: center;
+    margin: 0%;
 }
 
 .navbar .navbar-nav .nav-item:hover {
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(225, 225, 225);
     transition: 0.3s; 
 }

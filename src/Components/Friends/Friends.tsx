@@ -7,7 +7,7 @@ import { useShowUserMessage } from '../../Hooks/DisplayAndRedirect';
 
 function Friends() {
 
-    const authState = useSelector((state: RootState) => state.auth);
+    const authState = useSelector((state: RootState) => state.auth); //lets use the redux store
     const [errorMessage, setErrorMessage] = useDisplayError();
     const [userMessage, setUserMessage] = useShowUserMessage();
     const [friendsList, setFriendsList] = useState<any[]>([]);

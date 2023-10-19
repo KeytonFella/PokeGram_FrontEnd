@@ -4,6 +4,9 @@
     text-align: center;
 
 }
+.container-fluid{
+    height: 100%;
+}
 
 .stuffModal{
     position: fixed;
@@ -20,6 +23,9 @@
     display: flex;
     flex-direction: row;
     height: 100%;
+}
+.top{
+    height: 10%;
 }
 .sub_cont {
     flex: 1;
@@ -75,4 +81,15 @@
 
     //background-color: blue;
     flex-basis: 20%; /* Adjust this to control the width of Container 3 */
+  }
+
+  @media (max-width: 768px) {
+    .sub_cont1, .sub_cont2, .col_left, .col_right {
+      display: none; 
+    }
+  }
+  @media (min-width: 769px) {
+    .sub_cont1, .sub_cont2, .col_left, .col_right  {
+      display: flex; 
+    }
   }

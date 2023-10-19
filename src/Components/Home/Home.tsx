@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Home.scss';
 import Post from "../Post/Post";
 import StuffModal from "../StuffModal/StuffModal"
-import EditTeam from '../Edit Team/EditTeam';
+import EditTeam from '../EditTeam/EditTeam';
 import TeamView from '../TeamView/TeamView';
 import Feed from "../Feed/Feed";
 

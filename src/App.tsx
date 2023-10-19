@@ -13,7 +13,7 @@ import Profiles from './Components/Profiles/Profiles';
 import Confirm from './Components/Confirm/Confirm';
 import CreateTeam from './Components/CreateTeam/CreateTeam';
 import TeamView from './Components/TeamView/TeamView';
-import EditTeam from './Components/Edit Team/EditTeam';
+import EditTeam from './Components/EditTeam/EditTeam';
 import UserProfile from './Components/UserProfile/UserProfile'; // Import a component for displaying user profiles
 import FriendFinder from './Components/FriendFinder/FriendFinder';
 

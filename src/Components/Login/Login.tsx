@@ -33,7 +33,6 @@ function Login() {
       if(response?.status === 400){
         console.log("response status is ", response.status);
         console.log("the response data ",response.data);
-        console.log("the response data message",response.data.message);
         setErrorMessage(response.data.message || "some error");
         return;
       }

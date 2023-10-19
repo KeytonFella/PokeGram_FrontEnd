@@ -31,9 +31,10 @@ function Login() {
       // will call an axios request that returns the http response 
       const response = await postLogin();
       if(response?.status === 400){
-        console.log("response status is ", JSON.stringify(response.status));
+        console.log("response status is ", response.status);
         console.log("the response data ",response.data);
-        setErrorMessage(response.data || "some error");
+        console.log("the response data message",response.data.message);
+        setErrorMessage(response.data.message || "some error");
         return;
       }
       try {
@@ -71,7 +72,7 @@ function Login() {
   }
 
   async function postLogin(){
-      const URL = "http://52.90.96.133:5500/api/login";
+      const URL = "http://localhost:5500/api/login";
         const data = {username: state.username, password: state.password};
         try{
           const returnedData = await axios.post(URL, data);

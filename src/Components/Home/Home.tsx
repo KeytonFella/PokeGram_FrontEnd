@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import './Home.scss';
 import Post from "../Post/Post";
+import StuffModal from "../StuffModal/StuffModal"
+import EditTeam from '../Edit Team/EditTeam';
+import TeamView from '../TeamView/TeamView';
 import Feed from "../Feed/Feed";
 
-import StuffModal from "../StuffModal/StuffModal"
+
 function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
@@ -17,7 +20,8 @@ function Home() {
       <div className="container-fluid">
         <div className="row">
           <div className="col-3 d-none d-xl-block sm-col-1">
-            <div className="header text-center">Stuff</div>
+            <div className="header text-center">Team</div>
+            
           </div>
           <div className="col">
             <div className="header text-center">Social Feed</div>
@@ -28,7 +32,9 @@ function Home() {
         </div>
         <div className="row">
           <div className="col-3 d-none d-xl-block">
-            <div className="box">Stuff Component</div>
+            <div className="box">Stuff Component
+            </div>
+
           </div>
           <div className="col" id = "social_feed_container">
             <div id="top_of_social_feed">

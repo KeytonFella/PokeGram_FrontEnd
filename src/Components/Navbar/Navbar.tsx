@@ -23,8 +23,17 @@ function Navbar() {
               <Link className="nav-item nav-link" to="/">Home<span className="sr-only"></span></Link>
               <Link className="nav-item nav-link" to="/posts">Posts</Link>
               <Link className="nav-item nav-link" to="/trades">Trades</Link>
-              <Link className="nav-item nav-link" to="/login">Login</Link>
-              <Link className="nav-item nav-link" to="/register">Register</Link>
+              {
+                authState.username && <Link className="nav-item nav-link" to="/profiles">{authState.username}</Link>
+              }
+              {
+                !authState.username && 
+                <>
+                <Link className="nav-item nav-link" to="/login">Login</Link>
+                <Link className="nav-item nav-link" to="/register">Register</Link>
+                </>
+              }
+              
               </div>
           </div>
           </div>

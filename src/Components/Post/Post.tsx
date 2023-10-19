@@ -51,7 +51,7 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
           if(imageFile) {
             const formData = new FormData();
             formData.append('image', imageFile);
-            const response = await axios.post('http://localhost:5500/api/post/image', formData, {
+            const response = await axios.post('http://52.90.96.133:5500/api/post/image', formData, {
               headers: {'Content-Type': 'multipart/form-data'}
             })
             console.log('Image uploaded successfully:', response.data);
@@ -83,7 +83,7 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
         image_s3_id: image_id,
         tags: selected
       };
-      axios.post('http://localhost:5500/api/post', data, {
+      axios.post('http://52.90.96.133:5500/api/post', data, {
         headers: {'Content-Type':'application/json'}
       })
       .then((response) => {
@@ -106,7 +106,7 @@ function on_keyup_textarea(e : React.KeyboardEvent<HTMLTextAreaElement>) {
 }
 const handleDownload = async () => {
   try {
-    const response = await axios.get('http://localhost:5500/api/post/image?image_id=7075f071-ac37-4503-96d4-5bea521eed11', {
+    const response = await axios.get('http://52.90.96.133:5500/api/post/image?image_id=7075f071-ac37-4503-96d4-5bea521eed11', {
       responseType: 'blob'
     });
     const blob = new Blob([response.data], { type: response.headers['content-type'] });

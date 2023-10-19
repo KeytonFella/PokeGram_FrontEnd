@@ -3,7 +3,7 @@ import { AuthState } from './reduxTypes';
 const initialState: AuthState = {
     user_id: "empty",
     name: "no name yet",
-    username: "no username yet",
+    username: "",
     token: null,
 };
 const authSlice = createSlice({

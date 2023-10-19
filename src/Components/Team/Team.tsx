@@ -18,7 +18,7 @@ function Team(props: any) {
         
         if(authState.user_id && authState.username && authState.token){
             
-            const url = `http://localhost:5500/api/teams/${props.team_user_id}`
+            const url = `http://52.90.96.133:5500/api/teams/${props.team_user_id}`
             
             
             //Configured axios get request

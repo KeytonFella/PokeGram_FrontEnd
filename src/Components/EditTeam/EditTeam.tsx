@@ -21,7 +21,7 @@ function EditTeam() {
         if(AuthState.user_id && AuthState.username && AuthState.token){
             setState({...state, logged_in: true})
             
-            const url = `http://localhost:5500/api/teams/${AuthState.user_id}`
+            const url = `http://52.90.96.133:5500/api/teams/${AuthState.user_id}`
             
             //Configured axios get request
             axios.get(url, {headers: {Authorization: `Bearer ${AuthState.token}`}}).then((response) => {
@@ -120,7 +120,7 @@ function EditTeam() {
                 'Authorization': `Bearer ${userInfo.token}`,
                 'Content-Type': 'application/json'
             }
-            const response = await axios.put(`http://localhost:5500/api/teams/${userInfo.user_id}`, newTeam, {headers: headers})
+            const response = await axios.put(`http://52.90.96.133:5500/api/teams/${userInfo.user_id}`, newTeam, {headers: headers})
             console.log("Successfully posted data: ", JSON.stringify(response.data))
             return response;
         } catch(err) {

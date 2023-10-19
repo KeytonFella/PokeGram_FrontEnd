@@ -82,7 +82,7 @@ function CreateTeam() {
                 'Authoraization': `Bearer ${userInfo.token}`,
                 'Content-Type': 'application/json'
             }
-            const response = await axios.post('http://localhost:5500/api/teams', newTeam, {headers: headers})
+            const response = await axios.post('http://52.90.96.133:5500/api/teams', newTeam, {headers: headers})
             console.log("Successfully posted data: ", JSON.stringify(response.data))
             
         } catch(err) {

@@ -37,7 +37,7 @@ function TeamView() {
         if(authState.user_id && authState.username && authState.token){
             setState({...state, logged_in: true})
             
-            const url = `http://localhost:5500/api/teams/${authState.user_id}`
+            const url = `http://52.90.96.133:5500/api/teams/${authState.user_id}`
             
             //Configured axios get request
             axios.get(url, {headers: {Authorization: `Bearer ${authState.token}`}}).then((response) => {

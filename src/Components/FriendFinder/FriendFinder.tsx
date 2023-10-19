@@ -7,8 +7,8 @@ function FriendFinder() {
     const AuthState = useSelector((state: RootState) => state.auth);
     const USER_ID = AuthState.user_id;
     // id for testing purposes
-    // const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
-    const URL = `http://52.90.96.133:5500/api/addresses/user/${USER_ID}`;
+    const userID = 'd6305ddf-32af-4006-8148-5881761e9e30'
+    const URL = `http://52.90.96.133:5500/api/addresses/user/${userID}`;
 
     type Coordinates = {
         lat: number,
@@ -29,7 +29,7 @@ function FriendFinder() {
         const req1 = await  axios.get(URL).then((response) => {
             origin = response.data
         }).catch((error) => {console.log(error)})
-        const req2 = await axios.get(`${URL}/others`).then((response) => {
+        const req2 = await axios.get(`${URL}/others`, {headers: {'Authorization': AuthState.token}}).then((response) => {
             others = response.data
         }).catch((error) => {console.log(error)})
         requests.push(req1, req2);
@@ -42,19 +42,25 @@ function FriendFinder() {
     // Function to iterate through each address and calculate distance from origin 
     function compareDistances(origin: Coordinates, others: any[]){
         const nearby: any = [];
-        for(let i = 0; i < others.length; i++){
-            const distance = calculateDistance(origin, others[i].address);
-            let user = {
-                user_id: others[i].user_id,
-                username: others[i].username,
-                distance: distance
+        if(others.length <= 0){
+            setNearbyUsers(nearby)
+            return
+        }else{
+
+            for(let i = 0; i < others.length; i++){
+                const distance = calculateDistance(origin, others[i].address);
+                let user = {
+                    user_id: others[i].user_id,
+                    username: others[i].username,
+                    distance: distance
+                }
+                if (distance <= 25) {
+                    nearby.push(user);
+                }
+            };
+            console.log(nearby)
+            setNearbyUsers(nearby);
             }
-            if (distance <= 25) {
-            nearby.push(user);
-            }
-        };
-        console.log(nearby)
-        setNearbyUsers(nearby);
     }
 
     // ================== Helper Function ==================

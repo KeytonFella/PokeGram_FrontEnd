@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../utility/reduxTypes'; // Import your RootState type
 import { useDispatch } from 'react-redux';
@@ -7,20 +7,50 @@ import { AppDispatch } from '../../utility/store';
 import axios from 'axios';
 import { Pokemon } from '../../utility/PokemonType';
 
-function EditTeam(props: {teamName: String, pokemonList: Pokemon[]}) {
+function EditTeam() {
     const AuthState = useSelector((state: RootState) => state.auth)
     const dispatch: AppDispatch = useDispatch();
-    
-        
-
-    const [teamName, setTeamName] = useState('')
+    const [state, setState] = useState({
+        loading: true,
+        logged_in: false,
+        teamName: ''
+    })
+    // const [teamName, setTeamName] = useState('')
     const [pokemonList, setPokemonList] = useState([{} as Pokemon])
+    useEffect(() => {
+        if(AuthState.user_id && AuthState.username && AuthState.token){
+            setState({...state, logged_in: true})
+            
+            const url = `http://localhost:5500/api/teams/${AuthState.user_id}`
+            
+            //Configured axios get request
+            axios.get(url, {headers: {Authorization: `Bearer ${AuthState.token}`}}).then((response) => {
+                console.log('Data: ', response.data);
+
+                const team = response.data.body
+                console.log('Team: ', team)
+                console.log("Pokemon list: " + team.pokemonList)
+                setState({...state, loading: false, teamName: team.teamName})
+                setPokemonList(team.pokemonList)
+            
+
+            }).catch((err) => {
+                console.error('Error:', err);
+            })
+        } else {
+            console.log('not logged in')
+            setState({...state, loading: false})
+        }
+    
+    }, [])
+
+    
     
 
     const handleTeamNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
-        setTeamName(value)
-        console.log(teamName)
+        setState({...state, teamName: value})
+        console.log(state.teamName)
     }
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -48,19 +78,11 @@ function EditTeam(props: {teamName: String, pokemonList: Pokemon[]}) {
         setPokemonList(newList)
 
     }
-    // const handlePokemonListChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const {name, value} = e.target;
-    //     setTeam((team) => ({ 
-    //         ...team,
-    //         [name]: value
-    //     }))
-    // }
-
+    
     // Add another pokemon to the team
     const handleAddPokemon = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
         console.log('adding')
-        //const newMon = {name: '', level: null}
         
         // Make sure pokemon team size doesnt exceed 6
         if(pokemonList.length < 6) {
@@ -89,16 +111,10 @@ function EditTeam(props: {teamName: String, pokemonList: Pokemon[]}) {
             token: AuthState.token
         }
         dispatch(setUserInfo(userInfo))
-        //const splitList = team.pokemonList.split(' ')
-        //console.log(splitList)
-        const newTeam = {teamName: teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
+        
+        const newTeam = {teamName: state.teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
         console.log('fetching...')
-        // fetch('http://localhost:5500/teams', {
-        //     method: 'POST',
-        //     mode: 'cors',
-        //     headers: {'Content-Type': 'application/json'},
-        //     body: JSON.stringify(newTeam)
-        // })
+        
         try { 
             const headers = {
                 'Authorization': `Bearer ${userInfo.token}`,
@@ -116,35 +132,33 @@ function EditTeam(props: {teamName: String, pokemonList: Pokemon[]}) {
     
     return (
         <div>
-            <h1>Edit Team</h1>
+            <h2>Edit Team</h2>
             <form>
                 <label>Team Name:
-                    <input type="text" name="teamName" value={teamName} onChange={handleTeamNameChange}/>
+                    <input type="text" name="teamName" value={state.teamName} onChange={handleTeamNameChange}/>
                 </label>
                 <br></br>
                 <label>Pokemon List:
                     <ul>
-                        {props.pokemonList.map((pokemon: Pokemon, index) => {
+                        {pokemonList.map((pokemon: Pokemon, index) => {
                         return (
-                        //<PokemonInput key={index} name={pokemon.name} level={pokemon.level} nickname={pokemon.name}/>)
                         <div key={index}>
                             <label>Pokemon:
                                 <br></br>
-                                <input required type="text" name="pokemonName" placeholder="Pikachu" value={props.pokemonList[index].pokemonName} onChange={(e) => handleNameChange(e, index)}/>
+                                <input required type="text" name="pokemonName" placeholder="Pikachu" value={pokemonList[index].pokemonName} onChange={(e) => handleNameChange(e, index)}/>
                             </label>
                             
                             <label>Level:
                                 <br></br>
-                                <input required type="number" name="level" value={props.pokemonList[index].level}  placeholder="1-100" min='1' max='100' onChange={(e) => handleLevelChange(e, index)}/>
+                                <input required type="number" name="level" value={pokemonList[index].level}  placeholder="1-100" min='1' max='100' onChange={(e) => handleLevelChange(e, index)}/>
                             </label>
                         
                             <label>Nickname(Optional):
                                 <br></br>
-                                <input type="text" name='nickname' value={props.pokemonList[index].nickname} onChange={(e) => handleNicknameChange(e, index)}/>
+                                <input type="text" name='nickname' value={pokemonList[index].nickname} onChange={(e) => handleNicknameChange(e, index)}/>
                             </label>
                             <button onClick={(e) => handleDeletePokemon(e, index)}>Delete</button>
                         </div>
-                        //<p>test item</p>
                         
                         )})}
                         

@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import auth, { setUserInfo } from '../../utility/auth'; // Im+
 import { AppDispatch } from '../../utility/store';
 import CreateTeam from '../CreateTeam/CreateTeam'
+import { Link } from 'react-router-dom'
 
 function TeamView() {
     const authState = useSelector((state: RootState) => state.auth)
@@ -32,13 +33,11 @@ function TeamView() {
     
     
     React.useEffect(() => {
-        //test id
+        
         if(authState.user_id && authState.username && authState.token){
             setState({...state, logged_in: true})
-        
-            const id = '3aea3e44-6310-481b-857f-de1d55e5f07c'
             
-            const url = `http://localhost:5500/api/teams/${id}`
+            const url = `http://localhost:5500/api/teams/${authState.user_id}`
             
             //Configured axios get request
             axios.get(url, {headers: {Authorization: `Bearer ${authState.token}`}}).then((response) => {
@@ -47,12 +46,13 @@ function TeamView() {
                 
                 //check if user has a team created
                 if (Object.keys(response.data).length === 0) {
+                    // user does not have a team
                     setState({...state, teamExists: false, loading: false})
                 }else{
                     const team = response.data.body
                     console.log('Team: ', team)
                     console.log("Pokemon list: " + team.pokemonList)
-                    setState({...state, loading: false, team_name: team.teamName, pokemon_list: team.pokemonList})
+                    setState({...state, loading: false, teamExists: true, team_name: team.teamName, pokemon_list: team.pokemonList})
                 } 
 
             }).catch((err) => {
@@ -65,7 +65,7 @@ function TeamView() {
 
     
     
-    //if (state.logged_in) {  
+    if (state.logged_in) {  
             if (state.loading) {
                 return(<div>loading...</div>)
             } else if(state.teamExists){
@@ -78,14 +78,16 @@ function TeamView() {
                             <PokemonInTeam pokemon={pokemon}/>
                             )}
                         </div>
+                        <Link to='/editTeam'><button>Edit</button></Link>
                     </div>
                 )
             } else {
+                // Render CreateTeam if the user doesnt have a team
                 return(<CreateTeam />)
             }
-    // } else {
-    //     return <h4>Please Login to view or create your team</h4>
-    // }
+    } else {
+        return <h4>Please Login to view or create your team</h4>
+    }
     
 }
 

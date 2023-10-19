@@ -49,19 +49,11 @@ function CreateTeam() {
         setPokemonList(newList)
 
     }
-    // const handlePokemonListChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const {name, value} = e.target;
-    //     setTeam((team) => ({ 
-    //         ...team,
-    //         [name]: value
-    //     }))
-    // }
 
     // Add another pokemon to the team
     const handleAddPokemon = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
         console.log('adding')
-        //const newMon = {name: '', level: null}
         
         // Make sure pokemon team size doesnt exceed 6
         if(pokemonList.length < 6) {
@@ -81,16 +73,10 @@ function CreateTeam() {
             token: AuthState.token
         }
         dispatch(setUserInfo(userInfo))
-        //const splitList = team.pokemonList.split(' ')
-        //console.log(splitList)
+        
         const newTeam = {teamName: teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
         console.log('fetching...')
-        // fetch('http://localhost:5500/teams', {
-        //     method: 'POST',
-        //     mode: 'cors',
-        //     headers: {'Content-Type': 'application/json'},
-        //     body: JSON.stringify(newTeam)
-        // })
+        
         try { 
             const headers = {
                 'Authoraization': `Bearer ${userInfo.token}`,
@@ -118,7 +104,6 @@ function CreateTeam() {
                     <ul>
                         {pokemonList.map((pokemon: Pokemon, index) => {
                         return (
-                        //<PokemonInput key={index} name={pokemon.name} level={pokemon.level} nickname={pokemon.name}/>)
                         <div key={index}>
                             <label>Pokemon:
                                 <br></br>
@@ -135,7 +120,6 @@ function CreateTeam() {
                                 <input type="text" name='nickname' value={pokemonList[index].nickname} onChange={(e) => handleNicknameChange(e, index)}/>
                             </label>
                         </div>
-                        //<p>test item</p>
                         
                         )})}
                         

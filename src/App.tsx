@@ -11,7 +11,6 @@ import Trades from './Components/Trades/Trades';
 import Post from "./Components/Post/Post";
 import Profiles from './Components/Profiles/Profiles';
 import Confirm from './Components/Confirm/Confirm';
-import CreateTeam from './Components/CreateTeam/CreateTeam';
 import TeamView from './Components/TeamView/TeamView';
 import EditTeam from './Components/EditTeam/EditTeam';
 import UserProfile from './Components/UserProfile/UserProfile'; // Import a component for displaying user profiles
@@ -27,9 +26,8 @@ function App() {
         <Route path="/profiles" element={<Profiles />}/>
         <Route path="/login" element={<Login/>}/>
         
-
+        <Route path="/editTeam" element={<EditTeam />}/>
         <Route path="/team" element={<TeamView/>}/>
-        <Route path="/createTeam" element={<CreateTeam/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path='/confirm' element={<Confirm/>}/>
         <Route path="/profile/:profile_id" element={<UserProfile />} />

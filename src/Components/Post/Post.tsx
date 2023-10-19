@@ -2,9 +2,6 @@ import React, {useState, useRef } from 'react';
 import  axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
-import { useDispatch } from 'react-redux';
-import { setUserInfo } from '../../utility/auth';
-import { AppDispatch } from '../../utility/store';
 //credit https://github.com/hc-oss/react-multi-select-component/blob/master/README.md
 import { MultiSelect } from "react-multi-select-component";
 import './Post.scss';
@@ -71,14 +68,6 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
     }
   }
   async function on_click_submit(e: React.MouseEvent<HTMLButtonElement>){
-      //const dispatch: AppDispatch = useDispatch();
-    // const updatedInfo = {
-    //   username: "joshy",
-    //   name: 'Josh',
-    //   user_id: 'something reasonable', 
-    //   token: 'sha256--23',
-    // };
-    // dispatch(setUserInfo(updatedInfo));
     const image_id = await postImage();
     if(textareaValue) {
       const url = 'http://52.90.96.133:5500/api/post';

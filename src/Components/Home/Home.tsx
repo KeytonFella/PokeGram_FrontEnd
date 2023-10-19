@@ -18,7 +18,7 @@ function Home() {
   return (
     <>
       <div className="container-fluid">
-        <div className="row">
+        <div className="row top">
           <div className="headSection col_left">
             <div className="header text-center">Team</div>
           </div>

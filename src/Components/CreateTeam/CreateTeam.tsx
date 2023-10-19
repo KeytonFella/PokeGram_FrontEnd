@@ -75,10 +75,10 @@ function CreateTeam() {
     async function handleSubmit(event: any) {
         event.preventDefault()
         const userInfo = {
-            name: "johndoe",
-            username: "aceTrainerJohn",
-            user_id: "66efa9ce-6a6d-4466-a2ef-a48f00f82f40",
-            token: "sha256-23"
+            name: AuthState.name,
+            username: AuthState.username,
+            user_id: AuthState.user_id,
+            token: AuthState.token
         }
         dispatch(setUserInfo(userInfo))
         //const splitList = team.pokemonList.split(' ')
@@ -92,17 +92,20 @@ function CreateTeam() {
         //     body: JSON.stringify(newTeam)
         // })
         try { 
-            
-            const response = await axios.post('http://localhost:5500/api/teams', newTeam)
+            const headers = {
+                'Authoraization': `Bearer ${userInfo.token}`,
+                'Content-Type': 'application/json'
+            }
+            const response = await axios.post('http://localhost:5500/api/teams', newTeam, {headers: headers})
             console.log("Successfully posted data: ", JSON.stringify(response.data))
-            return response;
+            
         } catch(err) {
             
             console.error('Error: ', err)
         }
         
     }
-    //TODO: Implement team without splitting by space
+    
     return (
         <div>
             <h1>Create Team</h1>

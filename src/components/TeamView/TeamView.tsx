@@ -7,9 +7,9 @@ import { RootState } from '../../utility/reduxTypes'; // Import your RootState t
 import { useDispatch } from 'react-redux';
 import auth, { setUserInfo } from '../../utility/auth'; // Im+
 import { AppDispatch } from '../../utility/store';
+import CreateTeam from '../CreateTeam/CreateTeam'
 
 function TeamView() {
-   
     const authState = useSelector((state: RootState) => state.auth)
     
     
@@ -21,61 +21,71 @@ function TeamView() {
 
     let [state, setState] = useState({
         loading: true,
+        teamExists: false,
         logged_in: false,
-        team_id: "",
+        
         team_name: "",
         pokemon_list: [{} as Pokemon]
     })
 
     
     
-    if(authState.user_id && authState.username && authState.token){
-       setState({...state, logged_in: true})
-    }
+    
     React.useEffect(() => {
         //test id
-        const id = authState.user_id
+        if(authState.user_id && authState.username && authState.token){
+            setState({...state, logged_in: true})
         
-        const url = `http://localhost:5500/api/teams/${id}`
-        
-    
-        axios.get(url).then((response) => {
-            console.log('Data: ', response.data);
-            const team = response.data.body
-            console.log('Team: ', team)
-            console.log("Pokemon list: " + team.pokemonList)
+            const id = '3aea3e44-6310-481b-857f-de1d55e5f07c'
             
+            const url = `http://localhost:5500/api/teams/${id}`
             
-            setState({...state, loading: false, team_id: team.team_id, team_name: team.name, pokemon_list: team.pokemonList})
-            
+            //Configured axios get request
+            axios.get(url, {headers: {Authorization: `Bearer ${authState.token}`}}).then((response) => {
+                console.log('Data: ', response.data);
+                
+                
+                //check if user has a team created
+                if (Object.keys(response.data).length === 0) {
+                    setState({...state, teamExists: false, loading: false})
+                }else{
+                    const team = response.data.body
+                    console.log('Team: ', team)
+                    console.log("Pokemon list: " + team.pokemonList)
+                    setState({...state, loading: false, team_name: team.teamName, pokemon_list: team.pokemonList})
+                } 
+
+            }).catch((err) => {
+                console.error('Error:', err);
+            })
+        } else {
+            setState({...state, loading: false})
         }
-        ).catch((err) => {
-        console.error('Error:', err);
-        })
-    
     }, [])
 
     
     
-    if (state.logged_in) {  
-        if (state.loading) {
-            return(<div>loading...</div>)
-        } else {
-            return (
-                <div>
-                    <h2>{state.team_name}</h2>
+    //if (state.logged_in) {  
+            if (state.loading) {
+                return(<div>loading...</div>)
+            } else if(state.teamExists){
+                return (
                     <div>
-                        {state.pokemon_list.map((pokemon: Pokemon) => 
-                        //pokemon get rendered here
-                        <PokemonInTeam pokemon={pokemon}/>
-                        )}
+                        <h2>{state.team_name}</h2>
+                        <div>
+                            {state.pokemon_list.map((pokemon: Pokemon) => 
+                            //pokemon get rendered here
+                            <PokemonInTeam pokemon={pokemon}/>
+                            )}
+                        </div>
                     </div>
-                </div>
-            )
-        }
-    } else {
-        return <h2>Please Login to view or create your team</h2>
-    }
+                )
+            } else {
+                return(<CreateTeam />)
+            }
+    // } else {
+    //     return <h4>Please Login to view or create your team</h4>
+    // }
     
 }
 

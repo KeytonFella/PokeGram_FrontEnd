@@ -33,7 +33,7 @@ function Home() {
         <div className="row">
           <div className="col-3 d-none d-xl-block">
             <div className="box">Stuff Component
-            <TeamView /></div>
+            </div>
 
           </div>
           <div className="col" id = "social_feed_container">

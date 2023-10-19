@@ -1,5 +1,6 @@
 import React from 'react'
 import './StuffModal.scss';
+import TeamView from '../TeamView/TeamView';
 
 function StuffModal() {
   return (
@@ -17,7 +18,9 @@ function StuffModal() {
                 </div>
                 <div className="modal-body">
                 Stuff Component
+                <TeamView />
                 </div>
+                
             </div>
             </div>
         </div>

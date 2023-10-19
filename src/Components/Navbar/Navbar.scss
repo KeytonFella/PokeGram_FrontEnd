@@ -1,17 +1,25 @@
  .navbar-brand {
-    width: 240px;
     height: 70px;
+    // align-self: center;
+    // padding-left: 5%;
 }
 
-// .navbar {
-//     height: 100px;
-// }
+@media only screen and (min-width: 1198px){
+    .navbar {
+        max-height: 100px;
+    }
+}
+
+.navbar-profile-pic {
+    height: 70px;
+}
 
 .navbar .navbar-nav {
     display: flex;
     float: none;
     vertical-align: top;
     width: 100%;
+    height: 100%;
     justify-content: space-around;
 }
 
@@ -26,7 +34,9 @@
 
 .navbar .navbar-nav .nav-item {
     width: 100%;
-    height: 100%;
+    height: 70px;
+    align-self: center;
+    margin: 0%;
 }
 
 .navbar .navbar-nav .nav-item:hover {

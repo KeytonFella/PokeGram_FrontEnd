@@ -49,7 +49,7 @@ function Login() {
               username: tokenPayload.username,
               token: accessToken.jwtToken
             }));
-            setUserMessage({message:"Successfull login!",username:tokenPayload.username})
+            setUserMessage({message:"Successful login!",username:tokenPayload.username})
             return;
           } else {
             console.log("Response is empty")
@@ -100,7 +100,7 @@ function Login() {
         <div className='showMessage'>
           {<p>{errorMessage} </p>}
           {<p>{userMessage?.message}</p>}
-          {userMessage?.message && <p>Rediricting {userMessage.username} to the home page</p>}
+          {userMessage?.message && <p>Redirecting {userMessage.username} to the home page</p>}
           
           
         </div>

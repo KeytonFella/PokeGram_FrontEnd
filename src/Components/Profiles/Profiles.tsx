@@ -27,7 +27,7 @@ function Profiles() {
 
 
   useEffect(() => {
-    axios.get(URL)
+    axios.get(URL, {headers: {Authorization: 'Bearer ' + AuthState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }, [])
@@ -46,7 +46,7 @@ function Profiles() {
   async function submitBio(event: any){
     event.preventDefault()
     console.log(profile.bio)
-    axios.put(`${URL}/update/bio`, {bio: profile.bio})
+    axios.put(`${URL}/bio`, {bio: profile.bio}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
     .then(response => alert('Bio updated!'))
     .catch(err => console.log(err))
     setEditBio(false)
@@ -58,9 +58,9 @@ function Profiles() {
 
     let formData = new FormData();
     formData.append('image', file)
-    await axios.put(`${URL}/update/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    await axios.put(`${URL}/photo`, formData, {headers: {'Content-Type': 'multipart/form-data', Authorization: 'Bearer ' + AuthState.token}})
 
-    axios.get(URL)
+    axios.get(URL, {headers: {Authorization: 'Bearer ' + AuthState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }

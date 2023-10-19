@@ -49,7 +49,7 @@ function Register() {
     }
 
     async function postRegister(){
-      const URL = "http://localhost:5500/api/users";
+      const URL = "http://52.90.96.133:5500/api/users";
       const data = {username: state.username, password: state.password, email: state.email};
       try{
         const returnedData = await axios.post(URL, data);

@@ -49,7 +49,7 @@ function Login() {
               username: tokenPayload.username,
               token: accessToken.jwtToken
             }));
-            setUserMessage({message:"Successfull login!",username:tokenPayload.username})
+            setUserMessage({message:"Successful login!",username:tokenPayload.username})
             return;
           } else {
             console.log("Response is empty")
@@ -70,7 +70,7 @@ function Login() {
   }
 
   async function postLogin(){
-      const URL = "http://localhost:5500/api/login";
+      const URL = "http://52.90.96.133:5500/api/login";
         const data = {username: state.username, password: state.password};
         try{
           const returnedData = await axios.post(URL, data);
@@ -100,7 +100,7 @@ function Login() {
         <div className='showMessage'>
           {<p>{errorMessage} </p>}
           {<p>{userMessage?.message}</p>}
-          {userMessage?.message && <p>Rediricting {userMessage.username} to the home page</p>}
+          {userMessage?.message && <p>Redirecting {userMessage.username} to the home page</p>}
           
           
         </div>

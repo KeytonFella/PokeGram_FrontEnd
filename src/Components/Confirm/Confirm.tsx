@@ -46,7 +46,7 @@ function Confirm() {
     }
 
     async function postConfirm(){
-      const URL = "http://localhost:5500/api/confirm";
+      const URL = "http://52.90.96.133:5500:5500/api/confirm";
       const data = {username: state.username, confirmationCode: state.confirmationCode};
       try{
         const returnedData = await axios.post(URL, data);

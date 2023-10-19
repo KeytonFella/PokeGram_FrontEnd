@@ -3,16 +3,21 @@ import  axios from 'axios';
 //credit https://github.com/hc-oss/react-multi-select-component/blob/master/README.md
 import './UsersPostDisplay.scss'; 
 import IndivPost from './IndivPost'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../utility/reduxTypes';
 import {PostDataObject, ElementComponentProps} from './Feed'
 
 const UsersPostDisplay: React.FC<ElementComponentProps> = ({user_id}) => {
+    const AuthState = useSelector((state: RootState) => state.auth);
     const [arr, setArr] = useState<PostDataObject[]>([])
     useEffect(() => {
         async function getUsersPosts(user_id: string) {
             if(user_id) {
                 try {
-                    const response = await axios.get(`http://localhost:5500/api/post/user?user_id=${user_id}`, {
-                        headers: {'Content-Type': 'application/json'}
+                    const response = await axios.get(`http://52.90.96.133:5500/api/post/user?user_id=${user_id}`, {
+                        headers: { 
+                            'Authorization': `Bearer ${AuthState.token}`,
+                            'Content-Type': 'application/json'}
                     })
                     setArr((prevData)  => [...prevData, ...response.data.data]);
                 } catch(err) {

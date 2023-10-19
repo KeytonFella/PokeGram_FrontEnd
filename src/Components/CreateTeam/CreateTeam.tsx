@@ -62,8 +62,7 @@ function CreateTeam() {
         console.log(`pokemon list length: ${pokemonList.length}`)
         return pokemonList
     }
-
-
+    
     async function handleSubmit(event: any) {
         event.preventDefault()
         const userInfo = {

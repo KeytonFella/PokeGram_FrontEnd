@@ -1,16 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Home from '../Home/Home';
 import './Navbar.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Navbar() {
   //values from the global redux store
   const authState = useSelector((state: RootState) => state.auth);
+  const USER_ID = authState.user_id;
+  const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`
+
+  let [profile, setProfile] = useState({
+      bio: '',
+      image_url: ''
+  });
+
+  useEffect(() => {
+    axios.get(URL, {headers: {Authorization: 'Bearer ' + authState.token}})
+    .then(response => setProfile(response.data))
+    .catch(err => console.log(err))
+  }, [authState.token])
    
   return (
-      <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-light" id='navbar'>
+      <nav className="navbar sticky-top navbar-expand-xl navbar-light bg-light" id='navbar'>
         <div className="container">
           <Link className="navbar-brand" to="/">
           <img src= {require("../../images/pokegram.png")} alt ="pokegram logo" id="brand_img" width={"240px"} height={"60px"}/>
@@ -24,7 +38,15 @@ function Navbar() {
               <Link className="nav-item nav-link" to="/posts">Posts</Link>
               <Link className="nav-item nav-link" to="/trades">Trades</Link>
               {
-                authState.username && <Link className="nav-item nav-link" to="/profiles">{authState.username}</Link>
+                authState.username && 
+                <div className="container">
+                  <div className="col">
+                    <Link className="nav-item nav-link" to="/profiles">
+                    <img src={profile.image_url} alt='profile-pic' className='navbar-profile-pic' />
+                    {authState.username}
+                    </Link>
+                  </div>
+                </div>
               }
               {
                 !authState.username && 
@@ -33,9 +55,8 @@ function Navbar() {
                 <Link className="nav-item nav-link" to="/register">Register</Link>
                 </>
               }
-              
               </div>
-          </div>
+              </div>
           </div>
       </nav>
   )

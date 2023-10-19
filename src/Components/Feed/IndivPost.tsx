@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 import  axios from 'axios';
@@ -18,13 +18,11 @@ const IndivPost: React.FC<ElementComponentProps> = ({ text_body, user_id_fk, ima
             if(image_s3_id) {
                 try {
                     const response = await axios.get(`http://52.90.96.133:5500/api/post/image?image_id=${image_s3_id}`, {
-                        responseType: 'blob',
                         headers: {
                             Authorization: `Bearer ${AuthState.token}`,
                         }
                     });
-                const blob = new Blob([response.data], { type: response.headers['content-type'] });
-                const imageUrl = URL.createObjectURL(blob);
+                const imageUrl = response.data.image_url;
                 setImageData(imageUrl);
                 } catch (error) {
                     console.error('Error downloading image:', error);

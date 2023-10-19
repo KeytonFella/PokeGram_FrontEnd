@@ -1,13 +1,8 @@
 .header {
-    border: 1px solid rgb(161, 161, 161);
     min-height: 70px;
     font-size: 24px;
-}
+    text-align: center;
 
-.box {
-    border: 1px solid rgb(161, 161, 161);
-    min-height: 1500px;
-    font-size: 24px;
 }
 
 .stuffModal{
@@ -21,7 +16,63 @@
 #modal_open{
     background-image: none;
 }
+.row{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.sub_cont {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+  .sub_cont1 {
+    background-color: #ff9999;
+    flex-basis: 20%; /* Adjust this to control the width of Container 1 */
+  }
+  
+  .sub_contSF {
+    flex-direction: column;
+    background-color: #99ff99;
+    flex-basis: 60%; /* Adjust this to control the width of Container 2 (Wider) */
+  }
+  
+  .sub_cont2 {
+    background-color: #9999ff;
+    flex-basis: 20%; /* Adjust this to control the width of Container 3 */
+  }
+  .socialFeedContainer{
+    max-width: fit-content;
+  }
+  
+  .headSection {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    border: 1px solid #000; /* Add a bottom border to all boxes */
 
-// .col {
-//     background-color: rgb(220, 220, 220);
-// }
+}
+  .col_left {
+    //background-color: red;
+    align-items: center;
+
+    flex-basis: 20%; /* Adjust this to control the width of Container 1 */
+  }
+  
+  .col_center {
+    align-items: center;
+
+    //background-color: grey;
+    flex-basis: 60%; /* Adjust this to control the width of Container 2 (Wider) */
+  }
+  
+  .col_right {
+    align-items: center;
+
+    //background-color: blue;
+    flex-basis: 20%; /* Adjust this to control the width of Container 3 */
+  }

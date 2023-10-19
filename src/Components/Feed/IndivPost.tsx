@@ -5,11 +5,11 @@ import  axios from 'axios';
 //credit https://github.com/hc-oss/react-multi-select-component/blob/master/README.md
 import './IndivPost.scss'; 
 interface ElementComponentProps {
+    username: string;
     text_body: string;
-    user_id_fk: string;
     image_s3_id: string;
 }
-const IndivPost: React.FC<ElementComponentProps> = ({ text_body, user_id_fk, image_s3_id }) => {
+const IndivPost: React.FC<ElementComponentProps> = ({ username, text_body, image_s3_id }) => {
     const AuthState = useSelector((state: RootState) => state.auth);
 
     const [imageData, setImageData] = useState('');
@@ -39,7 +39,7 @@ const IndivPost: React.FC<ElementComponentProps> = ({ text_body, user_id_fk, ima
     return (
         <div className="ind_post_display">
             <div className="post-text-container">
-                <p>${user_id_fk} {text_body}</p>
+                <p>${username} {text_body}</p>
             </div>
             <div className="post-img-container">
                 {imageData && <img src={imageData} alt="Downloaded" className="post_img"/>}

@@ -32,7 +32,8 @@ function Home() {
         </div>
         <div className="row">
           <div className="col-3 d-none d-xl-block">
-            <div className="box">Stuff Component
+            <div className="box">
+            <TeamView />
             </div>
 
           </div>

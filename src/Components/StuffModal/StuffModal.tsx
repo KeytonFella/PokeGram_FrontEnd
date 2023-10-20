@@ -7,13 +7,13 @@ function StuffModal() {
     <>
       <div className="col">
         <button type="button" className="stuffModal btn-primary" data-bs-toggle="modal" data-bs-target="#stuffModal">
-            Stuff
+            Team
         </button>
         <div className="modal fade" id="stuffModal"  aria-labelledby="stuffModalLabel" aria-hidden="true">
             <div className="modal-dialog">
             <div className="modal-content">
                 <div className="modal-header">
-                <h1 className="modal-title fs-5" id="stuffModalLabel">Stuff</h1>
+                <h1 className="modal-title fs-5" id="stuffModalLabel">Team</h1>
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">

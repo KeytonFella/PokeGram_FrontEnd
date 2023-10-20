@@ -89,7 +89,7 @@ function UserProfile() {
 
                 </div>
                 <div id="post-container">
-                    <Feed/>
+                    <Feed social_bool={false} user_id_in={profile_id}/>
                 </div>
             </div>
         </div>

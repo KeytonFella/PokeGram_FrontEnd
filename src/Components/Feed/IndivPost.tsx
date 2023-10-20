@@ -8,7 +8,7 @@ import  axios from 'axios';
 import './IndivPost.scss'; 
 interface ElementComponentProps {
     username: string;
-    useridfk: string;
+    useridfk: string | null | undefined;
     profilePicUrl: string;
     text_body: string;
     image_s3_id: string;

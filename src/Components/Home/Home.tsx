@@ -43,7 +43,7 @@ function Home() {
               <Post isOpen={isModalOpen} closeModal={closeModal}/> 
             </div>
             <div className="socialFeedContainer">
-              <Feed/>
+              <Feed social_bool={true} user_id_in={null}/>
             </div>
           </div>
           <div className = "sub_cont sub_cont2 d-none d-xl-block">

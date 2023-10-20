@@ -23,7 +23,6 @@ export interface UsersObject {
     setPostArray: React.Dispatch<React.SetStateAction<PostDataObject[]>>;
     index: number;
 }
-
 export interface Friend {
     user_id: string  | null | undefined;
     username: string;
@@ -59,17 +58,11 @@ const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
         getFriends();
     }, [AuthState.user_id,AuthState.token]);
     if(!social_bool){
-        if(user_id_in)
         return (
             <div id="feed_container">
-                <UsersPostDisplay user_id={user_id_in} postArray={postArray} setPostArray={setPostArray} index={0}/>
+                <UsersPostDisplay user_id={user_id_in ? user_id_in : AuthState.user_id} postArray={postArray} setPostArray={setPostArray} index={0}/>
             </div>
         );
-        else{
-            <div id="feed_container">
-                <UsersPostDisplay user_id={AuthState.user_id} postArray={postArray} setPostArray={setPostArray} index={0}/>
-            </div>
-        }
     }
     return (
         <div id="feed_container">

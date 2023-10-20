@@ -5,5 +5,9 @@ $body-bg: white;
 //     height: 100%;
 // }
 
+html, body, #root {
+    height: 100%;
+    margin: 0;
+  }
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';

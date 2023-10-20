@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom';
+import Feed from "../Feed/Feed";
+
 import './UserProfile.scss'
 
 //const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
@@ -16,6 +18,14 @@ function UserProfile() {
                 </div>
                 <div id="user-profile-name-containter">
                     <h2>{profile_id}</h2>
+                </div>
+            </div>
+            <div id="bottom_container">
+                <div id="team-container">
+
+                </div>
+                <div id="post-container">
+                    <Feed/>
                 </div>
             </div>
         </div>

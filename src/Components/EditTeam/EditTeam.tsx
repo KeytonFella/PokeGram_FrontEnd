@@ -93,11 +93,18 @@ function EditTeam() {
     }
 
     const handleDeletePokemon = (event: React.MouseEvent<HTMLButtonElement>, index: number) => {
-        // event.preventDefault()
+        event.preventDefault()
         console.log ('deleting')
-        const newList = pokemonList
-        newList.splice(index, 1)
-        setPokemonList(newList)
+        console.log(`on index ${index}`)
+        //make sure the user cannot completely empty the list
+        if(pokemonList.length > 1) {
+            console.log(`pokemonList = ${pokemonList}`)
+            const newList = pokemonList
+            newList.splice(index, 1)
+            console.log(`newList = ${newList} length ${newList.length}`)
+
+            setPokemonList(newList)
+        }
         return pokemonList
     }
 

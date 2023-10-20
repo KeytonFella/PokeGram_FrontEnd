@@ -1,17 +1,25 @@
 import React, {useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
+import { Link } from 'react-router-dom';
+
 import  axios from 'axios';
 //credit https://github.com/hc-oss/react-multi-select-component/blob/master/README.md
 import './IndivPost.scss'; 
 interface ElementComponentProps {
+    username: string;
+    useridfk: string;
+    profilePicUrl: string;
     text_body: string;
-    user_id_fk: string;
     image_s3_id: string;
 }
-const IndivPost: React.FC<ElementComponentProps> = ({ text_body, user_id_fk, image_s3_id }) => {
-    const AuthState = useSelector((state: RootState) => state.auth);
 
+const IndivPost: React.FC<ElementComponentProps> = ({ username, profilePicUrl, useridfk, text_body, image_s3_id }) => {
+    const AuthState = useSelector((state: RootState) => state.auth);
+    const linkStyle = {
+        "font-weight": "bold",
+        "color": 'black'
+      };
     const [imageData, setImageData] = useState('');
     useEffect(() => {
         async function getImage(image_s3_id: string) {
@@ -32,14 +40,21 @@ const IndivPost: React.FC<ElementComponentProps> = ({ text_body, user_id_fk, ima
         getImage(image_s3_id);
     }, []);
     
-    <div className="post-image">
-        {imageData && <img src={imageData} alt=""/>}
-    </div>
-
     return (
         <div className="ind_post_display">
-            <div className="post-text-container">
-                <p>${user_id_fk} {text_body}</p>
+            <div className="profile-link-container">
+                <div id="user-profile-image-containter">
+                    <img src={profilePicUrl} className='profile_pic'/>
+                </div>
+                <div id="user-profile-name-containter">
+                    <Link style={linkStyle} to={`/profile/${username}`}>{username}</Link>
+                    <span>  @ {useridfk}</span>
+                </div>
+            </div>
+            <div className='post-text-container'>
+                <div className='text-body'>
+                    {text_body}
+                </div>
             </div>
             <div className="post-img-container">
                 {imageData && <img src={imageData} alt="Downloaded" className="post_img"/>}

@@ -11,7 +11,7 @@ import CreateTeam from '../CreateTeam/CreateTeam'
 import { Link } from 'react-router-dom'
 
 function TeamView() {
-    const authState = useSelector((state: RootState) => state.auth)
+    const AuthState = useSelector((state: RootState) => state.auth)
     
     
     type Pokemon = {
@@ -34,13 +34,13 @@ function TeamView() {
     
     React.useEffect(() => {
         
-        if(authState.user_id && authState.username && authState.token){
+        if(AuthState.user_id && AuthState.username && AuthState.token){
             setState({...state, logged_in: true})
             
-            const url = `http://52.90.96.133:5500/api/teams/${authState.user_id}`
+            const url = `http://52.90.96.133:5500/api/teams/${AuthState.user_id}`
             
             //Configured axios get request
-            axios.get(url, {headers: {Authorization: `Bearer ${authState.token}`}}).then((response) => {
+            axios.get(url, {headers: {Authorization: `Bearer ${AuthState.token}`}}).then((response) => {
                 console.log('Data: ', response.data);
                 
                 
@@ -65,7 +65,7 @@ function TeamView() {
 
     
     
-    if (state.logged_in) {  
+    //if (state.logged_in) {  
             if (state.loading) {
                 return(<div>loading...</div>)
             } else if(state.teamExists){
@@ -85,9 +85,9 @@ function TeamView() {
                 // Render CreateTeam if the user doesnt have a team
                 return(<CreateTeam />)
             }
-    } else {
-        return <h4>Please Login to view or create your team</h4>
-    }
+    // } else {
+    //     return <h4>Please Login to view or create your team</h4>
+    // }
     
 }
 

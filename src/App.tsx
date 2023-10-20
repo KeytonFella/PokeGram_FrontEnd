@@ -34,7 +34,6 @@ function App() {
         <Route path='/users/:user_id/' element={<Friends/>}/>
         <Route path="/profile/:profile_id" element={<UserProfile />} />
         <Route path="/users" element={<Register/>}/>
-        <Route path="/friendfinder" element={<FriendFinder/>}/>
     </Routes>
     </div>    
   );

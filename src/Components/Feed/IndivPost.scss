@@ -1,6 +1,8 @@
 .ind_post_display{
     display: flex;
     flex-direction: column;
+        align-items: flex-start;
+
     width: 100%;
     background-color: #fff;
     border: 1px solid #e1e8ed;
@@ -8,14 +10,47 @@
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.post-text-container{
-    width:100%
+
+.profile-link-container{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    height: 40px ; /* Adjust the height as needed */
+    background-color: #f0f0f0; /* Set a background color if desired */
 }
+.user-profile-name-containter{
+    height: 100%;
+    width: 100%;
+}
+.user-profile-image-containter{
+    height : 100%;
+    width: 100%;
+}
+.profile_pic{
+    height: auto;
+    height: 40px;
+    border-radius: 50% ;
+}
+
+.post-text-container{
+    width:100%;
+}
+.text-body {
+    text-align: left;
+    margin-left: 10%;
+    margin-right: 5%;
+}
+
 .post-img-container{
-    width:100%
+    width:100%;
+
 }
 .post_img{
-    max-width: 100%; /* Limits the image to the width of its container */
+    min-width: 40%;
+    max-width: 85%; /* Limits the image to the width of its container */
+    margin-left: 10%;
+    margin-right: 5%;
     height: auto;     
-    max-height: 700px
 }

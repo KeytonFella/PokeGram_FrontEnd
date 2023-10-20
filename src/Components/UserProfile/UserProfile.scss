@@ -1,9 +1,20 @@
-#user-profile-page-container{
+#user-profile-page-container {
     display: flex;
+    flex-direction: column;
     justify-content: left;
-    align-items: center;
     height: auto ; /* Adjust the height as needed */
     background-color: #f0f0f0; /* Set a background color if desired */
+}
+//============================================================================================================================================================
+//=========================================================== profile info container styles ========================================================================
+//============================================================================================================================================================
+#profile-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    height: 25%; 
 }
 #profile-info-containter {
     display: flex;
@@ -14,6 +25,7 @@
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width:30%
 }
 #user-profile-image-containter{
     margin: 20px;
@@ -25,4 +37,36 @@
     width: 100px;
     height: 100px;
     border-radius: 50% ;
+}
+#add-friend-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    width:20%;
+}
+#add-friend-btn{
+    background-color: #035096;
+    background-image: none;
+    color: white;
+    width:100%;
+}
+//============================================================================================================================================================
+//=========================================================== bottom container styles ========================================================================
+//============================================================================================================================================================
+#bottom_container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+#team-container{
+    width:30%
+}
+#post-container{
+    width:70%
 }

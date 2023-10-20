@@ -11,7 +11,7 @@ import CreateTeam from '../CreateTeam/CreateTeam'
 import { Link } from 'react-router-dom'
 
 function TeamView() {
-    const authState = useSelector((state: RootState) => state.auth)
+    const AuthState = useSelector((state: RootState) => state.auth)
     
     
     type Pokemon = {
@@ -33,14 +33,15 @@ function TeamView() {
     
     
     React.useEffect(() => {
-        
-        if(authState.user_id && authState.username && authState.token){
-            setState({...state, logged_in: true})
+        console.log(`Auth id= ${AuthState.user_id} \n Auth username = ${AuthState.username} \n Auth token = ${AuthState.token}`)
+        if(AuthState.token){
             
-            const url = `http://52.90.96.133:5500/api/teams/${authState.user_id}`
+            //setState({...state, logged_in: true})
+            
+            const url = `http://52.90.96.133:5500/api/teams/${AuthState.user_id}`
             
             //Configured axios get request
-            axios.get(url, {headers: {Authorization: `Bearer ${authState.token}`}}).then((response) => {
+            axios.get(url, {headers: {Authorization: `Bearer ${AuthState.token}`}}).then((response) => {
                 console.log('Data: ', response.data);
                 
                 
@@ -61,11 +62,11 @@ function TeamView() {
         } else {
             setState({...state, loading: false})
         }
-    }, [])
+    },[AuthState.token])
 
     
     
-    if (state.logged_in) {  
+    if (AuthState.token) {  
             if (state.loading) {
                 return(<div>loading...</div>)
             } else if(state.teamExists){

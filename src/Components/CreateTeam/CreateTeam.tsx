@@ -62,7 +62,7 @@ function CreateTeam() {
         console.log(`pokemon list length: ${pokemonList.length}`)
         return pokemonList
     }
-    
+
     async function handleSubmit(event: any) {
         event.preventDefault()
         const userInfo = {
@@ -78,7 +78,7 @@ function CreateTeam() {
         
         try { 
             const headers = {
-                'Authoraization': `Bearer ${userInfo.token}`,
+                'Authorization': `Bearer ${userInfo.token}`,
                 'Content-Type': 'application/json'
             }
             const response = await axios.post('http://52.90.96.133:5500/api/teams', newTeam, {headers: headers})

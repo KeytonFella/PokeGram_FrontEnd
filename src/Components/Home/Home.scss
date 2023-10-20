@@ -4,6 +4,9 @@
     text-align: center;
 
 }
+.container-fluid{
+    height: 100%;
+}
 
 .stuffModal{
     position: fixed;
@@ -12,14 +15,27 @@
     width: 50px;
     height: 50px;
 }
+#top_of_social_feed{
+  width: 100%;
 
+}
+#add-post-text{
+  font-size: large;
+  margin-right: 10px; 
+}
 #modal_open{
+    width: 100%;
+    font-size: large;
+    background-color: #4267B2;
     background-image: none;
 }
 .row{
     display: flex;
     flex-direction: row;
     height: 100%;
+}
+.top{
+    height: 10%;
 }
 .sub_cont {
     flex: 1;
@@ -75,4 +91,15 @@
 
     //background-color: blue;
     flex-basis: 20%; /* Adjust this to control the width of Container 3 */
+  }
+
+  @media (max-width: 768px) {
+    .sub_cont1, .sub_cont2, .col_left, .col_right {
+      display: none; 
+    }
+  }
+  @media (min-width: 769px) {
+    .sub_cont1, .sub_cont2, .col_left, .col_right  {
+      display: flex; 
+    }
   }

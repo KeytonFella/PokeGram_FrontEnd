@@ -14,6 +14,8 @@ function Friends() {
 
     const authState = useSelector((state: RootState) => state.auth); //lets use the redux store
     const URL = `http://52.90.96.133:5500/api/users/${authState.user_id}/friends`;
+    /* const URL = `http://localhost:5500/api/users/${authState.user_id}/friends`; */
+    
     const headers = {
         'Authorization': `Bearer ${authState.token}`
     }
@@ -21,12 +23,9 @@ function Friends() {
     const [userMessage, setUserMessage] = useShowUserMessage();
     const [friendsList, setFriendsList] = useState<any[]>([]);
 
-    const [reqBody, setReqBody] = useState<ReqBody>({});
-
     //might delete/modify
     let [state, setState] = useState({
-        username: "",
-        user_id: "",
+        friend_key : ""
     });
    
     //gets the users friends list in a get axios req
@@ -104,33 +103,31 @@ function Friends() {
             console.log("get all friends");
             response = await getFriends();
         } 
-        //If we click the add user by id button 
-        else if (clickedButton === "addUserId") {
-            setReqBody({ friend_key: state.user_id, key_type: "user_id" });
-            console.log("add user by id ");
-            response = await postFriend(reqBody);
-            console.log(response);
-        } 
-        //If we click the add user by username button 
-        else if (clickedButton === "addUsername") {
-            setReqBody({ friend_key: state.username, key_type: "username" });
-            console.log('comn', reqBody)
-            console.log("in add username");
-            response = await postFriend(reqBody);
-        } 
-        //If we click the delete user by username button 
-        else if (clickedButton === "deleteUsername") {
-            setReqBody({ friend_key: state.username, key_type: "username" });
-            response = await deleteFriend(reqBody);
-            console.log("in delete username");
-        } 
-        //If we click the delete user by id button
-        else if (clickedButton === "deleteUserId") {
-            setReqBody({ friend_key: state.username, key_type: "user_id" });
-            console.log("in delete id");
-            response = await deleteFriend(reqBody);
+
+        let localReqBody: ReqBody = {};
+        if (clickedButton === "addUserId") {
+            localReqBody = { friend_key: state.friend_key, key_type: "user_id" };
+        } else if (clickedButton === "addUsername") {
+            localReqBody = { friend_key: state.friend_key, key_type: "username" };
+        } else if (clickedButton === "deleteUsername") {
+            localReqBody = { friend_key: state.friend_key, key_type: "username" };
+        } else if (clickedButton === "deleteUserId") {
+            localReqBody = { friend_key: state.friend_key, key_type: "user_id" };
         }
-        console.log("reqBodyis", reqBody);
+
+        console.log("local reqbody", localReqBody);
+        
+        // Perform the action based on the localReqBody.
+        
+        if (clickedButton === "getFriends") {
+            response = await getFriends();
+        } else if (["addUserId", "addUsername"].includes(clickedButton)) {
+            response = await postFriend(localReqBody);
+        } else if (["deleteUsername", "deleteUserId"].includes(clickedButton)) {
+            response = await deleteFriend(localReqBody);
+        }
+
+        
         console.log("response", response);
         console.log("response status", response?.status);
 
@@ -156,13 +153,14 @@ function Friends() {
                 username: authState?.username
             });
         }
+        
     }
 
     //handles input text change. Records textbox but only if theres a keystroke
     function handleFormInputChange(event: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target; //takes the inputs name: and takes the value of the event
-        setReqBody(prevState => ({ ...prevState, [name]: value })); //spreading allows us to edit the properties we want without losing the ones we didnt
-        console.log(reqBody);
+        setState(prevState => ({ ...prevState, [name]: value })); //spreading allows us to edit the properties we want without losing the ones we didnt
+        console.log(state);
     }
 
 
@@ -171,8 +169,6 @@ function Friends() {
             <div>Friends</div>
             <p>Hello, {authState.username}</p>
             <p>ID: {authState.user_id}</p><br />
-
-
             <form>
                 <button type="button" name="get-friends" value="getFriends" onClick={handleFriendForm}>Get your friends list</button><br /><br />
                 <input type="text" name="friend_key" placeholder="Friends ID Or Username" onChange={handleFormInputChange}></input>

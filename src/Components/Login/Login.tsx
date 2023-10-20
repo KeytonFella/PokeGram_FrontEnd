@@ -75,7 +75,6 @@ function Login() {
   }
 
   async function postLogin(){
-     
         const data = {username: state.username, password: state.password};
         try{
           const returnedData = await axios.post(URL, data);
@@ -88,7 +87,6 @@ function Login() {
           }
           return null;
         } 
-      
     }
 
   return (

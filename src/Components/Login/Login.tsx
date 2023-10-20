@@ -14,6 +14,8 @@ function Login() {
   const dispatch: AppDispatch = useDispatch(); // Use AppDispatch for dispatching actions
   const [errorMessage, setErrorMessage] = useDisplayError();
   const [userMessage, setUserMessage] = useShowUserMessage(undefined, "/", 6000);
+  const URL = "http://52.90.96.133:5500/api/login"
+  /* const URL = "http://localhost:5500/api/login"; */
   
   let [state, setState] = useState({
       username: "",
@@ -39,11 +41,13 @@ function Login() {
       try {
           if(response && response.data) {
             const {message, ...data} = response?.data;
+            console.log(data);
+            console.log(data.acessToken);
             const accessToken = data?.accessToken;
             const tokenPayload = accessToken?.payload;
             console.log("my acessToken ", accessToken);
             console.log("token payload:", tokenPayload);
-  
+            
             dispatch(setUserInfo({
               user_id: tokenPayload.sub,
               name: tokenPayload?.name || "",
@@ -71,7 +75,7 @@ function Login() {
   }
 
   async function postLogin(){
-      const URL = "http://52.90.96.133:5500/api/login";
+     
         const data = {username: state.username, password: state.password};
         try{
           const returnedData = await axios.post(URL, data);

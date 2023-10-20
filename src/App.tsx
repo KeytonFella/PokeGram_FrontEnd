@@ -15,6 +15,8 @@ import TeamView from './Components/TeamView/TeamView';
 import EditTeam from './Components/EditTeam/EditTeam';
 import UserProfile from './Components/UserProfile/UserProfile'; // Import a component for displaying user profiles
 import FriendFinder from './Components/FriendFinder/FriendFinder';
+import Friends from './Components/Friends/Friends';
+
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
         <Route path="/team" element={<TeamView/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path='/confirm' element={<Confirm/>}/>
+        <Route path='/users/:user_id/' element={<Friends/>}/>
         <Route path="/profile/:profile_id" element={<UserProfile />} />
         <Route path="/users" element={<Register/>}/>
     </Routes>

@@ -8,6 +8,13 @@ import axios from 'axios';
 function Navbar() {
   //values from the global redux store
   const authState = useSelector((state: RootState) => state.auth);
+  const USER_ID = authState.user_id;
+  const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`
+  
+
+  //local
+  /* const URL = `http://localhost:5500/api/profiles/${USER_ID}` */
+
 
   let [profile, setProfile] = useState({
       bio: '',
@@ -37,6 +44,7 @@ function Navbar() {
               <Link className="nav-item nav-link" to="/">Home<span className="sr-only"></span></Link>
               <Link className="nav-item nav-link" to="/posts">Posts</Link>
               <Link className="nav-item nav-link" to="/trades">Trades</Link>
+              <Link className="nav-item nav-link" to="/users/:user_id/">Friends</Link>
               {
                 authState.username && 
                 <div className="container">

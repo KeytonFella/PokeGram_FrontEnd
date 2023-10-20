@@ -8,6 +8,14 @@
 //============================================================================================================================================================
 //=========================================================== profile info container styles ========================================================================
 //============================================================================================================================================================
+#profile-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    height: 25%; 
+}
 #profile-info-containter {
     display: flex;
     flex-direction: row;
@@ -17,6 +25,7 @@
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width:30%
 }
 #user-profile-image-containter{
     margin: 20px;
@@ -28,6 +37,19 @@
     width: 100px;
     height: 100px;
     border-radius: 50% ;
+}
+#add-friend-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    width:20%;
+}
+#add-friend-btn{
+    background-color: #035096;
+    background-image: none;
+    color: white;
+    width:100%;
 }
 //============================================================================================================================================================
 //=========================================================== bottom container styles ========================================================================

@@ -13,13 +13,14 @@ function Navbar() {
       bio: '',
       image_url: ''
   });
-
   useEffect(() => {
-    const USER_ID = authState.user_id;
-    const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`
-    axios.get(URL, {headers: {Authorization: 'Bearer ' + authState.token}})
-    .then(response => setProfile(response.data))
-    .catch(err => console.log(err))
+    if(authState.token){
+      const USER_ID = authState.user_id;
+      const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`
+      axios.get(URL, {headers: {Authorization: 'Bearer ' + authState.token}})
+      .then(response => setProfile(response.data))
+      .catch(err => console.log(err))
+    }
   }, [authState.token])
    
   return (

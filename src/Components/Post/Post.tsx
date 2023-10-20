@@ -150,7 +150,6 @@ return (
         </div>
       )}
       <button className="btn btn-info" id="post_button" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_submit}>Post</button>
-      {imageData && <img src={imageData} alt="Unable to Render Photo"/>}
     </div>
   </div>
 );

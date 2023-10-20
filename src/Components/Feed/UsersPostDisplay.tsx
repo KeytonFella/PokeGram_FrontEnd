@@ -5,9 +5,9 @@ import './UsersPostDisplay.scss';
 import IndivPost from './IndivPost'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
-import {PostDataObject, ElementComponentProps} from './Feed'
+import {PostDataObject, UsersObject} from './Feed'
 
-const UsersPostDisplay: React.FC<ElementComponentProps> = ({user_id}) => {
+const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
     const AuthState = useSelector((state: RootState) => state.auth);
     const [username, setUsername] = useState<string>("Username Unavailable");
     const [profilePic, setProfilePic] = useState<string>("Username Unavailable");

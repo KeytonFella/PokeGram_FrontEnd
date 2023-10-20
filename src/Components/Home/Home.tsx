@@ -36,6 +36,7 @@ function Home() {
           <div className="sub_cont sub_contSF">
             <div id="top_of_social_feed">
               <button className="btn btn-default" onClick={openModal} id="modal_open">
+                <span id="add-post-text"> Add Post                    </span>
                 <img src={require("../../images/posticon.png")} alt ="asd" width="50px"/> 
               </button>
               <Post isOpen={isModalOpen} closeModal={closeModal}/> 

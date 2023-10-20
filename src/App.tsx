@@ -25,7 +25,6 @@ function App() {
         <Route path="/trades" element={<Trades/>}/>
         <Route path="/profiles" element={<Profiles />}/>
         <Route path="/login" element={<Login/>}/>
-        
         <Route path="/editTeam" element={<EditTeam />}/>
         <Route path="/team" element={<TeamView/>}/>
         <Route path="/register" element={<Register/>}/>

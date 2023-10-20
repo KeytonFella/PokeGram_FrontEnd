@@ -34,6 +34,7 @@ function App() {
         <Route path="/users" element={<Register/>}/>
         <Route path="/friendfinder" element={<FriendFinder/>}/>
     </Routes>
+    <h6>pokegram</h6>
     </div>    
   );
 }

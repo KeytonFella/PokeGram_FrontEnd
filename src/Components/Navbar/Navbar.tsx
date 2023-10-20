@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Home from '../Home/Home';
 import './Navbar.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
@@ -9,8 +8,6 @@ import axios from 'axios';
 function Navbar() {
   //values from the global redux store
   const authState = useSelector((state: RootState) => state.auth);
-  const USER_ID = authState.user_id;
-  const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`
 
   let [profile, setProfile] = useState({
       bio: '',
@@ -18,6 +15,8 @@ function Navbar() {
   });
 
   useEffect(() => {
+    const USER_ID = authState.user_id;
+    const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`
     axios.get(URL, {headers: {Authorization: 'Bearer ' + authState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))

@@ -37,6 +37,7 @@ function FriendFinder() {
             </form>
         </div>
         <div className='user-container'>
+            {nearbyUsers.length === 0 && <p className='no-users'>No users found</p>}
             {nearbyUsers.map((user: any) => (
                 <div className="user-entry" key={user.user_id}>
                     <h5>{user.username}</h5>

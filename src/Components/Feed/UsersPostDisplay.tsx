@@ -14,7 +14,7 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
 
     const [arr, setArr] = useState<PostDataObject[]>([])
     useEffect(() => {
-        async function getUsersPosts(user_id: string) {
+        async function getUsersPosts(user_id: string | null | undefined) {
             if(user_id) {
                 try {
                     const postsInfoResponse = await axios.get(`http://52.90.96.133:5500/api/post/user?user_id=${user_id}`, {

@@ -38,11 +38,7 @@ function SidebarModal() {
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
-<<<<<<< HEAD:src/Components/StuffModal/StuffModal.tsx
-                <FriendFinder/>
-=======
                   <FriendFinder />
->>>>>>> c8bea8f5d1a7a3b1fe5f70b296f7e3a0370cd5a4:src/Components/SidebarModal/SidbarModal.tsx
                 </div>
             </div>
             </div>

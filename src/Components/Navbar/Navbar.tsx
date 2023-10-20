@@ -37,6 +37,7 @@ function Navbar() {
               <Link className="nav-item nav-link" to="/">Home<span className="sr-only"></span></Link>
               <Link className="nav-item nav-link" to="/posts">Posts</Link>
               <Link className="nav-item nav-link" to="/trades">Trades</Link>
+              <Link className="nav-item nav-link" to='/friendsnearby'>Friends Nearby</Link>
               {
                 authState.username && 
                 <div className="container">

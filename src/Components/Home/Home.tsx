@@ -31,7 +31,7 @@ function Home() {
         </div>
         <div className="row">
           <div className="sub_cont sub_cont1">
-            <p>Stuff Component</p>
+            <TeamView />
           </div>
           <div className="sub_cont sub_contSF">
             <div id="top_of_social_feed">

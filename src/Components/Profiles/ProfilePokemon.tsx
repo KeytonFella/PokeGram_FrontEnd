@@ -68,7 +68,6 @@ const ProfilePokemon = (props:any) => {
     <div>
         <h1 className="title">Pokemon</h1>
         <div className="row">
-          <div className="header text-center">Pokemon To Receive</div>
           <form method="post" onSubmit={addPokemon}>
             <label>
               Pokemon Search: <input name="myInput" defaultValue="" />
@@ -76,13 +75,12 @@ const ProfilePokemon = (props:any) => {
             <button type="submit">Add Pokemon</button>
           </form>
         </div>
-        <div className="row"></div>
-        <div id="container" className="container">
+        <div className="poke-container">
             {pokemon.map((poke: any) => (
             <div key={poke.name} className="entry">
                 <p className="names">{poke.name}</p>
                 <img src={poke.sprite} alt={poke.name} className="sprite"/>
-                <button className="btn" onClick={removePokemon} value={poke.name} >Remove</button>
+                <button className="remove-btn" onClick={removePokemon} value={poke.name} >Remove</button>
             </div>
             ))}    
         </div>

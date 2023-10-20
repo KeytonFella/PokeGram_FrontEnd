@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import './Home.scss';
 import Post from "../Post/Post";
-import StuffModal from "../StuffModal/StuffModal"
 import EditTeam from '../EditTeam/EditTeam';
 import TeamView from '../TeamView/TeamView';
 import Feed from "../Feed/Feed";
 import FriendFinder from '../FriendFinder/FriendFinder';
+import SidebarModal from '../SidebarModal/SidbarModal';
 
 
 function Home() {
@@ -20,18 +20,18 @@ function Home() {
     <>
       <div className="container-fluid">
         <div className="row top">
-          <div className="headSection col_left">
+          <div className="headSection col_left d-none d-xl-block">
             <div className="header text-center">Team</div>
           </div>
           <div className="headSection col_center">
             <div className="header text-center">Social Feed</div>
           </div>
-          <div className="headSection col_right">
+          <div className="headSection col_right d-none d-xl-block">
             <div className="header text-center">Users Nearby</div>
           </div>
         </div>
         <div className="row">
-          <div className="sub_cont sub_cont1">
+          <div className="sub_cont sub_cont1 d-none d-xl-block">
             <TeamView />
           </div>
           <div className="sub_cont sub_contSF">
@@ -43,16 +43,16 @@ function Home() {
               <Post isOpen={isModalOpen} closeModal={closeModal}/> 
             </div>
             <div className="socialFeedContainer">
-              <Feed/>
+              <Feed social_bool={true} user_id_in={null}/>
             </div>
           </div>
-          <div className = "sub_cont sub_cont2">
+          <div className = "sub_cont sub_cont2 d-none d-xl-block">
             <FriendFinder />
           </div>
         </div>
       </div>
       <div className="row d-xl-none">
-        {<StuffModal/>}
+        {<SidebarModal/>}
       </div>
     </>
   )

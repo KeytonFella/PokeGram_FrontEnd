@@ -6,7 +6,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.container {
+.poke-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -37,12 +37,12 @@
     margin-bottom: 5px;
 }
 .sprite {
-    height: 150px;
+    height: 180px;
     margin-left: auto;
     margin-right: auto;
     display: block;
 }
-.btn {
+.remove-btn {
     background-image: url('../../images/pokeball.png');
     background-repeat: no-repeat;
     background-size: 100%;
@@ -56,7 +56,7 @@
     font-size: 0px;
     display: block;
 }
-.btn:hover{
+.remove-btn:hover{
     background-color: rgb(255, 0, 0);
     background-image: none;
     cursor: pointer;

@@ -4,6 +4,7 @@ import './Profiles.scss'
 import axios from 'axios'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
+import Team from '../Team/Team';
 
 
 
@@ -89,6 +90,7 @@ function Profiles() {
               <button type='submit'>Upload</button>
             </form>
         </div>
+        <Team team_user_id={AuthState.user_id}/>
         <ProfilePokemon user_id={AuthState.user_id}/>
     </div>
   )

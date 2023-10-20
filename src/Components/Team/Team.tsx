@@ -13,16 +13,16 @@ function Team(props: any) {
         teamExists: true
     })
 
-    const authState = useSelector((state: RootState) => state.auth)
+    const AuthState = useSelector((state: RootState) => state.auth)
     React.useEffect(() => {
         
-        if(authState.user_id && authState.username && authState.token){
+        if(AuthState.user_id && AuthState.username && AuthState.token){
             
             const url = `http://52.90.96.133:5500/api/teams/${props.team_user_id}`
             
             
             //Configured axios get request
-            axios.get(url, {headers: {Authorization: `Bearer ${authState.token}`}}).then((response) => {
+            axios.get(url, {headers: {Authorization: `Bearer ${AuthState.token}`}}).then((response) => {
                 console.log('Data: ', response.data);
                 
                 

@@ -6,9 +6,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 import Team from '../Team/Team';
 
-
-
-
 function Profiles() {
   
   const AuthState = useSelector((state: RootState) => state.auth);
@@ -16,7 +13,6 @@ function Profiles() {
   // ID for testintg
   //const id = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
   const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
-
 
   let [profile, setProfile] = useState({
       bio: '',
@@ -27,7 +23,7 @@ function Profiles() {
 
 
   useEffect(() => {
-    axios.get(URL, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+    axios.get(URL, {headers: {'Authorization': 'Bearer ' + AuthState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }, [])
@@ -46,7 +42,7 @@ function Profiles() {
   async function submitBio(event: any){
     event.preventDefault()
     console.log(profile.bio)
-    axios.put(`${URL}/bio`, {bio: profile.bio}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+    axios.put(`${URL}/bio`, {bio: profile.bio})
     .then(response => alert('Bio updated!'))
     .catch(err => console.log(err))
     setEditBio(false)
@@ -58,9 +54,12 @@ function Profiles() {
 
     let formData = new FormData();
     formData.append('image', file)
-    await axios.put(`${URL}/photo`, formData, {headers: {'Content-Type': 'multipart/form-data', Authorization: 'Bearer ' + AuthState.token}})
+    await axios.put(`${URL}/photo`, formData, {headers:{
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer ' + AuthState.token,
+    }})
 
-    axios.get(URL, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+    axios.get(URL, {headers: {'Authorization': 'Bearer ' + AuthState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }

@@ -5,6 +5,7 @@ import StuffModal from "../StuffModal/StuffModal"
 import EditTeam from '../EditTeam/EditTeam';
 import TeamView from '../TeamView/TeamView';
 import Feed from "../Feed/Feed";
+import FriendFinder from '../FriendFinder/FriendFinder';
 
 
 function Home() {
@@ -26,7 +27,7 @@ function Home() {
             <div className="header text-center">Social Feed</div>
           </div>
           <div className="headSection col_right">
-            <div className="header text-center">Other Stuff</div>
+            <div className="header text-center">Users Nearby</div>
           </div>
         </div>
         <div className="row">
@@ -46,7 +47,7 @@ function Home() {
             </div>
           </div>
           <div className = "sub_cont sub_cont2">
-            <p>Other Stuff Component</p>
+            <FriendFinder />
           </div>
         </div>
       </div>

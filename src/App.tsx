@@ -31,7 +31,6 @@ function App() {
         <Route path='/confirm' element={<Confirm/>}/>
         <Route path="/profile/:profile_id" element={<UserProfile />} />
         <Route path="/users" element={<Register/>}/>
-        <Route path="/friendfinder" element={<FriendFinder/>}/>
     </Routes>
     </div>    
   );

@@ -1,100 +1,50 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
+import './FriendFinder.scss'
+import { Link } from 'react-router-dom';
 
 function FriendFinder() {
     const AuthState = useSelector((state: RootState) => state.auth);
-    const USER_ID = AuthState.user_id;
-    // id for testing purposes
-    // const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
-    const URL = `http://52.90.96.133:5500/api/addresses/user/${USER_ID}`;
-
-    type Coordinates = {
-        lat: number,
-        lng: number
-    }
+    const URL = `http://52.90.96.133:5500/api/addresses/user/${AuthState.user_id}/others`;
 
     let [nearbyUsers, setNearbyUsers] = useState([] as any);
+    let [distance, setDistance] = useState(0);
 
-    useEffect(() => {
-        getAllAddresses();
-    },[])
-
-    // Function to get all addresses from database
-    async function getAllAddresses(){
-        let origin: Coordinates;
-        let others: any;
-        let requests = [];
-        const req1 = await  axios.get(URL).then((response) => {
-            origin = response.data
-        }).catch((error) => {console.log(error)})
-        const req2 = await axios.get(`${URL}/others`).then((response) => {
-            others = response.data
-        }).catch((error) => {console.log(error)})
-        requests.push(req1, req2);
-        Promise.all(requests).then(() => {
-            compareDistances(origin, others);
+     function getUsers(e: any){
+        e.preventDefault();
+        axios.post(URL, {distance: distance}, {headers: {Authorization: `Bearer ${AuthState.token}`}}).then((res) => {
+            setNearbyUsers(res.data);
+        }).catch((err) => {
+            console.log(err);
         })
-
     }
-
-    // Function to iterate through each address and calculate distance from origin 
-    function compareDistances(origin: Coordinates, others: any[]){
-        const nearby: any = [];
-        for(let i = 0; i < others.length; i++){
-            const distance = calculateDistance(origin, others[i].address);
-            let user = {
-                user_id: others[i].user_id,
-                username: others[i].username,
-                distance: distance
-            }
-            if (distance <= 25) {
-            nearby.push(user);
-            }
-        };
-        console.log(nearby)
-        setNearbyUsers(nearby);
+    function distanceChange(e: any) {
+        e.preventDefault();
+        setDistance(e.target.value);
+        console.log(distance)
     }
-
-    // ================== Helper Function ==================
-
-    // Helper function to calculate distance between two sets of coordinates in miles
-    function calculateDistance(origin: Coordinates, destination: Coordinates) {
-        const earthRadiusMiles = 3958.8; // Earth's radius in miles
-        
-        const lat1 = origin.lat;
-        const lon1 = origin.lng;
     
-        const lat2 = destination.lat;
-        const lon2 = destination.lng;
-    
-        const dLat: number = ((lat2 - lat1) * Math.PI) / 180;
-        const dLon: number = ((lon2 - lon1) * Math.PI) / 180;
-    
-        const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos((lat1 * Math.PI) / 180) *
-            Math.cos((lat2 * Math.PI) / 180) *
-            Math.sin(dLon / 2) *
-            Math.sin(dLon / 2);
-    
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distanceInMiles = earthRadiusMiles * c;
-    
-        return distanceInMiles;
-    }
- 
-
   return (
-
-    <div>
-        <h1>Friend Finder</h1>
-        <div>
+    <div className='friends-container'>
+        <h2 >Friend Finder</h2>
+        <div className='radius-form'>
+            <form onSubmit={getUsers} > 
+                <p className='radius-label'>Search radius (miles): </p>
+                <input type="text" placeholder='25' onChange={distanceChange} className='radius-input'/>
+                <input type="submit" value="Submit" className='radius-btn'/>
+            </form>
+        </div>
+        <div className='user-container'>
+            {nearbyUsers.length === 0 && <p className='no-users'>No users found</p>}
             {nearbyUsers.map((user: any) => (
-                 <div key={user.user_id}>
-                    <h3>{user.username}</h3>
-                    <p>{user.distance.toFixed(4)} miles away</p>
+                <div className="user-entry" key={user.user_id}>
+                    <h5>{user.username}</h5>
+                    <p>{user.distance.toFixed(2)} miles away</p>
+                    <Link to={`/profile/${user.user_id}`}>
+                        <button type='button' className='view-profile-btn'>View Profile</button>
+                    </Link>
                 </div>
             ))}
         </div>

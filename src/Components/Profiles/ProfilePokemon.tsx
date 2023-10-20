@@ -9,6 +9,7 @@ import './ProfilePokemon.scss'
 const ProfilePokemon = (props:any) => {
     const AuthState = useSelector((state: RootState) => state.auth);
     const USER_ID = props.user_id;
+    const TOKEN = props.token;
     // id for testing purposes
     // const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
     const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}/pokemon`;

@@ -12,7 +12,7 @@ function Register() {
     });
 
     const URL = "http://52.90.96.133:5500/api/users"
-    const [userMessage, setUserMessage] = useShowUserMessage(undefined, "/confirm", 6000);
+    const [userMessage, setUserMessage] = useShowUserMessage(undefined, "/login", 6000);
     const [errorMessage, setErrorMessage] = useDisplayError();
 
 

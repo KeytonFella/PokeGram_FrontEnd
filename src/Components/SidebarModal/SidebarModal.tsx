@@ -17,8 +17,7 @@ function SidebarModal() {
                 <h1 className="modal-title fs-5" id="stuffModalLabel">Team</h1>
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div className="modal-body">
-                
+                <div className="modal-body">               
                 <TeamView />
                 </div>
                 
@@ -38,11 +37,7 @@ function SidebarModal() {
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
-<<<<<<< HEAD:src/Components/StuffModal/StuffModal.tsx
-                <FriendFinder/>
-=======
                   <FriendFinder />
->>>>>>> c8bea8f5d1a7a3b1fe5f70b296f7e3a0370cd5a4:src/Components/SidebarModal/SidbarModal.tsx
                 </div>
             </div>
             </div>

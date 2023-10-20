@@ -42,8 +42,23 @@ const ProfilePokemon = (props:any) => {
         setPokemon(pokemonArray);
     }
 
+    async function addPokemon(event: any) {
+        event.preventDefault();
+    
+        // Read the form data
+        const form = event.target;
+        const formData = new FormData(form);
+        const formJson = Object.fromEntries(formData.entries());
+        const pokemon: String = formJson.myInput as String;
+        
+        await axios.put(URL, {action: "add", pokemon: pokemon}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+        .then(response => response.data.message)
+        .catch(error => console.log(error));
+        getPokemon();
+      }
+
     async function removePokemon(event: any) {
-        await axios.put(`${URL}/remove`, {pokemon: event.target.value}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+        await axios.put(URL, {action: "remove", pokemon: event.target.value}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
         .then(response => response.data.message)
         .catch(error => console.log(error));
         getPokemon();
@@ -52,6 +67,16 @@ const ProfilePokemon = (props:any) => {
   return (
     <div>
         <h1 className="title">Pokemon</h1>
+        <div className="row">
+          <div className="header text-center">Pokemon To Receive</div>
+          <form method="post" onSubmit={addPokemon}>
+            <label>
+              Pokemon Search: <input name="myInput" defaultValue="" />
+            </label>
+            <button type="submit">Add Pokemon</button>
+          </form>
+        </div>
+        <div className="row"></div>
         <div id="container" className="container">
             {pokemon.map((poke: any) => (
             <div key={poke.name} className="entry">

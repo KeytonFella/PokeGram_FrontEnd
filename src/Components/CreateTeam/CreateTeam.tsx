@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../utility/reduxTypes'; // Import your RootState type
 import { useDispatch } from 'react-redux';
@@ -6,6 +6,8 @@ import { setUserInfo } from '../../utility/auth'; // Im+
 import { AppDispatch } from '../../utility/store';
 import axios from 'axios';
 import { Pokemon } from '../../utility/PokemonType';
+import { useShowUserMessage } from '../../Hooks/DisplayAndRedirect';
+import { useDisplayError } from '../../Hooks/DisplayError';
 
 
 function CreateTeam() {
@@ -15,6 +17,8 @@ function CreateTeam() {
         
 
     const [teamName, setTeamName] = useState('')
+    const [errorMessage, setErrorMessage] = useDisplayError()
+    const [userMessage, setUserMessage] = useShowUserMessage(undefined, '/profiles', 6000)
     const [pokemonList, setPokemonList] = useState([{} as Pokemon])
     
 
@@ -82,8 +86,13 @@ function CreateTeam() {
                 'Content-Type': 'application/json'
             }
             const response = await axios.post('http://52.90.96.133:5500/api/teams', newTeam, {headers: headers})
+            // if(response.status === 400) {
+            //     setErrorMessage(response.data.message || 'error')
+            // }
             console.log("Successfully posted data: ", JSON.stringify(response.data))
             
+            setUserMessage({message: "Successfully created team!", username: userInfo.username})
+            return
         } catch(err) {
             
             console.error('Error: ', err)
@@ -129,6 +138,11 @@ function CreateTeam() {
                 <br/>
                 <button type="submit" onClick={handleSubmit}>Submit</button>
             </form>
+            <div className='showMessage'>
+                {/* {<p>{errorMessage} </p>} */}
+                {<p>{userMessage?.message}</p>}
+                {userMessage?.message && <p>Redirecting {userMessage.username} to the profile page</p>}
+            </div>
         </div>
     )
 }

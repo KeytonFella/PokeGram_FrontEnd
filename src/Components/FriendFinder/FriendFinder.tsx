@@ -41,11 +41,9 @@ function FriendFinder() {
                 <div className="user-entry" key={user.user_id}>
                     <h5>{user.username}</h5>
                     <p>{user.distance.toFixed(2)} miles away</p>
-                    <button>
-                        <Link to={'/'}>
-                            View Profile
-                        </Link>
-                    </button>
+                    <Link to={`/profile/${user.user_id}`}>
+                        <button type='button' className='view-profile-btn'>View Profile</button>
+                    </Link>
                 </div>
             ))}
         </div>

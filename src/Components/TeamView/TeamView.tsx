@@ -73,10 +73,10 @@ function TeamView() {
                 return (
                     <div>
                         <h2 id="teamname">{state.team_name}</h2>
-                        <div>
-                            {state.pokemon_list.map((pokemon: Pokemon) => 
+                        <div id="pokemonlist">
+                            {state.pokemon_list.map((pokemon: Pokemon, index: number) => 
                             //pokemon get rendered here
-                            <PokemonInTeam pokemon={pokemon}/>
+                            <PokemonInTeam pokemon={pokemon} key={index}/>
                             )}
                         </div>
                         <Link to='/editTeam'><button>Edit</button></Link>

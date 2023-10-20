@@ -12,7 +12,9 @@ function Register() {
     });
 
     const URL = "http://52.90.96.133:5500/api/users"
-    const [userMessage, setUserMessage] = useShowUserMessage(undefined, "/login", 6000);
+    /* const URL = "http://localhost:5500/api/users" */
+
+    const [userMessage, setUserMessage] = useShowUserMessage(undefined, "/login", 5000); //set the initial message, redirect path, timer duartion
     const [errorMessage, setErrorMessage] = useDisplayError();
 
 

@@ -5,7 +5,7 @@ import EditTeam from '../EditTeam/EditTeam';
 import TeamView from '../TeamView/TeamView';
 import Feed from "../Feed/Feed";
 import FriendFinder from '../FriendFinder/FriendFinder';
-import SidebarModal from '../SidebarModal/SidbarModal';
+import SidebarModal from '../SidebarModal/SidebarModal';
 
 
 function Home() {

@@ -72,7 +72,7 @@ function TeamView() {
             } else if(state.teamExists){
                 return (
                     <div>
-                        <h2>{state.team_name}</h2>
+                        <h2 id="teamname">{state.team_name}</h2>
                         <div>
                             {state.pokemon_list.map((pokemon: Pokemon) => 
                             //pokemon get rendered here

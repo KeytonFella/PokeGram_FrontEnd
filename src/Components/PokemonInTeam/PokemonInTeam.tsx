@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import "./PokemonInTeam.scss"
+import './PokemonInTeam.scss'
 import { Pokemon } from '../../utility/PokemonType'
 
 function PokemonInTeam(props: {pokemon: Pokemon}) {
@@ -27,13 +27,14 @@ function PokemonInTeam(props: {pokemon: Pokemon}) {
         return (<p>Loading...</p>)
     } else {
         return (
-        <div className='card'>
-            <h4>{props.pokemon.nickname ? <span>{props.pokemon.nickname} the </span>: <></>}{pokemon.name.charAt(0).toUpperCase() + pokemon.name.substr(1).toLowerCase()}</h4>
-            <h6>Lv. {props.pokemon.level}</h6>
-            
-            <div className='sprite'>
-                <img src={pokemon.sprites.front_default} alt="pokemon sprite"></img>
+        <div id="card">
+            <div>{props.pokemon.nickname ? <span>{props.pokemon.nickname} the </span>: <></>}{pokemon.name.charAt(0).toUpperCase() + pokemon.name.substr(1).toLowerCase()}</div>
+            <div id="sprite-wrapper">
+                <img id='sprite' src={pokemon.sprites.front_default} alt="pokemon sprite"></img>
             </div>
+            <div id="level">Lv. {props.pokemon.level}</div>
+            
+            
         </div>
     )
     }

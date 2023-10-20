@@ -2,9 +2,6 @@ import React, {useState, useRef } from 'react';
 import  axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
-import { useDispatch } from 'react-redux';
-import { setUserInfo } from '../../utility/auth';
-import { AppDispatch } from '../../utility/store';
 //credit https://github.com/hc-oss/react-multi-select-component/blob/master/README.md
 import { MultiSelect } from "react-multi-select-component";
 import './Post.scss';
@@ -71,14 +68,6 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
     }
   }
   async function on_click_submit(e: React.MouseEvent<HTMLButtonElement>){
-      //const dispatch: AppDispatch = useDispatch();
-    // const updatedInfo = {
-    //   username: "joshy",
-    //   name: 'Josh',
-    //   user_id: 'something reasonable', 
-    //   token: 'sha256--23',
-    // };
-    // dispatch(setUserInfo(updatedInfo));
     const image_id = await postImage();
     if(textareaValue) {
       const url = 'http://52.90.96.133:5500/api/post';
@@ -115,19 +104,6 @@ function calcHeight(value: string) {
 function on_keyup_textarea(e : React.KeyboardEvent<HTMLTextAreaElement>) {
   e.currentTarget.style.height = calcHeight(e.currentTarget.value) + "px";
 }
-// const handleDownload = async () => {
-//   try {
-//     const response = await axios.get('http://localhost:5500/api/post/image?image_id=7075f071-ac37-4503-96d4-5bea521eed11', {
-//       responseType: 'blob'
-//     });
-//     const blob = new Blob([response.data], { type: response.headers['content-type'] });
-//     const imageUrl = URL.createObjectURL(blob);
-//     setImageData(imageUrl);
-//   } catch (error) {
-//     console.error('Error downloading image:', error);
-//   }
-// };
-//<button onClick={handleDownload}>Download Image</button>
 const on_click_image = () =>{
 if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -152,8 +128,6 @@ return (
       <br/>
         <span>{AuthState.name} </span>
         {<span>{AuthState.username} </span>}<br/>
-        <span>is feeling okay</span>
-        {/* Use the token as needed in this child component */}
         <br/>
         <textarea placeholder="What's on your mind" id="post_body" onKeyUp={on_keyup_textarea} value={textareaValue}
         onChange={handleTextareaChange}></textarea>
@@ -176,7 +150,6 @@ return (
         </div>
       )}
       <button className="btn btn-info" id="post_button" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_submit}>Post</button>
-      {imageData && <img src={imageData} alt="Downloaded"/>}
     </div>
   </div>
 );

@@ -1,13 +1,11 @@
 .header {
-    border: 1px solid rgb(161, 161, 161);
     min-height: 70px;
     font-size: 24px;
-}
+    text-align: center;
 
-.box {
-    border: 1px solid rgb(161, 161, 161);
-    min-height: 1500px;
-    font-size: 24px;
+}
+.container-fluid{
+    height: 100%;
 }
 
 .stuffModal{
@@ -17,7 +15,91 @@
     width: 50px;
     height: 50px;
 }
+#top_of_social_feed{
+  width: 100%;
 
+}
+#add-post-text{
+  font-size: large;
+  margin-right: 10px; 
+}
 #modal_open{
+    width: 100%;
+    font-size: large;
+    background-color: #4267B2;
     background-image: none;
 }
+.row{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.top{
+    height: 10%;
+}
+.sub_cont {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+  .sub_cont1 {
+    background-color: #ff9999;
+    flex-basis: 20%; /* Adjust this to control the width of Container 1 */
+  }
+  
+  .sub_contSF {
+    flex-direction: column;
+    background-color: #99ff99;
+    flex-basis: 60%; /* Adjust this to control the width of Container 2 (Wider) */
+  }
+  
+  .sub_cont2 {
+    background-color: #9999ff;
+    flex-basis: 20%; /* Adjust this to control the width of Container 3 */
+  }
+  .socialFeedContainer{
+    max-width: fit-content;
+  }
+  
+  .headSection {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    border: 1px solid #000; /* Add a bottom border to all boxes */
+
+}
+  .col_left {
+    //background-color: red;
+    align-items: center;
+
+    flex-basis: 20%; /* Adjust this to control the width of Container 1 */
+  }
+  
+  .col_center {
+    align-items: center;
+
+    //background-color: grey;
+    flex-basis: 60%; /* Adjust this to control the width of Container 2 (Wider) */
+  }
+  
+  .col_right {
+    align-items: center;
+
+    //background-color: blue;
+    flex-basis: 20%; /* Adjust this to control the width of Container 3 */
+  }
+
+  @media (max-width: 768px) {
+    .sub_cont1, .sub_cont2, .col_left, .col_right {
+      display: none; 
+    }
+  }
+  @media (min-width: 769px) {
+    .sub_cont1, .sub_cont2, .col_left, .col_right  {
+      display: flex; 
+    }
+  }

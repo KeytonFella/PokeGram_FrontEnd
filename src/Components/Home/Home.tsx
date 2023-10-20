@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import './Home.scss';
 import Post from "../Post/Post";
+import StuffModal from "../StuffModal/StuffModal"
+import EditTeam from '../EditTeam/EditTeam';
+import TeamView from '../TeamView/TeamView';
 import Feed from "../Feed/Feed";
 
-import StuffModal from "../StuffModal/StuffModal"
+
 function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
@@ -15,34 +18,35 @@ function Home() {
   return (
     <>
       <div className="container-fluid">
-        <div className="row">
-          <div className="col-3 d-none d-xl-block sm-col-1">
-            <div className="header text-center">Stuff</div>
+        <div className="row top">
+          <div className="headSection col_left">
+            <div className="header text-center">Team</div>
           </div>
-          <div className="col">
+          <div className="headSection col_center">
             <div className="header text-center">Social Feed</div>
           </div>
-          <div className="col-3 d-none d-xl-block">
+          <div className="headSection col_right">
             <div className="header text-center">Other Stuff</div>
           </div>
         </div>
         <div className="row">
-          <div className="col-3 d-none d-xl-block">
-            <div className="box">Stuff Component</div>
+          <div className="sub_cont sub_cont1">
+            <p>Stuff Component</p>
           </div>
-          <div className="col" id = "social_feed_container">
+          <div className="sub_cont sub_contSF">
             <div id="top_of_social_feed">
               <button className="btn btn-default" onClick={openModal} id="modal_open">
+                <span id="add-post-text"> Add Post                    </span>
                 <img src={require("../../images/posticon.png")} alt ="asd" width="50px"/> 
               </button>
               <Post isOpen={isModalOpen} closeModal={closeModal}/> 
             </div>
-            <div id="posts_social_feed">
+            <div className="socialFeedContainer">
               <Feed/>
             </div>
           </div>
-          <div className="col-3 d-none d-xl-block">
-            <div className="box">Other Stuff Component</div>
+          <div className = "sub_cont sub_cont2">
+            <p>Other Stuff Component</p>
           </div>
         </div>
       </div>

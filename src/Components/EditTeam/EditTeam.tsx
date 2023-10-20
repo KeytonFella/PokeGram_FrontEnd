@@ -92,7 +92,7 @@ function EditTeam() {
         return pokemonList
     }
 
-    const handleDeletePokemon = (event: React.MouseEvent<HTMLButtonElement>, index: number) => {
+    async function handleDeletePokemon(event: React.MouseEvent<HTMLButtonElement>, index: number) {
         event.preventDefault()
         console.log ('deleting')
         console.log(`on index ${index}`)
@@ -104,6 +104,27 @@ function EditTeam() {
             console.log(`newList = ${newList} length ${newList.length}`)
 
             setPokemonList(newList)
+            const userInfo = {
+                name: AuthState.name,
+                username: AuthState.username,
+                user_id: AuthState.user_id,
+                token: AuthState.token
+            }
+            dispatch(setUserInfo(userInfo))
+            
+            const newTeam = {teamName: state.teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
+            try { 
+                const headers = {
+                    'Authorization': `Bearer ${userInfo.token}`,
+                    'Content-Type': 'application/json'
+                }
+                const response = await axios.put(`http://52.90.96.133:5500/api/teams/${userInfo.user_id}`, newTeam, {headers: headers})
+                console.log("Successfully posted data: ", JSON.stringify(response.data))
+                return response;
+            } catch(err) {
+                
+                console.error('Error: ', err)
+            }
         }
         return pokemonList
     }

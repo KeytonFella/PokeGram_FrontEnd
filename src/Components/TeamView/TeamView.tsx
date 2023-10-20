@@ -33,9 +33,10 @@ function TeamView() {
     
     
     React.useEffect(() => {
-        
-        if(AuthState.user_id && AuthState.username && AuthState.token){
-            setState({...state, logged_in: true})
+        console.log(`Auth id= ${AuthState.user_id} \n Auth username = ${AuthState.username} \n Auth token = ${AuthState.token}`)
+        if(AuthState.token){
+            
+            //setState({...state, logged_in: true})
             
             const url = `http://52.90.96.133:5500/api/teams/${AuthState.user_id}`
             
@@ -61,11 +62,11 @@ function TeamView() {
         } else {
             setState({...state, loading: false})
         }
-    }, [])
+    },[AuthState.token])
 
     
     
-    //if (state.logged_in) {  
+    if (AuthState.token) {  
             if (state.loading) {
                 return(<div>loading...</div>)
             } else if(state.teamExists){
@@ -85,9 +86,9 @@ function TeamView() {
                 // Render CreateTeam if the user doesnt have a team
                 return(<CreateTeam />)
             }
-    // } else {
-    //     return <h4>Please Login to view or create your team</h4>
-    // }
+    } else {
+        return <h4>Please Login to view or create your team</h4>
+    }
     
 }
 

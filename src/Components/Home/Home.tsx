@@ -27,7 +27,7 @@ function Home() {
             <div className="header text-center">Social Feed</div>
           </div>
           <div className="headSection col_right">
-            <div className="header text-center">Other Stuff</div>
+            <div className="header text-center">Users Nearby</div>
           </div>
         </div>
         <div className="row">

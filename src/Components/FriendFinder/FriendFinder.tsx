@@ -28,10 +28,10 @@ function FriendFinder() {
     
   return (
     <div className='friends-container'>
-        <h1>Friend Finder</h1>
+        <h2 >Friend Finder</h2>
         <div className='radius-form'>
             <form onSubmit={getUsers} > 
-                <label htmlFor='radius-input' className='radius-label'>Search radius (miles): </label>
+                <p className='radius-label'>Search radius (miles): </p>
                 <input type="text" placeholder='25' onChange={distanceChange} className='radius-input'/>
                 <input type="submit" value="Submit" className='radius-btn'/>
             </form>
@@ -39,10 +39,12 @@ function FriendFinder() {
         <div className='user-container'>
             {nearbyUsers.map((user: any) => (
                 <div className="user-entry" key={user.user_id}>
-                    <h3>{user.username}</h3>
-                    <p>{user.distance.toFixed(3)} miles away</p>
+                    <h5>{user.username}</h5>
+                    <p>{user.distance.toFixed(2)} miles away</p>
                     <button>
-                        View Profile
+                        <Link to={'/'}>
+                            View Profile
+                        </Link>
                     </button>
                 </div>
             ))}

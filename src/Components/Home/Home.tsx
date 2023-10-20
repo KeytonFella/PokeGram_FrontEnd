@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import './Home.scss';
 import Post from "../Post/Post";
-import StuffModal from "../StuffModal/StuffModal"
 import EditTeam from '../EditTeam/EditTeam';
 import TeamView from '../TeamView/TeamView';
 import Feed from "../Feed/Feed";
 import FriendFinder from '../FriendFinder/FriendFinder';
+import SidebarModal from '../SidebarModal/SidbarModal';
 
 
 function Home() {
@@ -52,7 +52,7 @@ function Home() {
         </div>
       </div>
       <div className="row d-xl-none">
-        {<StuffModal/>}
+        {<SidebarModal/>}
       </div>
     </>
   )

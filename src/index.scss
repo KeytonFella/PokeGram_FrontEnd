@@ -1,9 +1,13 @@
 // Override default variables before the import
 $body-bg: white;
-// .App {
-//     background-image: url('./images/pokemonbg.png');
-//     height: 100%;
-// }
+.App {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background-image: url('./images/pokemonbg.png')
+}
 
 html, body, #root {
     height: 100%;

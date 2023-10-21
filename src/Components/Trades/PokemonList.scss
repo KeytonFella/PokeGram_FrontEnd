@@ -1,0 +1,198 @@
+.pokemonListOuterContainer {
+    box-shadow: 4px 4px 8px #888888cd;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    border-radius: 6px;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+.tradeHeader {
+    flex: 0 0 100%;
+    background-color: white;
+    border-radius: 5%;
+    font-size: 36px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(50, 50, 50, 0.9);
+    padding: 12px;
+}
+
+.pokemonSearch {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgba(50, 50, 50, 0.9);
+    color: white;
+    font-size: 24px;
+}
+
+.leftSearch {
+    margin-left: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+    font-size: 24px;
+    max-width: 400px;
+}
+
+.searchLabel {
+    padding-top: 8px;
+    flex: 0 0 100%;
+}
+
+.searchInput {
+    max-height: 40px;
+    margin-bottom: 12px;
+}
+
+.searchButton {
+    max-height: 40px;
+    background-color: rgb(255, 125, 11);
+    border: 0;
+    border-radius: 15%;
+    color: rgb(24, 24, 24);
+    margin-left: 12px;
+    margin-bottom: 12px;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.searchButton:hover {
+    background-color: rgb(255, 152, 61);
+    border: 0;
+    border-radius: 15%;
+    color: rgb(24, 24, 24);
+}
+
+.searchInstructions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(100, 206, 102);
+    max-width: 350px;
+    font-size: 16px;
+    margin: 24px;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 2000;
+}
+
+.pokemonList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.pokemonCard {
+    height: 220px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    margin: 12px;
+    background-color: white;
+    border-radius: 5%;
+}
+
+.pokemonImage {
+    background-color: rgb(240, 240, 240);
+    border-radius: 5%;
+
+}
+
+.pokemonId {
+    font-size: 12px;
+    font-weight: bold;
+    color: rgba($color: #939393af, $alpha: 1.0)
+}
+
+.pokemonName {
+    display: inline-block;
+    background-color: white;
+}
+
+.removePokemonButton {
+    background-color: rgb(240, 240, 240);
+    border: 0;
+    border-radius: 5%;
+    color: rgb(24, 24, 24);
+}
+
+.removePokemonButton:hover {
+    background-color: rgb(218, 218, 218);
+    border: 0;
+    border-radius: 5%;
+    color: rgb(24, 24, 24);
+}
+
+.tradesOuterContainer {
+    box-shadow: 4px 4px 8px #888888cd;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.tradeContainer {
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.tradeUser {
+    flex: 0 0 100%;
+    background-color: rgba(50, 50, 50, 0.9);
+    color: white;
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 24px;
+}
+
+.tradeHeaderWants {
+    flex: 0 0 100%;
+    background-color: rgb(255, 125, 11);
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(50, 50, 50, 0.9);
+    text-align: center;
+    color: white;
+}
+
+.tradeHeaderHas {
+    flex: 0 0 100%;
+    background-color: rgb(100, 206, 102);
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(50, 50, 50, 0.9);
+    text-align: center;
+    color: white;
+}
+
+.tradeList {
+    flex: 0 0 100%;
+}
+
+.tradesButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(100, 206, 102);
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 2000;
+    color: white;
+}
+
+.tradesButton:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(66, 186, 68);
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 2000;
+    color: white;
+}
+

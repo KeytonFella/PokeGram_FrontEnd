@@ -3,6 +3,7 @@ import axios from 'axios';
 import { get } from 'http';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
+import './PokemonList.scss';
 
 const BASE_API = `http://52.90.96.133:5500/api/trades`;
 const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
@@ -67,45 +68,45 @@ function AvailableTrades() {
     
     return (
         <>
-        <div className="container">
-            <div className="row">
-              <div className="header text-center">Available Trades</div>
-              <button className="button" onClick={getAvailableTrades}>See Trades</button>
-            </div>
-            <div className="row">
+        <div className="tradesOuterContainer">
+              <div className="tradeHeader text-center">Available Trades</div>
+              <button className="tradesButton" onClick={getAvailableTrades}>See All Available Trades</button>
+            <div className="pokemonList">
             {
               availableTrades.length > 0 &&
               availableTrades.map((trade, index) => {
                 return (
-                  <div className="col text-center"key={trade.username}>
+                  <div className="tradeContainer"key={trade.username}>
                   <div className="tradeList" >
-                    <h3>{trade.username}</h3>
-                    <h4>Give Pokemon</h4>
-                    {
-                        trade.give_pokemon.map((pokemon: any) => {
-                            return (
-                                <div className="col text-center"key={pokemon.id}>
-                                <div className="tradeList" >
-                                  <h6>{pokemon.name}</h6>
-                                  <img src={pokemon.image} alt="" />
+                    <div className="tradeUser">{trade.username} has trade options available:</div>
+                    <div className="pokemonList">
+                      <div className="tradeHeaderWants">{trade.username} wants</div>
+                      {
+                          trade.give_pokemon.map((pokemon: any) => {
+                              return (
+                                <div className="pokemonCard" key={pokemon.id}>
+                                  <img className="pokemonImage" src={pokemon.image} alt={pokemon.name} />
+                                  <div className="pokemonId">#{("000" + pokemon.id).slice(-4)}</div>
+                                  <div className="pokemonName"><h5>{pokemon.name}</h5></div>
                                 </div>
+                                )
+                          })
+                      }
+                      </div>
+                      <div className="pokemonList">
+                      <div className="tradeHeaderHas">{trade.username} has</div>
+                      {
+                          trade.get_pokemon.map((pokemon: any) => {
+                              return (
+                                <div className="pokemonCard" key={pokemon.id}>
+                                  <img className="pokemonImage" src={pokemon.image} alt={pokemon.name} />
+                                  <div className="pokemonId">#{("000" + pokemon.id).slice(-4)}</div>
+                                  <div className="pokemonName"><h5>{pokemon.name}</h5></div>
                                 </div>
-                              )
-                        })
-                    }
-                    <h4>Get Pokemon</h4>
-                    {
-                        trade.get_pokemon.map((pokemon: any) => {
-                            return (
-                                <div className="col text-center"key={pokemon.id}>
-                                <div className="tradeList" >
-                                  <h6>{pokemon.name}</h6>
-                                  <img src={pokemon.image} alt="" />
-                                </div>
-                                </div>
-                              )
-                        })
-                    }
+                                )
+                          })
+                      }
+                    </div>
                   </div>
                   </div>
                 )

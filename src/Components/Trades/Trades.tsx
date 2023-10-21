@@ -9,13 +9,13 @@ function Trades() {
   return (
     <>
       <div className="container">
-        <div className="row">
+        <div className="container">
           {<SurrenderList/>}
         </div>
-        <div className="row">
+        <div className="container">
           {<DesireList/>}
         </div>
-        <div className="row">
+        <div className="container">
           {<AvailableTrades/>}
         </div>
       </div>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
+import './PokemonList.scss';
 
 const BASE_API = `http://52.90.96.133:5500/api/trades`;
 const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
@@ -33,11 +34,12 @@ function SurrenderList() {
           let pokeInfo = await axios.get(POKE_API + pokeId);
           let pokeObj = {
               id: pokeId,
-              name: pokeInfo.data.species.name,
+              name: pokeInfo.data.species.name.charAt(0).toUpperCase() + pokeInfo.data.species.name.slice(1),
               image: pokeInfo.data.sprites.front_default
           }
           pokemonArray.push(pokeObj);
       }
+      pokemonArray.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
       setsurrenderList(pokemonArray);
   }
   
@@ -66,27 +68,30 @@ function SurrenderList() {
 
   return (
     <>
-    <div className="container">
+    <div className="pokemonListOuterContainer">
         <div className="row">
-          <div className="header text-center">Pokemon To Trade</div>
-          <form method="post" onSubmit={addPokemon}>
-            <label>
-              Pokemon Search: <input name="myInput" defaultValue="" />
-            </label>
-            <button type="submit">Add Pokemon</button>
+          <div className="tradeHeader text-center">Pokemon To Trade</div>
+          <form className="pokemonSearch" method="post" onSubmit={addPokemon}>
+            <div className="leftSearch">
+              <label className="searchLabel">
+                Name or Number:
+              </label>
+              <input className="searchInput" name="myInput" defaultValue="" />
+              <button className="searchButton" type="submit">Add</button>
+            </div>
+            <div className="searchInstructions">Search for a Pokemon by name or using its National Pokedex number</div>
           </form>
 
         </div>
-        <div className="row">
+        <div className="pokemonList">
         {
           surrenderList.map((pokemon, index) => {
             return (
-              <div className="col text-center"key={pokemon.id}>
-              <div className="surrenderList" >
-                <h6>{pokemon.name}</h6>
-                <img src={pokemon.image} alt="" />
-                <button className="button" onClick={removePokemon} value={pokemon.id} >Remove</button>
-              </div>
+              <div className="pokemonCard" key={pokemon.id}>
+                <img className="pokemonImage" src={pokemon.image} alt="" />
+                <div className="pokemonId">#{("000" + pokemon.id).slice(-4)}</div>
+                <div className="pokemonName"><h5>{pokemon.name}</h5></div>               
+                <button className="removePokemonButton" onClick={removePokemon} value={pokemon.id} >Remove</button>
               </div>
             )
           })

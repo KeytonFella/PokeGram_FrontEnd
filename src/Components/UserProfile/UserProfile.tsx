@@ -149,7 +149,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                         <h2>{postProfile ? AuthState.username : username}</h2>
                     </div>
                     <div key = {Date.now()}  className="info user-profile-bio-container">
-                        {bio ?`About me: ${bio}`: "No Bio"}
+                        {bio ?`${bio}`: "No Bio"}
                     </div>
                 </div>
                 <div  id="add-friend-container">

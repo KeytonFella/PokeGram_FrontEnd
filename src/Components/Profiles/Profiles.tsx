@@ -42,10 +42,18 @@ function Profiles() {
   async function submitBio(event: any){
     event.preventDefault()
     console.log(profile.bio)
-    axios.put(`${URL}/bio`, {bio: profile.bio})
-    .then(response => alert('Bio updated!'))
-    .catch(err => console.log(err))
-    setEditBio(false)
+    try{
+      let headers = {
+        'Authorization': `Bearer ${AuthState.token}`,
+        'Content-Type': 'application/json'
+      }
+      const response = await axios.put(`${URL}/bio`, {bio: profile.bio}, {headers})
+      alert('Bio updated!');
+      setEditBio(false)
+    }
+    catch(err){
+      console.error(err);
+    }
   }
 
   // Function to upload profile picture

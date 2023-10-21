@@ -3,14 +3,15 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
-import { Friend } from '../Feed/Feed';
 import Feed from "../Feed/Feed";
 
 import './UserProfile.scss'
-
+interface userProfileProps {
+    postProfile: boolean;
+}
 //const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
+const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
 
-function UserProfile() {
     const { profile_id } = useParams();
     const AuthState = useSelector((state: RootState) => state.auth);
     const [profilePic, setProfilePic] = useState<string>("UserProfile Unavailable");
@@ -33,7 +34,7 @@ function UserProfile() {
 
     useEffect(() => {
         async function getProfileInfo() {
-            if(profile_id) {
+            if(profile_id && !postProfile) {
                 try {                
                     const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${profile_id}`, {
                         headers: { 
@@ -61,6 +62,18 @@ function UserProfile() {
                     console.error("Can't get post Text:", err);
                 }
             }
+            else if(postProfile) {
+                try {                
+                    const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${AuthState.user_id}`, {
+                        headers: { 
+                            'Authorization': `Bearer ${AuthState.token}`,
+                            'Content-Type': 'application/json'}
+                    })
+                    profileInfo.data.image_url ? setProfilePic(profileInfo.data.image_url) : setProfilePic(require("../../images/default_pp.jpg"));
+                } catch(err) {
+                    console.error("Can't get post Text:", err);
+                }
+            }
         }
         getProfileInfo();
     }, []);
@@ -73,11 +86,11 @@ function UserProfile() {
                         <img src={profilePic} alt={`pic not found for ${username}`} id='profile_pic'/>
                     </div>
                     <div id="user-profile-name-containter">
-                        <h2>{username}</h2>
+                        <h2>{postProfile ? AuthState.username : username}</h2>
                     </div>
                 </div>
                 <div id="add-friend-container">
-                    {(AuthState.user_id != profile_id && !areFriends) ? 
+                    {(AuthState.user_id != profile_id && !areFriends && !postProfile) ? 
                     <div id="add-friend">
                         <button className="btn btn-info" id="add-friend-btn" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_add}>Add Friend</button>
                     </div> 
@@ -89,7 +102,7 @@ function UserProfile() {
 
                 </div>
                 <div id="post-container">
-                    <Feed social_bool={false} user_id_in={profile_id}/>
+                    <Feed social_bool={false} user_id_in={postProfile ? AuthState.user_id : profile_id}/>
                 </div>
             </div>
         </div>

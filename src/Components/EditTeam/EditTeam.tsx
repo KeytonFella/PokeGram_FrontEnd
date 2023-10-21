@@ -6,10 +6,14 @@ import { setUserInfo } from '../../utility/auth'; // Im+
 import { AppDispatch } from '../../utility/store';
 import axios from 'axios';
 import { Pokemon } from '../../utility/PokemonType';
+import { useShowUserMessage } from '../../Hooks/DisplayAndRedirect';
+import { useDisplayError } from '../../Hooks/DisplayError';
 
 function EditTeam() {
     const AuthState = useSelector((state: RootState) => state.auth)
     const dispatch: AppDispatch = useDispatch();
+    const [errorMessage, setErrorMessage] = useDisplayError()
+    const [userMessage, setUserMessage] = useShowUserMessage(undefined, '/profiles', 6000)
     const [state, setState] = useState({
         loading: true,
         logged_in: false,
@@ -150,6 +154,7 @@ function EditTeam() {
             }
             const response = await axios.put(`http://52.90.96.133:5500/api/teams/${userInfo.user_id}`, newTeam, {headers: headers})
             console.log("Successfully posted data: ", JSON.stringify(response.data))
+            setUserMessage({message: "Successfully updated team!", username: userInfo.username})
             return response;
         } catch(err) {
             
@@ -197,6 +202,11 @@ function EditTeam() {
                 <br/>
                 <button type="submit" onClick={handleSubmit}>Submit</button>
             </form>
+            <div className='showMessage'>
+                {/* {<p>{errorMessage} </p>} */}
+                {<p>{userMessage?.message}</p>}
+                {userMessage?.message && <p>Redirecting {userMessage.username} to the profile page</p>}
+            </div>
         </div>
     )
 }

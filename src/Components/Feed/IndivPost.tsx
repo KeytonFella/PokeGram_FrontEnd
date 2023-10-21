@@ -2,19 +2,21 @@ import React, {useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 import { Link } from 'react-router-dom';
-
+import Tags, {Tag} from './Tags';
 import  axios from 'axios';
 //credit https://github.com/hc-oss/react-multi-select-component/blob/master/README.md
 import './IndivPost.scss'; 
-interface ElementComponentProps {
+interface IndivPostProps {
     username: string;
     useridfk: string | null | undefined;
     profilePicUrl: string;
     text_body: string;
     image_s3_id: string;
+    tags:  Tag[];
 }
 
-const IndivPost: React.FC<ElementComponentProps> = ({ username, profilePicUrl, useridfk, text_body, image_s3_id }) => {
+
+const IndivPost: React.FC<IndivPostProps> = ({ username, profilePicUrl, useridfk, text_body, image_s3_id, tags }) => {
     const AuthState = useSelector((state: RootState) => state.auth);
     const linkStyle = {
         "fontWeight": "bold",
@@ -59,6 +61,7 @@ const IndivPost: React.FC<ElementComponentProps> = ({ username, profilePicUrl, u
             <div className="post-img-container">
                 {imageData && <img src={imageData} alt="Downloaded" className="post_img"/>}
             </div>
+            {<Tags tags = {tags}/>}
         </div>
     );
 }

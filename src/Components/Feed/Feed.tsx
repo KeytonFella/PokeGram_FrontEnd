@@ -8,6 +8,7 @@ import { RootState } from '../../utility/reduxTypes';
 //credit https://github.com/hc-oss/react-multi-select-component/blob/master/README.md
 import './Feed.scss'; 
 import UsersPostDisplay from './UsersPostDisplay'
+import {Tag} from './Tags';
 import { AnyAaaaRecord } from 'dns';
 
 
@@ -16,6 +17,7 @@ export interface PostDataObject {
     post_id: string;
     text_body: string;
     user_id_fk: string  | null | undefined;
+    tags: Tag[] ;
 }
 export interface UsersObject {
     user_id: string | null | undefined;
@@ -23,7 +25,6 @@ export interface UsersObject {
     setPostArray: React.Dispatch<React.SetStateAction<PostDataObject[]>>;
     index: number;
 }
-
 export interface Friend {
     user_id: string  | null | undefined;
     username: string;
@@ -59,17 +60,11 @@ const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
         getFriends();
     }, [AuthState.user_id,AuthState.token]);
     if(!social_bool){
-        if(user_id_in)
         return (
             <div id="feed_container">
-                <UsersPostDisplay user_id={user_id_in} postArray={postArray} setPostArray={setPostArray} index={0}/>
+                <UsersPostDisplay user_id={user_id_in ? user_id_in : AuthState.user_id} postArray={postArray} setPostArray={setPostArray} index={0}/>
             </div>
         );
-        else{
-            <div id="feed_container">
-                <UsersPostDisplay user_id={AuthState.user_id} postArray={postArray} setPostArray={setPostArray} index={0}/>
-            </div>
-        }
     }
     return (
         <div id="feed_container">

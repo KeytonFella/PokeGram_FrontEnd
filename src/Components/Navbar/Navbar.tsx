@@ -43,36 +43,53 @@ function Navbar() {
               <div className="navbar-nav">
                 
               <Link className="nav-item nav-link" to="/">
+                <div className="container">
                 <img className="navImage" src= {require("../../images/pikachu.png")} width={"40px"} height={"40px"}/>
                 <h6>Home</h6>
+                </div>
               </Link>
               <Link className="nav-item nav-link" to="/posts">
+                <div className="container">
                 <img className="navImage" src= {require("../../images/post.png")} width={"40px"} height={"40px"}/>
                 <h6>Posts</h6>
+                </div>
               </Link>
               <Link className="nav-item nav-link" to="/trades">
+                <div className="container">
                 <img className="navImage" src= {require("../../images/trades.png")} width={"40px"} height={"40px"}/>
-                <h6>Trades</h6></Link>
+                <h6>Trades</h6>
+                </div>
+              </Link>
               <Link className="nav-item nav-link" to="/users/:user_id/">
+                <div className="container">
                 <img className="navImage" src= {require("../../images/friends.png")} width={"45px"} height={"40px"}/>
                 <h6>Friends</h6>
+                </div>
               </Link>
               {
                 authState.username && 
                   <Link className="nav-item nav-link" to="/profiles">
+                  <div className="container">
                   <img src={profile.image_url} alt='profile-pic' className='navbar-profile-pic' width={"40px"} height={"40px"} />
                   <h6>{authState.username.charAt(0).toUpperCase() + authState.username.slice(1)}</h6>
+                  </div>
                   </Link>
               }
               {
                 !authState.username && 
                 <>
                 <Link className="nav-item nav-link" to="/login">
+                  <div className="container">
                   <img className="navImage" src= {require("../../images/loginIcon.png")} width={"45px"} height={"40px"}/>
-                  <h6>Login</h6></Link>
-                  <Link className="nav-item nav-link" to="/register">
+                  <h6>Login</h6>
+                  </div>
+                </Link>
+                <Link className="nav-item nav-link" to="/register">
+                  <div className="container">
                   <img className="navImage" src= {require("../../images/registerIcon.png")} width={"45px"} height={"40px"}/>
-                  <h6>Register</h6></Link>
+                  <h6>Register</h6>
+                  </div>
+                </Link>
                 </>
               }
               </div>

@@ -3,37 +3,91 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
-import { Friend } from '../Feed/Feed';
 import Feed from "../Feed/Feed";
 
 import './UserProfile.scss'
-
+import Team from '../Team/Team';
+interface userProfileProps {
+    postProfile: boolean;
+}
 //const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
-
-function UserProfile() {
+const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
     const { profile_id } = useParams();
     const AuthState = useSelector((state: RootState) => state.auth);
     const [profilePic, setProfilePic] = useState<string>("UserProfile Unavailable");
     const [username, setUserName] = useState('Username not found');
     const [areFriends, setAreFriends] = useState(false);
+    const [buttonState , setButtonState ] = useState('add-friend');
+
     const on_hover_button = (e : React.MouseEvent<HTMLButtonElement>) => {
         e.currentTarget.style.background = '#034480';
       }
     const on_leave_button = (e : React.MouseEvent<HTMLButtonElement>) => {
         e.currentTarget.style.background = '#035096';
     }
-    async function on_click_add(e: React.MouseEvent<HTMLButtonElement>){
-        const response = await axios.get(`http://52.90.96.133:5500/api/users/${AuthState.user_id}}/friends`, {
-            headers: { 
-                'Authorization': `Bearer ${AuthState.token}`,
-                'Content-Type': 'application/json'}
-        })
-        console.log(response);
-    }
+    const on_hover_remove = (e : React.MouseEvent<HTMLButtonElement>) => {
+        e.currentTarget.style.background = 'red';
+        e.currentTarget.innerHTML = '❌ Unfriend'
+        e.currentTarget.style.borderColor= 'black';
 
+      }
+    const on_leave_remove = (e : React.MouseEvent<HTMLButtonElement>) => {
+        e.currentTarget.style.background = '#fff';
+        e.currentTarget.innerHTML = '✔ Friends'
+        e.currentTarget.style.borderColor= 'skyblue';
+
+    }
+    async function on_click_add(e: React.MouseEvent<HTMLButtonElement>){
+        try{
+            console.log(AuthState.user_id);
+            console.log(profile_id);
+            console.log(AuthState.token);
+
+            const url = `http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`;
+            let body = {
+                friend_key: profile_id,
+                key_type: 'user_id'
+            };
+            let headers = {
+                'Authorization': `Bearer ${AuthState.token}`,
+                'Content-Type': 'application/json'
+            }
+            const response = await axios.put(url, body, {headers});
+            setAreFriends(true);
+           
+            console.log(response);
+            console.log("Arefriend: ", areFriends);
+        } catch(err){
+            console.error(err);
+        }
+    }
+    
+    async function on_click_remove(e: React.MouseEvent<HTMLButtonElement>){
+        try{
+            console.log(profile_id);//21a4fe80-ce1d-42d0-8718-22e580940267
+            console.log(AuthState.user_id);//5cafef44-7453-4381-8815-cd73e3fd037b
+            const url = `http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`;
+            let body = {
+                friend_key: profile_id,
+                key_type: 'user_id'
+            };
+            let headers = {
+                'Authorization': `Bearer ${AuthState.token}`,
+                'Content-Type': 'application/json'
+            }
+            const response = await axios.delete(url, { headers, data: body });
+            //e.currentTarget.style.background = '#035096';
+            setAreFriends(false);
+            console.log("Arefriend: ", areFriends);
+
+            console.log(response);
+        } catch(err){
+            console.error(err);
+        }
+    }
     useEffect(() => {
         async function getProfileInfo() {
-            if(profile_id) {
+            if(profile_id && !postProfile) {
                 try {                
                     const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${profile_id}`, {
                         headers: { 
@@ -61,10 +115,53 @@ function UserProfile() {
                     console.error("Can't get post Text:", err);
                 }
             }
+            else if(postProfile) {
+                try {                
+                    const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${AuthState.user_id}`, {
+                        headers: { 
+                            'Authorization': `Bearer ${AuthState.token}`,
+                            'Content-Type': 'application/json'}
+                    })
+                    profileInfo.data.image_url ? setProfilePic(profileInfo.data.image_url) : setProfilePic(require("../../images/default_pp.jpg"));
+                } catch(err) {
+                    console.error("Can't get post Text:", err);
+                }
+            }
         }
         getProfileInfo();
-    }, []);
+    }, [postProfile]);
+    // useEffect(() => {
+    //     function changeButton() {
+    //         console.log("from change button Arefriend: ", areFriends);
+
+    //         if (AuthState.user_id != profile_id && !areFriends && !postProfile) {// add friend button
+    //             setFriendsButton(<div id="add-friend">
+    //                                 <button className="btn btn-info" id="add-friend-btn" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_add}>+ Add Friend</button>
+    //                             </div>) ;
+
+    //         } else if (AuthState.user_id != profile_id && areFriends && !postProfile) {//remove friend button
+    //             setFriendsButton(<div id="add-friend">
+    //                                 <button className="btn btn-info" id="remove-friend-btn" onMouseOver={on_hover_remove} onMouseLeave={on_leave_remove} onClick={on_click_remove}> ✔ Friends</button>
+    //                             </div>);
+    //         } else {//empty
+    //             setFriendsButton(<></>);
+    //         } 
+    //     }
+    //     changeButton();
+    // }, [areFriends]);
     //todo: add friends with checkmark on it. and have it change upon removing friend or adding them
+    useEffect(() => {
+        function changeButton() {
+            if (AuthState.user_id != profile_id && !areFriends && !postProfile) {// add friend button
+                setButtonState('add-friend');
+            } else if (AuthState.user_id != profile_id && areFriends && !postProfile) {//remove friend button
+                setButtonState('remove-friend');
+            } else {//empty
+                setButtonState('empty');
+            } 
+        }
+        changeButton();
+    }, [areFriends, postProfile ]);
     return (
         <div id = "user-profile-page-container">
             <div id='profile-top'>
@@ -73,23 +170,43 @@ function UserProfile() {
                         <img src={profilePic} alt={`pic not found for ${username}`} id='profile_pic'/>
                     </div>
                     <div id="user-profile-name-containter">
-                        <h2>{username}</h2>
+                        <h2>{postProfile ? AuthState.username : username}</h2>
                     </div>
                 </div>
                 <div id="add-friend-container">
-                    {(AuthState.user_id != profile_id && !areFriends) ? 
+                {buttonState === 'add-friend' && (
                     <div id="add-friend">
-                        <button className="btn btn-info" id="add-friend-btn" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_add}>Add Friend</button>
-                    </div> 
-                    :<></>} 
-                </div> 
+                        <button
+                            className="btn btn-info add-friend-btn"
+                            onMouseOver={on_hover_button}
+                            onMouseLeave={on_leave_button}
+                            onClick={on_click_add}
+                        >
+                            + Add Friend
+                        </button>
+                    </div>
+                    )}
+                {buttonState === 'remove-friend' && (
+                <div id="add-friend">
+                    <button
+                        className="btn btn-info remove-friend-btn"
+                        onMouseOver={on_hover_remove}
+                        onMouseLeave={on_leave_remove}
+                        onClick={on_click_remove}
+                    >
+                        ✔ Friends
+                    </button>
+                </div>
+                )}
+                {buttonState === 'empty' && <></>}
+            </div>
             </div>
             <div id="bottom_container">
                 <div id="team-container">
-
+                    <Team team_user_id={profile_id}/>
                 </div>
                 <div id="post-container">
-                    <Feed/>
+                    <Feed social_bool={!postProfile} user_id_in={postProfile ? AuthState.user_id : profile_id}/>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
 
     const [arr, setArr] = useState<PostDataObject[]>([])
     useEffect(() => {
-        async function getUsersPosts(user_id: string) {
+        async function getUsersPosts(user_id: string | null | undefined) {
             if(user_id) {
                 try {
                     const postsInfoResponse = await axios.get(`http://52.90.96.133:5500/api/post/user?user_id=${user_id}`, {
@@ -32,9 +32,11 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
                             'Authorization': `Bearer ${AuthState.token}`,
                             'Content-Type': 'application/json'}
                     })
+                    console.log()
                     setArr((prevData)  => [...prevData, ...postsInfoResponse.data.data]);
                     setUsername(usernameResponse.data.username);
                     setProfilePic(profileInfo.data.image_url)
+                    console.log(postsInfoResponse)
                 } catch(err) {
                     console.error("Can't get post Text:", err);
                 }
@@ -42,11 +44,10 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
         }
         getUsersPosts(user_id);
     }, []);
-
     return (
         <div className='user_post_display'>
             {arr.map( (item: PostDataObject, index: number) => (
-                <IndivPost key={index} username={username} profilePicUrl={profilePic} useridfk={user_id} text_body={item.text_body}  image_s3_id={item.image_s3_id}/>
+                <IndivPost key={index} username={username} profilePicUrl={profilePic} useridfk={user_id} text_body={item.text_body}  image_s3_id={item.image_s3_id} tags={item.tags}/>
             ))}
         </div>
     );

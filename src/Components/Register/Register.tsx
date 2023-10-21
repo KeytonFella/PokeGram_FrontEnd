@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, {useState } from 'react'
 import { useDisplayError} from '../../Hooks/DisplayError';
 import { useShowUserMessage} from '../../Hooks/DisplayAndRedirect';
+import { Link } from 'react-router-dom';
 
 function Register() {
 
@@ -12,7 +13,9 @@ function Register() {
     });
 
     const URL = "http://52.90.96.133:5500/api/users"
-    const [userMessage, setUserMessage] = useShowUserMessage(undefined, "/confirm", 6000);
+    /* const URL = "http://localhost:5500/api/users" */
+
+    const [userMessage, setUserMessage] = useShowUserMessage(undefined, "/login", 5000); //set the initial message, redirect path, timer duartion
     const [errorMessage, setErrorMessage] = useDisplayError();
 
 
@@ -74,21 +77,31 @@ function Register() {
     }
     return (
     <>
-        <br/>
-        <form onSubmit={handleSubmitRegister}>
-            <input type="text" name="username" placeholder='username' onChange={handleFormInputChange}></input>
+        <div id = "container">
+        <div className="loginContainer">
+        <img className="logo" src={require("../../images/pgLogo.png")} alt="pokegram logo" />
+        <div className="loginHeader"> Create account! </div>
+        <form className="loginForm" onSubmit={handleSubmitRegister}>
+          <div className="loginSubtext">Username</div>
+            <input className="loginInput" type="text" name="username" placeholder='' onChange={handleFormInputChange}></input>
             <br/>
-            <input type="text" name='password' placeholder='password' onChange={handleFormInputChange}></input>
+            <div className="loginSubtext">Password</div>
+            <input className="loginInput" type="text" name='password' placeholder='' onChange={handleFormInputChange}></input>
             <br/>
-            <input type="text" name='email' placeholder='email' onChange={handleFormInputChange}></input>
+            <div className="loginSubtext">Email</div>
+            <input className="loginInput" type="text" name='email' placeholder='' onChange={handleFormInputChange}></input>
             <br/>
-            <button type="submit"  disabled={!state.username || !state.password}>Register</button>
+            <button className="loginButton" type="submit"  disabled={!state.username || !state.password}>Register</button>
         </form>
         <br/>
         <div className='showMessage'>
           {<p>{errorMessage} </p>}
           {<p>{userMessage?.message} </p>}
           {userMessage.username && <p>Rediricting {userMessage.username} to the Confirmation page</p>}
+        </div>
+        <Link className="loginSubtext" to="/login">Already have an account? Login here!</Link>
+        <div className="space"> </div>
+        </div>
         </div>
     </>
   )

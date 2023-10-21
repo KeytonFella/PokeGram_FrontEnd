@@ -39,28 +39,57 @@ function Navbar() {
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="collapse navbar-collapse" id="navbarNavAltMarkup" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
               <div className="navbar-nav">
-              <Link className="nav-item nav-link" to="/">Home<span className="sr-only"></span></Link>
-              <Link className="nav-item nav-link" to="/posts">Posts</Link>
-              <Link className="nav-item nav-link" to="/trades">Trades</Link>
-              <Link className="nav-item nav-link" to="/users/:user_id/">Friends</Link>
+                
+              <Link className="nav-item nav-link" to="/">
+                <div className="container">
+                <img className="navImage" src= {require("../../images/pikachu.png")} width={"40px"} height={"40px"}/>
+                <h6>Home</h6>
+                </div>
+              </Link>
+              <Link className="nav-item nav-link" to="/posts">
+                <div className="container">
+                <img className="navImage" src= {require("../../images/post.png")} width={"40px"} height={"40px"}/>
+                <h6>Posts</h6>
+                </div>
+              </Link>
+              <Link className="nav-item nav-link" to="/trades">
+                <div className="container">
+                <img className="navImage" src= {require("../../images/trades.png")} width={"40px"} height={"40px"}/>
+                <h6>Trades</h6>
+                </div>
+              </Link>
+              <Link className="nav-item nav-link" to="/users/:user_id/">
+                <div className="container">
+                <img className="navImage" src= {require("../../images/friends.png")} width={"45px"} height={"40px"}/>
+                <h6>Friends</h6>
+                </div>
+              </Link>
               {
                 authState.username && 
-                <div className="container">
-                  <div className="col">
-                    <Link className="nav-item nav-link" to="/profiles">
-                    <img src={profile.image_url} alt='profile-pic' className='navbar-profile-pic' />
-                    {authState.username}
-                    </Link>
+                  <Link className="nav-item nav-link" to="/profiles">
+                  <div className="container">
+                  <img src={profile.image_url} alt='profile-pic' className='navbar-profile-pic' width={"40px"} height={"40px"} />
+                  <h6>{authState.username.charAt(0).toUpperCase() + authState.username.slice(1)}</h6>
                   </div>
-                </div>
+                  </Link>
               }
               {
                 !authState.username && 
                 <>
-                <Link className="nav-item nav-link" to="/login">Login</Link>
-                <Link className="nav-item nav-link" to="/register">Register</Link>
+                <Link className="nav-item nav-link" to="/login">
+                  <div className="container">
+                  <img className="navImage" src= {require("../../images/loginIcon.png")} width={"45px"} height={"40px"}/>
+                  <h6>Login</h6>
+                  </div>
+                </Link>
+                <Link className="nav-item nav-link" to="/register">
+                  <div className="container">
+                  <img className="navImage" src= {require("../../images/registerIcon.png")} width={"45px"} height={"40px"}/>
+                  <h6>Register</h6>
+                  </div>
+                </Link>
                 </>
               }
               </div>

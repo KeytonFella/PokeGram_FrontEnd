@@ -10,7 +10,7 @@ import { AppDispatch } from '../../utility/store';
 import CreateTeam from '../CreateTeam/CreateTeam'
 import { Link } from 'react-router-dom'
 
-function TeamView() {
+function TeamView(props: any) {
     const AuthState = useSelector((state: RootState) => state.auth)
     
     
@@ -79,7 +79,8 @@ function TeamView() {
                             <PokemonInTeam pokemon={pokemon} key={index}/>
                             )}
                         </div>
-                        <Link to='/editTeam'><button>Edit</button></Link>
+                        {props.modal && <Link to='/editTeam'><button type="button" data-bs-dismiss="modal">Edit</button></Link>}
+                        {!props.modal && <Link to='/editTeam'><button type="button">Edit</button></Link>}
                     </div>
                 )
             } else {

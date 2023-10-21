@@ -24,7 +24,7 @@ function Home() {
           <div className="sideContainerRed">
             <div className="header text-center">Team</div>
               <div className="sideContent">
-              <TeamView />
+              <TeamView modal={false}/>
               </div>
           </div>
         </div>

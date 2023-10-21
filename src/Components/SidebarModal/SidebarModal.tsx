@@ -18,7 +18,7 @@ function SidebarModal() {
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">               
-                <TeamView />
+                <TeamView modal={true}/>
                 </div>
                 
             </div>

@@ -39,17 +39,25 @@
     border-radius: 50% ;
 }
 #add-friend-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
+    justify-content: center;
     width:20%;
 }
 #add-friend-btn{
+    margin-top: 25%;
     background-color: #035096;
     background-image: none;
-    color: white;
-    width:100%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width:100%
+}
+#remove-friend-btn{
+    margin-top: 25%;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 8px;
+    border-color: skyblue;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width:100%
 }
 //============================================================================================================================================================
 //=========================================================== bottom container styles ========================================================================

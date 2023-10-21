@@ -81,7 +81,7 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
         image_s3_id: image_id,
         tags: selected
       };
-      axios.post(url, body, {headers })
+      axios.post(url, body, { headers })
       .then((response) => {
         console.log('Post Successfully Uploaded\n post_id: ', response.data.post_id);
         setTextareaValue('');

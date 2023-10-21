@@ -11,25 +11,64 @@ interface userProfileProps {
 }
 //const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
 const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
-
     const { profile_id } = useParams();
     const AuthState = useSelector((state: RootState) => state.auth);
     const [profilePic, setProfilePic] = useState<string>("UserProfile Unavailable");
     const [username, setUserName] = useState('Username not found');
     const [areFriends, setAreFriends] = useState(false);
+    const [friendButtton, setFriendsButton] = useState(<></>);
+
     const on_hover_button = (e : React.MouseEvent<HTMLButtonElement>) => {
         e.currentTarget.style.background = '#034480';
       }
     const on_leave_button = (e : React.MouseEvent<HTMLButtonElement>) => {
         e.currentTarget.style.background = '#035096';
     }
+    const on_hover_remove = (e : React.MouseEvent<HTMLButtonElement>) => {
+        e.currentTarget.style.background = 'red';
+        e.currentTarget.innerHTML = '❌ Unfriend'
+        e.currentTarget.style.borderColor= 'black';
+
+      }
+    const on_leave_remove = (e : React.MouseEvent<HTMLButtonElement>) => {
+        e.currentTarget.style.background = '#fff';
+        e.currentTarget.innerHTML = '✔ Friends'
+        e.currentTarget.style.borderColor= 'skyblue';
+
+    }
+  
     async function on_click_add(e: React.MouseEvent<HTMLButtonElement>){
-        const response = await axios.get(`http://52.90.96.133:5500/api/users/${AuthState.user_id}}/friends`, {
-            headers: { 
+        try{
+            const response = await axios.get(`http://52.90.96.133:5500/api/users/${AuthState.user_id}}/friends`, {
+                headers: { 
+                    'Authorization': `Bearer ${AuthState.token}`,
+                    'Content-Type': 'application/json'}
+            })
+            console.log(response);
+        } catch(err){
+            console.error(err);
+        }
+    }
+    
+    async function on_click_remove(e: React.MouseEvent<HTMLButtonElement>){
+        try{
+            console.log(profile_id);//21a4fe80-ce1d-42d0-8718-22e580940267
+            console.log(AuthState.user_id);//5cafef44-7453-4381-8815-cd73e3fd037b
+            const url = `http://52.90.96.133:5500/api/users/${AuthState.user_id}}/friends`;
+            let body = {
+                friend_key: profile_id,
+                key_type: 'user_id'
+            };
+            let headers = {
                 'Authorization': `Bearer ${AuthState.token}`,
-                'Content-Type': 'application/json'}
-        })
-        console.log(response);
+                'Content-Type': 'application/json'
+            }
+            const response = await axios.delete(url, {headers, data: body});
+            setAreFriends(false);
+            console.log(response);
+        } catch(err){
+            console.error(err);
+        }
     }
 
     useEffect(() => {
@@ -77,7 +116,24 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
         }
         getProfileInfo();
     }, []);
+    useEffect(() => {
+        function changeButton() {
+            if (AuthState.user_id != profile_id && !areFriends && !postProfile) {// add friend button
+                setFriendsButton(<div id="add-friend">
+                                    <button className="btn btn-info" id="add-friend-btn" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_add}>+ Add Friend</button>
+                                </div>) ;
+            } else if (AuthState.user_id != profile_id && areFriends && !postProfile) {//remove friend button
+                setFriendsButton(<div id="add-friend">
+                                    <button className="btn btn-info" id="remove-friend-btn" onMouseOver={on_hover_remove} onMouseLeave={on_leave_remove} onClick={on_click_remove}> ✔ Friends</button>
+                                </div>);
+            } else {//empty
+                setFriendsButton(<></>);
+            } 
+        }
+        changeButton();
+    }, [areFriends]);
     //todo: add friends with checkmark on it. and have it change upon removing friend or adding them
+   
     return (
         <div id = "user-profile-page-container">
             <div id='profile-top'>
@@ -90,12 +146,8 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                     </div>
                 </div>
                 <div id="add-friend-container">
-                    {(AuthState.user_id != profile_id && !areFriends && !postProfile) ? 
-                    <div id="add-friend">
-                        <button className="btn btn-info" id="add-friend-btn" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_add}>Add Friend</button>
-                    </div> 
-                    :<></>} 
-                </div> 
+                    {friendButtton}
+                </div>
             </div>
             <div id="bottom_container">
                 <div id="team-container">

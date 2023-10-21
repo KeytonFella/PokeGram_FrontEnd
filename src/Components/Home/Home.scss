@@ -38,6 +38,7 @@
     height: 10%;
 }
 .sub_cont {
+    padding: 30px;
     flex: 1;
     display: flex;
     align-items: center;
@@ -45,22 +46,25 @@
 }
   
   .sub_cont1 {
-    background-color: #ff9999;
-    flex-basis: 20%; /* Adjust this to control the width of Container 1 */
+    background-color: #FBD8B0;
+    flex-basis: 20%; 
+
   }
   
   .sub_contSF {
     flex-direction: column;
-    background-color: #99ff99;
-    flex-basis: 60%; /* Adjust this to control the width of Container 2 (Wider) */
+    justify-content: flex-start;
+    background-color: #E9EAE0;
+    flex-basis: 60%;
   }
   
   .sub_cont2 {
-    background-color: #9999ff;
-    flex-basis: 20%; /* Adjust this to control the width of Container 3 */
+    background-color: #FBD8B0;
+
+    flex-basis: 20%;
   }
   .socialFeedContainer{
-    max-width: fit-content;
+    width: 100%;
   }
   
   .headSection {

@@ -19,6 +19,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
     const AuthState = useSelector((state: RootState) => state.auth);
     const [profilePic, setProfilePic] = useState<string>("UserProfile Unavailable");
     const [username, setUserName] = useState<string | null>('Username not found');
+    const [bio, setBioState] = useState('');
     const [areFriends, setAreFriends] = useState(false);
     const [buttonState , setButtonState ] = useState('add-friend');
     console.log(
@@ -47,10 +48,6 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
     }
     async function on_click_add(e: React.MouseEvent<HTMLButtonElement>){
         try{
-            console.log(AuthState.user_id);
-            console.log(profilePathState);
-            console.log(AuthState.token);
-
             const url = `http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`;
             let body = {
                 friend_key: profilePathState,
@@ -62,17 +59,12 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
             }
             const response = await axios.put(url, body, {headers});
             setAreFriends(true);
-           
-            console.log(response);
-            console.log("Arefriend: ", areFriends);
         } catch(err){
             console.error(err);
         }
     }
     async function on_click_remove(e: React.MouseEvent<HTMLButtonElement>){
         try{
-            console.log(profilePathState);//21a4fe80-ce1d-42d0-8718-22e580940267
-            console.log(AuthState.user_id);//5cafef44-7453-4381-8815-cd73e3fd037b
             const url = `http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`;
             let body = {
                 friend_key: profilePathState,
@@ -85,9 +77,6 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
             const response = await axios.delete(url, { headers, data: body });
             //e.currentTarget.style.background = '#035096';
             setAreFriends(false);
-            console.log("Arefriend: ", areFriends);
-
-            console.log(response);
         } catch(err){
             console.error(err);
         }
@@ -124,6 +113,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                         'Content-Type': 'application/json'}
                 })
                 console.log(profileInfo)
+                setBioState(profileInfo.data.bio)
                 setProfilePic(profileInfo.data.image_url);
                 setUserName(usernameResponse.data.username);
             }
@@ -152,14 +142,17 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
         <div id = "user-profile-page-container">
             <div id='profile-top'>
                 <div id='profile-info-containter'>
-                    <div id="user-profile-image-containter">
+                    <div className="info user-profile-image-containter">
                         <img key = {Date.now()} src={profilePic} alt={`pic not found for ${username}`} id='profile_pic'/>
                     </div>
-                    <div id="user-profile-name-containter">
+                    <div  className="info user-profile-name-containter">
                         <h2>{postProfile ? AuthState.username : username}</h2>
                     </div>
+                    <div key = {Date.now()}  className="info user-profile-bio-container">
+                        {bio ?`About me: ${bio}`: "No Bio"}
+                    </div>
                 </div>
-                <div id="add-friend-container">
+                <div  id="add-friend-container">
                 {buttonState === 'add-friend' && (
                     <div id="add-friend">
                         <button
@@ -189,7 +182,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
             </div>
             <div id="bottom_container">
                 <div id="team-container">
-                    <Team team_user_id={profile_id}/>
+                    <Team key = {Date.now()} team_user_id={profilePathState}/>
                 </div>
                 <div id="post-container">
                     <Feed key = {Date.now()} social_bool={false} user_id_in={profilePathState}/>

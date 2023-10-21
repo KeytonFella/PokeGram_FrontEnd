@@ -1,22 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import { useSelector } from 'react-redux';
 import './App.scss';
-import { RootState } from './utility/reduxTypes'; // Import your RootState type
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import Trades from './Components/Trades/Trades';
-import Post from "./Components/Post/Post";
 import Profiles from './Components/Profiles/Profiles';
 import Confirm from './Components/Confirm/Confirm';
 import TeamView from './Components/TeamView/TeamView';
 import EditTeam from './Components/EditTeam/EditTeam';
-import UserProfile from './Components/UserProfile/UserProfile'; // Import a component for displaying user profiles
-import FriendFinder from './Components/FriendFinder/FriendFinder';
+import UserProfile from './Components/UserProfile/UserProfile';
 import Friends from './Components/Friends/Friends';
-import UserPosts from './Components/UserPosts/UserPosts';
 
 
 function App() {
@@ -35,7 +29,7 @@ function App() {
         <Route path='/users/:user_id/' element={<Friends/>}/>
         <Route path="/profile/:profile_id" element={<UserProfile postProfile = {false} />} />
         <Route path="/users" element={<Register/>}/>
-        <Route path="/posts" element={<UserPosts/>}/>
+        <Route path="/posts" element={<UserProfile postProfile={true}/>}/>
     </Routes>
     </div>    
   );

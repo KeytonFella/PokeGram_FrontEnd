@@ -8,6 +8,7 @@ import { RootState } from '../../utility/reduxTypes';
 //credit https://github.com/hc-oss/react-multi-select-component/blob/master/README.md
 import './Feed.scss'; 
 import UsersPostDisplay from './UsersPostDisplay'
+import {Tag} from './Tags';
 import { AnyAaaaRecord } from 'dns';
 
 
@@ -16,6 +17,7 @@ export interface PostDataObject {
     post_id: string;
     text_body: string;
     user_id_fk: string  | null | undefined;
+    tags: Tag[] ;
 }
 export interface UsersObject {
     user_id: string | null | undefined;

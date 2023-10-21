@@ -6,6 +6,7 @@ import { RootState } from '../../utility/reduxTypes';
 import Feed from "../Feed/Feed";
 
 import './UserProfile.scss'
+import Team from '../Team/Team';
 interface userProfileProps {
     postProfile: boolean;
 }
@@ -188,7 +189,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
             </div>
             <div id="bottom_container">
                 <div id="team-container">
-
+                    <Team team_user_id={profile_id}/>
                 </div>
                 <div id="post-container">
                     <Feed key = {Date.now()} social_bool={false} user_id_in={profilePathState}/>

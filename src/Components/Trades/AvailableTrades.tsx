@@ -4,6 +4,7 @@ import { get } from 'http';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 import './PokemonList.scss';
+import MessageModal from '../MessageModal/MessageModal';
 
 const BASE_API = `http://52.90.96.133:5500/api/trades`;
 const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
@@ -38,9 +39,11 @@ function AvailableTrades() {
         let tradesArray = [];
         for(let i = 0; i < trade.length; i++){
             const username = trade[i].username;
+            const user_id = trade[i].user_id;
             const give_pokemon = await createPokemonObj(trade[i].give_pokemon);
             const get_pokemon = await createPokemonObj(trade[i].get_pokemon);
             let tradeObj = {
+                user_id: user_id,
                 username: username,
                 give_pokemon: give_pokemon,
                 get_pokemon: get_pokemon
@@ -76,10 +79,10 @@ function AvailableTrades() {
               availableTrades.length > 0 &&
               availableTrades.map((trade, index) => {
                 return (
-                  <div className="tradeContainer"key={trade.username}>
+                  <div className="tradeContainer"key={trade.user_id}>
                   <div className="tradeList" >
                     <div className="tradeUser">{trade.username} has trade options available:
-                    
+                    <MessageModal user_id={trade.user_id}/>
                     </div>
                     <div className="pokemonList">
                       <div className="tradeHeaderWants">{trade.username} wants</div>

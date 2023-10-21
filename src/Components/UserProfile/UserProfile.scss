@@ -73,8 +73,16 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 #team-container{
-    width:30%
+    display: flex;
+    align-self: first baseline;
+    width:30%;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
 #post-container{
     width:70%
 }

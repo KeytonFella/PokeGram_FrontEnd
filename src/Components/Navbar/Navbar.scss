@@ -43,10 +43,12 @@
     height: 70px;
     align-self: center;
     margin: 0%;
+    border-radius: 5px;
 }
 
 .navbar .navbar-nav .nav-item:hover {
-    background-color: rgb(225, 225, 225);
+    // background-color: rgb(225, 225, 225);
+    background-color: rgba(33, 114, 206, 0.5);
     transition: 0.3s; 
 }
 

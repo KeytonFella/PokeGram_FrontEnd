@@ -19,7 +19,7 @@
 // }
 
 .navbar-profile-pic {
-    height: 70px;
+    border-radius: 50%;
 }
 
 .navbar .navbar-nav {
@@ -42,6 +42,7 @@
 
 .navbar .navbar-nav .nav-item {
     width: 100%;
+    min-width: 0;
     height: 70px;
     align-self: center;
     margin: 0%;
@@ -50,4 +51,12 @@
 .navbar .navbar-nav .nav-item:hover {
     background-color: rgb(225, 225, 225);
     transition: 0.3s; 
+}
+
+.navContainer {
+    display: flex;
+}
+
+.navImage {
+    opacity: 50%;
 }

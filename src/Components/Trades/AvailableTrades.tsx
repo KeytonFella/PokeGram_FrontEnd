@@ -78,7 +78,9 @@ function AvailableTrades() {
                 return (
                   <div className="tradeContainer"key={trade.username}>
                   <div className="tradeList" >
-                    <div className="tradeUser">{trade.username} has trade options available:</div>
+                    <div className="tradeUser">{trade.username} has trade options available:
+                    
+                    </div>
                     <div className="pokemonList">
                       <div className="tradeHeaderWants">{trade.username} wants</div>
                       {

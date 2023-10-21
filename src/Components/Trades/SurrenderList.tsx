@@ -81,7 +81,6 @@ function SurrenderList() {
             </div>
             <div className="searchInstructions">Search for a Pokemon by name or using its National Pokedex number</div>
           </form>
-
         </div>
         <div className="pokemonList">
         {

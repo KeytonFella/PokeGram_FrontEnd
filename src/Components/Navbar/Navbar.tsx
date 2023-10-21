@@ -41,26 +41,38 @@ function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
-              <Link className="nav-item nav-link" to="/">Home<span className="sr-only"></span></Link>
-              <Link className="nav-item nav-link" to="/posts">Posts</Link>
-              <Link className="nav-item nav-link" to="/trades">Trades</Link>
-              <Link className="nav-item nav-link" to="/users/:user_id/">Friends</Link>
+                
+              <Link className="nav-item nav-link" to="/">
+                <img className="navImage" src= {require("../../images/pikachu.png")} width={"40px"} height={"40px"}/>
+                <h6>Home</h6>
+              </Link>
+              <Link className="nav-item nav-link" to="/posts">
+                <img className="navImage" src= {require("../../images/post.png")} width={"40px"} height={"40px"}/>
+                <h6>Posts</h6>
+              </Link>
+              <Link className="nav-item nav-link" to="/trades">
+                <img className="navImage" src= {require("../../images/trades.png")} width={"40px"} height={"40px"}/>
+                <h6>Trades</h6></Link>
+              <Link className="nav-item nav-link" to="/users/:user_id/">
+                <img className="navImage" src= {require("../../images/friends.png")} width={"45px"} height={"40px"}/>
+                <h6>Friends</h6>
+              </Link>
               {
                 authState.username && 
-                <div className="container">
-                  <div className="col">
-                    <Link className="nav-item nav-link" to="/profiles">
-                    <img src={profile.image_url} alt='profile-pic' className='navbar-profile-pic' />
-                    {authState.username}
-                    </Link>
-                  </div>
-                </div>
+                  <Link className="nav-item nav-link" to="/profiles">
+                  <img src={profile.image_url} alt='profile-pic' className='navbar-profile-pic' width={"40px"} height={"40px"} />
+                  <h6>{authState.username.charAt(0).toUpperCase() + authState.username.slice(1)}</h6>
+                  </Link>
               }
               {
                 !authState.username && 
                 <>
-                <Link className="nav-item nav-link" to="/login">Login</Link>
-                <Link className="nav-item nav-link" to="/register">Register</Link>
+                <Link className="nav-item nav-link" to="/login">
+                  <img className="navImage" src= {require("../../images/loginIcon.png")} width={"45px"} height={"40px"}/>
+                  <h6>Login</h6></Link>
+                  <Link className="nav-item nav-link" to="/register">
+                  <img className="navImage" src= {require("../../images/registerIcon.png")} width={"45px"} height={"40px"}/>
+                  <h6>Register</h6></Link>
                 </>
               }
               </div>

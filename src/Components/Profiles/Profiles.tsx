@@ -20,6 +20,14 @@ function Profiles() {
   });
   let [file, setFile] = useState('');
   let [editBio, setEditBio] = useState(false);
+  let [address, setAddress] = useState({
+    street_number: '',
+    street_name: '',
+    city: '',
+    state: '',
+    zip_code: '',
+    
+  })
 
 
   useEffect(() => {
@@ -36,6 +44,22 @@ function Profiles() {
   // Function to update state bio
   function updateBio(event: any){
     setProfile({...profile, bio: event.target.value})
+  }
+
+  function updateStreetNumber(event: any){
+    setAddress({...address, street_number: event.target.value})
+  }
+  function updateStreetName(event: any){
+    setAddress({...address, street_name: event.target.value})
+  }
+  function updateCity(event: any){
+    setAddress({...address, city: event.target.value})
+  }
+  function updateState(event: any){
+    setAddress({...address, state: event.target.value})
+  }
+  function updateZip(event: any){
+    setAddress({...address, zip_code: event.target.value})
   }
 
   // Function to submit bio
@@ -64,33 +88,48 @@ function Profiles() {
     .catch(err => console.log(err))
   }
   
+  async function updateAddress(event: any){
+    event.preventDefault();
 
-
+  }
 
   return (
     <div className='profile-container'>
-        <div className='profile-info'>
-            <h1 className='username'>{AuthState.username}</h1>
-            <p className='bio'>{profile.bio}</p>
-            <button type='button' className='edit-profile' onClick={() => setEditBio(true)}>Edit bio</button>
-            <br/>
-            {editBio === true && 
-            <form className='bio-form' onSubmit={submitBio}>
-              <input type='text' className='bio-input' defaultValue={profile.bio} onChange={updateBio}/>
-              <button type='button' className='bio-cancel' onClick={() => setEditBio(false)}>Cancel</button>
-              <button type='submit' className='bio-submit'>Submit</button>
-            </form>
-            }
+      <h1 className='username'>{AuthState.username}</h1>
+      <div className='grid-container'>
+        <div className='bio-container'>
+          <p className='bio'>{profile.bio}</p>
+          <button type='button' className='edit-profile' onClick={() => setEditBio(true)}>Edit bio</button>
 
-            <img src={profile.image_url} alt='profile-pic' className='profile-pic' />
-            <form className='photo-form' onSubmit={uploadPhoto}>
-              <p>Choose a picture to update your profile with!</p>
-              <input type='file' onChange={selectFile} className='inputfile' />
-              <button type='submit'>Upload</button>
-            </form>
+          {editBio === true && 
+          <form className='bio-form' onSubmit={submitBio}>
+            <input type='text' className='bio-input' defaultValue={profile.bio} onChange={updateBio}/>
+            <button type='button' className='bio-cancel' onClick={() => setEditBio(false)}>Cancel</button>
+            <button type='submit' className='bio-submit'>Submit</button>
+          </form>
+          }
         </div>
-        <Team team_user_id={AuthState.user_id}/>
-        <ProfilePokemon user_id={AuthState.user_id}/>
+        <div className='picture-container'>
+          <img src={profile.image_url} alt='profile-pic' className='profile-pic' />
+          <form className='photo-form' onSubmit={uploadPhoto}>
+            <p>Choose a picture to update your profile with!</p>
+            <input type='file' onChange={selectFile} className='inputfile' />
+            <button type='submit'>Upload</button>
+          </form>
+        </div>
+        <div className='address-container'>
+          <form className='address-form' onSubmit={updateAddress}>
+            <input type='text' placeholder='1234' onChange={updateStreetNumber}/>
+            <input type='text' placeholder='Main St' onChange={updateStreetName}/>
+            <input type='text' placeholder='Seattle' onChange={updateCity}/>
+            <input type='text' placeholder='Washington' onChange={updateState}/>
+            <input type='text' placeholder='99999' onChange={updateZip}/>
+            <button type='submit'>Update Address</button>
+          </form>
+        </div>
+      </div>
+      <Team team_user_id={AuthState.user_id}/>
+      <ProfilePokemon user_id={AuthState.user_id}/>
     </div>
   )
 }

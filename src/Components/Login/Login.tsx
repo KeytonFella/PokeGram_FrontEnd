@@ -7,6 +7,7 @@ import { setUserInfo } from '../../utility/auth';
 import { useNavigate } from 'react-router';
 import { useDisplayError } from '../../Hooks/DisplayError';
 import { useShowUserMessage } from '../../Hooks/DisplayAndRedirect';
+import { Link } from 'react-router-dom';
 import "./Login.scss"
 
 
@@ -91,18 +92,27 @@ function Login() {
 
   return (
       <div id = "container">
-        <form onSubmit={handleSubmitLogin}>
-              <input type="text" name='username' placeholder='username' onChange={handleFormInputChange}></input>
-              <br/>
-              <input type="text" name='password' placeholder='password' onChange={handleFormInputChange}></input>
-              <br/>
-              <button type="submit" disabled={!state.username || !state.password}  >Login</button>
-          </form>
-          <div className='showMessage'>
-            {<p>{errorMessage} </p>}
-            {<p>{userMessage?.message}</p>}
-            {userMessage?.message && <p>Redirecting {userMessage.username} to the home page</p>}
-          </div>
+        <div className="loginContainer">
+          <img className="logo" src={require("../../images/pgLogo.png")} alt="pokegram logo" />
+        <div className="loginHeader"> Welcome! </div>
+        <div className="loginSubtext">Sign in to your account</div>     
+          <form className="loginForm" onSubmit={handleSubmitLogin}>
+                <div className="loginSubtext">Username</div>
+                <input className="loginInput" type="text" name='username' placeholder='' onChange={handleFormInputChange}></input>
+                <br/>
+                <div className="loginSubtext">Password</div>
+                <input className="loginInput" type="text" name='password' placeholder='' onChange={handleFormInputChange}></input>
+                <br/>
+                <button className="loginButton" type="submit" disabled={!state.username || !state.password}  >Login</button>
+            </form>
+            <div className='showMessage'>
+              {<p>{errorMessage} </p>}
+              {<p>{userMessage?.message}</p>}
+              {userMessage?.message && <p>Redirecting {userMessage.username} to the home page</p>}
+            </div>
+            <Link className="loginSubtext" to="/register">New user? Register here!</Link>
+            <div className="space"> </div>
+        </div>
       </div>
   )
 }

@@ -37,9 +37,9 @@ function DesireList() {
               name: pokeInfo.data.species.name.charAt(0).toUpperCase() + pokeInfo.data.species.name.slice(1),
               image: pokeInfo.data.sprites.front_default
           }
-          pokemonArray.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
           pokemonArray.push(pokeObj);
       }
+      pokemonArray.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
       setdesireList(pokemonArray);
   }
   

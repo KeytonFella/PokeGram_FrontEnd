@@ -28,7 +28,7 @@ function Navbar() {
       .then(response => setProfile(response.data))
       .catch(err => console.log(err))
     }
-  }, [authState.token])
+  }, [authState.token, profile])
    
   return (
       <nav className="navbar sticky-top navbar-expand-xl navbar-light bg-light" id='navbar'>

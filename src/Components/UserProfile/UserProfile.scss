@@ -25,14 +25,29 @@
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width:60%
+    width:75%
 }
-#user-profile-image-containter{
-    margin: 20px;
+.info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
 }
-#user-profile-name-containter{
-    margin-top: 10px;
-}
+    .user-profile-image-containter{
+        margin: 20px;
+        flex-basis: 25%;
+
+    }
+    .user-profile-name-containter{
+        margin-top: 10px;
+        flex-basis: 30%;
+
+    }
+    .user-profile-bio-container{
+        flex-basis: 45%;
+
+    }
 #profile_pic {
     width: 100px;
     height: 100px;
@@ -65,7 +80,6 @@
 #bottom_container{
     display: flex;
     flex-direction: row;
-    align-items: center;
     text-align: center;
     padding: 20px;
     background-color: #fff;
@@ -84,5 +98,7 @@
 }
 
 #post-container{
-    width:70%
+    width:70%;
+    display: flex;
+    flex-direction: flex-start;
 }

@@ -82,7 +82,7 @@ function Profiles() {
     await axios.put(`${URL}/photo`, formData, {headers:{
       'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer ' + AuthState.token,
-    }}).then
+    }})
 
     axios.get(URL, {headers: {'Authorization': 'Bearer ' + AuthState.token}})
     .then(response => setProfile(response.data))

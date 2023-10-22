@@ -66,7 +66,27 @@ function CreateTeam() {
         console.log(`pokemon list length: ${pokemonList.length}`)
         return pokemonList
     }
-
+    async function postTeam(userInfo: any) {
+        const team = {teamName: teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
+        const headers = {
+            'Authorization': `Bearer ${userInfo.token}`,
+            'Content-Type': 'application/json'
+        }
+        try{
+            const response = await axios.post('http://52.90.96.133:5500/api/teams', team, {headers: headers})
+            
+            return response;
+        
+        } catch(err) {
+            const error = err as any;
+            if(error && error.response) {
+                return error.response
+            }
+            return
+            //console.log(err)
+            // setErrorMessage(err)
+        }
+    }
     async function handleSubmit(event: any) {
         event.preventDefault()
         const userInfo = {
@@ -77,27 +97,20 @@ function CreateTeam() {
         }
         dispatch(setUserInfo(userInfo))
         
-        const newTeam = {teamName: teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
+        //const newTeam = {teamName: teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
         console.log('fetching...')
-        
-        try { 
-            const headers = {
-                'Authorization': `Bearer ${userInfo.token}`,
-                'Content-Type': 'application/json'
-            }
-            const response = await axios.post('http://52.90.96.133:5500/api/teams', newTeam, {headers: headers})
-            // if(response.status === 400) {
-            //     setErrorMessage(response.data.message || 'error')
-            // }
-            console.log("Successfully posted data: ", JSON.stringify(response.data))
+        const response = await postTeam(userInfo)
+        if(response?.status === 400) {
+            setErrorMessage(response.data.message || "error")
+            return
+        }
+        try {
             
             setUserMessage({message: "Successfully created team!", username: userInfo.username})
             return
         } catch(err) {
-            
-            console.error('Error: ', err)
+            console.log(err)
         }
-        
     }
     
     return (
@@ -139,7 +152,7 @@ function CreateTeam() {
                 <button type="submit" onClick={handleSubmit}>Submit</button>
             </form>
             <div className='showMessage'>
-                {/* {<p>{errorMessage} </p>} */}
+                {<p>{errorMessage} </p>}
                 {<p>{userMessage?.message}</p>}
                 {userMessage?.message && <p>Redirecting {userMessage.username} to the profile page</p>}
             </div>

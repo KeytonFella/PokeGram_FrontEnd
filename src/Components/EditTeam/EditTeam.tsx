@@ -133,7 +133,28 @@ function EditTeam() {
         return pokemonList
     }
 
-
+    async function putTeam(userInfo: any) {
+        const team = {teamName: state.teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
+        const headers = {
+            'Authorization': `Bearer ${userInfo.token}`,
+            'Content-Type': 'application/json'
+        }
+        try{
+            const response = await axios.put(`http://52.90.96.133:5500/api/teams/${userInfo.user_id}`, team, {headers: headers})
+            
+            return response;
+        
+        } catch(err) {
+            const error = err as any;
+            if(error && error.response) {
+                return error.response
+            }
+            return
+            //console.log(err)
+            // setErrorMessage(err)
+        }
+    }
+    
     async function handleSubmit(event: any) {
         event.preventDefault()
         const userInfo = {
@@ -144,18 +165,22 @@ function EditTeam() {
         }
         dispatch(setUserInfo(userInfo))
         
-        const newTeam = {teamName: state.teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
+        //const newTeam = {teamName: state.teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
         console.log('fetching...')
-        
+        const response = await putTeam(userInfo)
+        if(response?.status === 400) {
+            setErrorMessage(response.data.message || "error")
+            return
+        }
         try { 
-            const headers = {
-                'Authorization': `Bearer ${userInfo.token}`,
-                'Content-Type': 'application/json'
-            }
-            const response = await axios.put(`http://52.90.96.133:5500/api/teams/${userInfo.user_id}`, newTeam, {headers: headers})
+            // const headers = {
+            //     'Authorization': `Bearer ${userInfo.token}`,
+            //     'Content-Type': 'application/json'
+            // }
+            // const response = await axios.put(`http://52.90.96.133:5500/api/teams/${userInfo.user_id}`, newTeam, {headers: headers})
             console.log("Successfully posted data: ", JSON.stringify(response.data))
             setUserMessage({message: "Successfully updated team!", username: userInfo.username})
-            return response;
+            return
         } catch(err) {
             
             console.error('Error: ', err)
@@ -203,7 +228,7 @@ function EditTeam() {
                 <button type="submit" onClick={handleSubmit}>Submit</button>
             </form>
             <div className='showMessage'>
-                {/* {<p>{errorMessage} </p>} */}
+                {<p>{errorMessage} </p>}
                 {<p>{userMessage?.message}</p>}
                 {userMessage?.message && <p>Redirecting {userMessage.username} to the profile page</p>}
             </div>

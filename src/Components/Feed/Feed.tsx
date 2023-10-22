@@ -21,9 +21,6 @@ export interface PostDataObject {
 }
 export interface UsersObject {
     user_id: string | null | undefined;
-    postArray: PostDataObject[];
-    setPostArray: React.Dispatch<React.SetStateAction<PostDataObject[]>>;
-    index: number;
 }
 export interface Friend {
     user_id: string  | null | undefined;
@@ -34,13 +31,12 @@ export interface FeedProps {
     user_id_in: string | null | undefined;
 }
 const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
+    console.log(user_id_in);
     const AuthState = useSelector((state: RootState) => state.auth);
-    const [postArray, setPostArray] = useState<PostDataObject[]>([]);
     const [userLists, setUsersLists] = useState([])
     useEffect(() => {
         async function getFriends() {
-            console.log(AuthState.token)
-            console.log(AuthState.user_id)
+
             if(AuthState.token && social_bool) {
                 try {
                     const response = await axios.get(`http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`, {
@@ -58,20 +54,22 @@ const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
             }
         }
         getFriends();
-    }, [AuthState.user_id,AuthState.token]);
+    }, []);
     if(!social_bool){
         return (
             <div id="feed_container">
-                <UsersPostDisplay user_id={user_id_in ? user_id_in : AuthState.user_id} postArray={postArray} setPostArray={setPostArray} index={0}/>
+                <UsersPostDisplay user_id={user_id_in}/>
+            </div>
+        );
+    }else{
+        return (
+            <div id="feed_container">
+                {userLists.map((friend :Friend , index) => (
+                    <UsersPostDisplay key={index} user_id={friend.user_id}/>
+                ))}
             </div>
         );
     }
-    return (
-        <div id="feed_container">
-            {userLists.map((friend :Friend , index) => (
-                <UsersPostDisplay key={index} user_id={friend.user_id} postArray={postArray} setPostArray={setPostArray} index={index}/>
-            ))}
-        </div>
-    );
+
 }
 export default Feed;

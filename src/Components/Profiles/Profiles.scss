@@ -2,14 +2,40 @@
   margin-left: 20px;
   margin-right: 20px;
 }
-
 .grid-container {
-  border: 1px solid black;
   display: grid;
+  align-items: center;
   grid-template-columns: 33% 33% 33%;
   column-gap: 50px;
+  padding: 15px;
+}
+.container-header{
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  top: 0;
+}
+.profile-btn{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: auto;
+  padding: 5px;
+  background-color: #3a5cf5;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+}
+.profile-btn:hover{
+  background-color: #3a5cf5;
+  color: white;
 }
 .bio-container{
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,13 +43,17 @@
   margin: 0 auto;
 }
 .picture-container{
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
 }
-
+.profile-pic{
+  height: 100px;
+  width: auto;
+}
 .photo-form {
   display: flex;
   flex-direction: column;
@@ -33,9 +63,24 @@
 }
 
 .address-container{
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+}
+.address-input{
+  width: 100%;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-right: 20px;
+  padding: 5px;
+}
+.address-label{
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }

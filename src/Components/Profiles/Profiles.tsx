@@ -14,6 +14,7 @@ function Profiles() {
   //const id = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
   const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
 
+
   let [profile, setProfile] = useState({
       bio: '',
       image_url: ''
@@ -25,7 +26,7 @@ function Profiles() {
     street_name: '',
     city: '',
     state: '',
-    zip_code: '',
+    zip: '',
     
   })
 
@@ -59,15 +60,15 @@ function Profiles() {
     setAddress({...address, state: event.target.value})
   }
   function updateZip(event: any){
-    setAddress({...address, zip_code: event.target.value})
+    setAddress({...address, zip: event.target.value})
   }
 
   // Function to submit bio
   async function submitBio(event: any){
     event.preventDefault()
     console.log(profile.bio)
-    axios.put(`${URL}/bio`, {bio: profile.bio})
-    .then(response => alert('Bio updated!'))
+    axios.put(`${URL}/bio`, {bio: profile.bio}, {headers: {'Authorization': 'Bearer ' + AuthState.token}})
+    .then(response => console.log(response))
     .catch(err => console.log(err))
     setEditBio(false)
   }
@@ -81,7 +82,7 @@ function Profiles() {
     await axios.put(`${URL}/photo`, formData, {headers:{
       'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer ' + AuthState.token,
-    }})
+    }}).then
 
     axios.get(URL, {headers: {'Authorization': 'Bearer ' + AuthState.token}})
     .then(response => setProfile(response.data))
@@ -90,43 +91,61 @@ function Profiles() {
   
   async function updateAddress(event: any){
     event.preventDefault();
-
+    console.log(address)
+    await axios.put(`${URL}/address`, {address: address}, {headers: {'Authorization': 'Bearer ' + AuthState.token}})
+    .then(response => alert('Address Updated!'))
+    .catch(err => console.log(err))
+    setAddress({
+      street_number: '',
+      street_name: '',
+      city: '',
+      state: '',
+      zip: '',
+    });
   }
 
   return (
     <div className='profile-container'>
       <h1 className='username'>{AuthState.username}</h1>
       <div className='grid-container'>
+        <h2 className='container-header'>Update Bio</h2>
+        <h2 className='container-header'>Update Profile Picture</h2>
+        <h2 className='container-header'>Update Address</h2>
+      </div>
+      <div className='grid-container'>
         <div className='bio-container'>
-          <p className='bio'>{profile.bio}</p>
-          <button type='button' className='edit-profile' onClick={() => setEditBio(true)}>Edit bio</button>
+          <h4 className='bio'>{`"${profile.bio}"`}</h4>
+          <button type='button' className='profile-btn' onClick={() => setEditBio(true)}>Edit bio</button>
 
           {editBio === true && 
           <form className='bio-form' onSubmit={submitBio}>
             <input type='text' className='bio-input' defaultValue={profile.bio} onChange={updateBio}/>
             <button type='button' className='bio-cancel' onClick={() => setEditBio(false)}>Cancel</button>
-            <button type='submit' className='bio-submit'>Submit</button>
+            <button type='submit' className='profile-btn'>Submit</button>
           </form>
           }
         </div>
         <div className='picture-container'>
-          <img src={profile.image_url} alt='profile-pic' className='profile-pic' />
+          <img src={profile.image_url} alt='profile-pic' className='profile-pic'/>
           <form className='photo-form' onSubmit={uploadPhoto}>
-            <p>Choose a picture to update your profile with!</p>
-            <input type='file' onChange={selectFile} className='inputfile' />
-            <button type='submit'>Upload</button>
+            <h5>Choose a picture to update your profile with!</h5>
+            <input type='file' onChange={selectFile} className='profile-btn' /><br/>
+            <button type='submit' className='profile-btn'>Upload</button>
           </form>
         </div>
-        <div className='address-container'>
-          <form className='address-form' onSubmit={updateAddress}>
-            <input type='text' placeholder='1234' onChange={updateStreetNumber}/>
-            <input type='text' placeholder='Main St' onChange={updateStreetName}/>
-            <input type='text' placeholder='Seattle' onChange={updateCity}/>
-            <input type='text' placeholder='Washington' onChange={updateState}/>
-            <input type='text' placeholder='99999' onChange={updateZip}/>
-            <button type='submit'>Update Address</button>
-          </form>
-        </div>
+        <form id='address-form' className='address-container' onSubmit={updateAddress}>
+            <p className='address-label'>Street Number:</p>
+            <input type='text' placeholder='1234' className='address-input' onChange={updateStreetNumber}/>
+            <p className='address-label'>Street Name:</p>
+            <input type='text' placeholder='Main St' className='address-input' onChange={updateStreetName}/>
+            <p className='address-label'>City:</p>
+            <input type='text' placeholder='Seattle' className='address-input' onChange={updateCity}/>
+            <p className='address-label'>State:</p>
+            <input type='text' placeholder='WA' className='address-input' maxLength={2} onChange={updateState}/>
+            <p className='address-label'>Zip:</p>
+            <input type='text' placeholder='99999' className='address-input' onChange={updateZip}/>
+            <button type='submit' className='profile-btn'>Update Address</button>
+        </form>
       </div>
       <Team team_user_id={AuthState.user_id}/>
       <ProfilePokemon user_id={AuthState.user_id}/>

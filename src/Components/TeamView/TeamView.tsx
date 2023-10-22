@@ -33,7 +33,7 @@ function TeamView(props: any) {
     
     
     React.useEffect(() => {
-        console.log(`Auth id= ${AuthState.user_id} \n Auth username = ${AuthState.username} \n Auth token = ${AuthState.token}`)
+        console.log(`Auth id = ${AuthState.user_id} \n Auth username = ${AuthState.username} \n Auth token = ${AuthState.token}`)
         if(AuthState.token){
             
             //setState({...state, logged_in: true})
@@ -88,7 +88,7 @@ function TeamView(props: any) {
                 return(<CreateTeam />)
             }
     } else {
-        return <h4>Please Login to view or create your team</h4>
+        return <h4>Please login to view or create your team</h4>
     }
     
 }

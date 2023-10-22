@@ -82,7 +82,7 @@ function AvailableTrades() {
                   <div className="tradeContainer"key={trade.user_id}>
                   <div className="tradeList" >
                     <div className="tradeUser">{trade.username} has trade options available:
-                    <MessageModal user_id={trade.user_id}/>
+                    <MessageModal username={trade.username}/>
                     </div>
                     <div className="pokemonList">
                       <div className="tradeHeaderWants">{trade.username} wants</div>

@@ -17,6 +17,7 @@ interface IndivPostProps {
 
 
 const IndivPost: React.FC<IndivPostProps> = ({ username, profilePicUrl, useridfk, text_body, image_s3_id, tags }) => {
+
     const AuthState = useSelector((state: RootState) => state.auth);
     const linkStyle = {
         "fontWeight": "bold",
@@ -49,7 +50,7 @@ const IndivPost: React.FC<IndivPostProps> = ({ username, profilePicUrl, useridfk
                     <img src={profilePicUrl} className='profile_pic'/>
                 </div>
                 <div id="user-profile-name-containter">
-                    <Link style={linkStyle} to={AuthState.user_id == useridfk ? '/posts': `/profile/${useridfk}`}>{username}</Link>
+                    <Link style={linkStyle} to={`/profile/${useridfk}`}>{username}</Link>
                     <span>  @ {useridfk}</span>
                 </div>
             </div>

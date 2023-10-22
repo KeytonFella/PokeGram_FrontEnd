@@ -9,7 +9,7 @@ import './ProfilePokemon.scss'
 const ProfilePokemon = (props:any) => {
     const AuthState = useSelector((state: RootState) => state.auth);
     const USER_ID = props.user_id;
-    const TOKEN = props.token;
+
     // id for testing purposes
     // const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
     const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}/pokemon`;
@@ -17,6 +17,7 @@ const ProfilePokemon = (props:any) => {
     let [pokemon, setPokemon] = useState([] as any);
 
     useEffect(() => {
+      console.log(AuthState.user_id)
         getPokemon();
     },[]);
 
@@ -31,7 +32,8 @@ const ProfilePokemon = (props:any) => {
     async function createPokemonObj(pokemon: string[]) {
         let pokemonArray = [];
         for(let i = 0; i < pokemon.length; i++) {
-            let pokeName = pokemon[i];
+            let pokeName = pokemon[i][0].toUpperCase() + pokemon[i].slice(1);
+            console.log(pokeName)
             let pokeSprite = await axios.get(POKE_API + pokeName.toString().toLowerCase());
             let pokeObj = {
                 name: pokeName,
@@ -49,8 +51,8 @@ const ProfilePokemon = (props:any) => {
         const form = event.target;
         const formData = new FormData(form);
         const formJson = Object.fromEntries(formData.entries());
-        const pokemon: String = formJson.myInput as String;
-        
+        let pokemon: String = formJson.myInput as String;
+        pokemon = pokemon.toLowerCase();
         await axios.put(URL, {action: "add", pokemon: pokemon}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
         .then(response => response.data.message)
         .catch(error => console.log(error));
@@ -58,7 +60,10 @@ const ProfilePokemon = (props:any) => {
       }
 
     async function removePokemon(event: any) {
-        await axios.put(URL, {action: "remove", pokemon: event.target.value}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+        event.preventDefault();
+        let pokemon = event.target.value;
+        pokemon = pokemon.toLowerCase();
+        await axios.put(URL, {action: "remove", pokemon: pokemon}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
         .then(response => response.data.message)
         .catch(error => console.log(error));
         getPokemon();

@@ -52,7 +52,7 @@ const ProfilePokemon = (props:any) => {
         const formData = new FormData(form);
         const formJson = Object.fromEntries(formData.entries());
         let pokemon: String = formJson.myInput as String;
-        pokemon = pokemon[0].toUpperCase()+pokemon.slice(1);
+        pokemon = pokemon.toLowerCase();
         await axios.put(URL, {action: "add", pokemon: pokemon}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
         .then(response => response.data.message)
         .catch(error => console.log(error));
@@ -62,7 +62,7 @@ const ProfilePokemon = (props:any) => {
     async function removePokemon(event: any) {
         event.preventDefault();
         let pokemon = event.target.value;
-        pokemon = pokemon[0].toUpperCase()+pokemon.slice(1);
+        pokemon = pokemon.toLowerCase();
         await axios.put(URL, {action: "remove", pokemon: pokemon}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
         .then(response => response.data.message)
         .catch(error => console.log(error));

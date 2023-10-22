@@ -13,6 +13,6 @@ test('renders pokegram', () => {
         </BrowserRouter>
     </Provider>
 );
-  const linkElement = screen.getByText(/pokegram/i);
+  const linkElement = screen.getByText(/social feed/i);
   expect(linkElement).toBeInTheDocument();
 });

@@ -12,6 +12,7 @@
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.10",
     "@types/react-redux": "^7.1.27",
+    "@types/redux-mock-store": "^1.0.5",
     "aws-sdk": "^2.1472.0",
     "axios": "^1.5.1",
     "bluebird": "^3.7.2",
@@ -25,6 +26,7 @@
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
+    "redux-mock-store": "^1.5.4",
     "typescript": "^4.9.5",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
@@ -54,17 +56,19 @@
     ]
   },
   "devDependencies": {
-    "file-loader": "^6.2.0",
-    "sass": "^1.69.3",
-    "url-loader": "^4.1.1",
     "@babel/core": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-typescript": "^7.23.2",
     "@types/jest": "^29.5.6",
     "babel-jest": "^29.7.0",
-    "ts-jest": "^29.1.1"
+    "file-loader": "^6.2.0",
+    "sass": "^1.69.3",
+    "ts-jest": "^29.1.1",
+    "url-loader": "^4.1.1"
   },
   "jest": {
-    "transformIgnorePatterns": ["node_modules/(?!axios)/"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)/"
+    ]
   }
 }

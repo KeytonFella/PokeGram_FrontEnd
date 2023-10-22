@@ -6,9 +6,10 @@ import './MessageModal.scss';
 
 const BASE_API = `http://52.90.96.133:5500/api/messages`;
 
-function MessageModal(props: { user_id: any; }) {
-    const user_id = props.user_id;
-    const [recipient, setRecipient] = useState(user_id)
+function MessageModal(props: any) {
+    const username = props.username;
+    const buttonText = props.buttonText;
+    const [recipient, setRecipient] = useState(username)
     const [message, setMessage] = useState("")
     const AuthState = useSelector((state: RootState) => state.auth);
 
@@ -31,7 +32,7 @@ function MessageModal(props: { user_id: any; }) {
 
   return (
     <>
-        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever={user_id ? user_id: "user_id"}>Send Message</button>
+        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever={username ? username: "user_id"}>{buttonText ? buttonText : "Send Message"}</button>
        
         <div className="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">

@@ -6,6 +6,7 @@ import { RootState } from '../../utility/reduxTypes';
 import Feed from "../Feed/Feed";
 
 import './UserProfile.scss'
+import MessageModal from '../MessageModal/MessageModal';
 interface userProfileProps {
     postProfile: boolean;
 }
@@ -199,6 +200,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                 )}
                 {buttonState === 'empty' && <></>}
             </div>
+            <MessageModal username={profile_id}/>
             </div>
             <div id="bottom_container">
                 <div id="team-container">

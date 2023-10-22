@@ -68,12 +68,20 @@ function Navbar() {
               </Link>
               {
                 authState.username && 
-                  <Link className="nav-item nav-link" to="/profiles">
-                  <div className="container">
-                  <img src={profile.image_url} alt='profile-pic' className='navbar-profile-pic' width={"40px"} height={"40px"} />
-                  <h6>{authState.username.charAt(0).toUpperCase() + authState.username.slice(1)}</h6>
-                  </div>
+                <>
+                  <Link className="nav-item nav-link" to="/messages">
+                    <div className="container">
+                    <img className="navImage" src= {require("../../images/messagesIcon.png")} width={"45px"} height={"40px"}/>
+                    <h6>Messages</h6>
+                    </div>
                   </Link>
+                  <Link className="nav-item nav-link" to="/profiles">
+                    <div className="container">
+                    <img src={profile.image_url} alt='profile-pic' className='navbar-profile-pic' width={"40px"} height={"40px"} />
+                    <h6>{authState.username.charAt(0).toUpperCase() + authState.username.slice(1)}</h6>
+                    </div>
+                  </Link>
+                </>
               }
               {
                 !authState.username && 

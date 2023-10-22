@@ -11,6 +11,7 @@ import TeamView from './Components/TeamView/TeamView';
 import EditTeam from './Components/EditTeam/EditTeam';
 import UserProfile from './Components/UserProfile/UserProfile';
 import Friends from './Components/Friends/Friends';
+import Messages from './Components/Messages/Messages';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/profile/:profile_id" element={<UserProfile postProfile = {false} />} />
         <Route path="/users" element={<Register/>}/>
         <Route path="/posts" element={<UserProfile postProfile={true}/>}/>
+        <Route path="/messages" element={<Messages/>}/>
     </Routes>
     </div>    
   );

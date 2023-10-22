@@ -54,20 +54,23 @@
     border-radius: 50% ;
 }
 #add-friend-container {
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width:20%;
+    
 }
 .add-friend-btn{
-    margin-top: 25%;
-    background-color: #035096;
+    margin-top: 15%;
+    background: #035096;
     background-image: none;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width:100%
 }
 .remove-friend-btn{
-    margin-top: 25%;
-    background-color: #fff;
+    margin-top: 15%;
+    background: #fff;
     background-image: none;
     border-radius: 8px;
     border-color: skyblue;

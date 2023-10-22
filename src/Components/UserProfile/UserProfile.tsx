@@ -91,14 +91,14 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                     setprofilePathStateState(AuthState.user_id)
                 }
 
-                if(profilePathState != AuthState.user_id && !postProfile) {// not our own profile, we can look for frineds
+                if(profilePathState !== AuthState.user_id && !postProfile) {// not our own profile, we can look for frineds
                     const friendsList = await axios.get(`http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`, {
                         headers: { 
                             'Authorization': `Bearer ${AuthState.token}`,
                             'Content-Type': 'application/json'}
                     });
                     for (const friend of friendsList.data.friendsList) {
-                        if(friend.user_id == profilePathState) {
+                        if(friend.user_id === profilePathState) {
                             setAreFriends(true);
                         }
                     }
@@ -129,9 +129,9 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
 
     useEffect(() => {
         function changeButton() {
-            if (AuthState.user_id != profilePathState && !areFriends && !postProfile) {// add friend button
+            if (AuthState.user_id !== profilePathState && !areFriends && !postProfile) {// add friend button
                 setButtonState('add-friend');
-            } else if (AuthState.user_id != profilePathState && areFriends && !postProfile) {//remove friend button
+            } else if (AuthState.user_id !== profilePathState && areFriends && !postProfile) {//remove friend button
                 setButtonState('remove-friend');
             } else {//empty
                 setButtonState('empty');
@@ -153,11 +153,13 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                         {bio ?`${bio}`: "No Bio"}
                     </div>
                 </div>
-                <div  id="add-friend-container">
+                <div key = {Date.now()} id="add-friend-container">
                 {buttonState === 'add-friend' && (
-                    <div id="add-friend">
+                    <div key = {Date.now()} id="add-friend">
                         <button
+                            key = {Date.now()}
                             className="btn btn-info add-friend-btn"
+                            style= {{ background: '#035096'}}
                             onMouseOver={on_hover_button}
                             onMouseLeave={on_leave_button}
                             onClick={on_click_add}
@@ -167,10 +169,12 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                     </div>
                     )}
                 {buttonState === 'remove-friend' && (
-                <div id="add-friend">
+                <div key = {Date.now()}  id="add-friend">
                     <button
+                    key = {Date.now()}
                         className="btn btn-info remove-friend-btn"
                         onMouseOver={on_hover_remove}
+                        style= {{ background: '#fff'}}
                         onMouseLeave={on_leave_remove}
                         onClick={on_click_remove}
                     >
@@ -179,8 +183,8 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                 </div>
                 )}
                 {buttonState === 'empty' && <></>}
+                {!postProfile || profilePathState !== AuthState.user_id ? <MessageModal username={profile_id}/> :<></>}
             </div>
-            <MessageModal username={profile_id}/>
             </div>
             <div id="bottom_container">
                 <div id="team-container">

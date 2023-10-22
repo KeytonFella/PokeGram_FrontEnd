@@ -42,6 +42,32 @@
   align-items: center;
   margin: 0 auto;
 }
+.bio-input{
+  width: 100%;
+  height: 80%;
+  border-radius: 5px;
+
+}
+.bio-cancel-btn{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  width: auto;
+  padding: 5px;
+  background-color: #f53b3b;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+}
+.bio-cancel-btn:hover{
+  background-color: #f53b3b;
+  color: white;
+}
 .picture-container{
   height: 100%;
   display: flex;

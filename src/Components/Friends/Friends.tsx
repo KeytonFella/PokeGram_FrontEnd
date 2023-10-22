@@ -13,8 +13,8 @@ function Friends() {
     }
 
     const authState = useSelector((state: RootState) => state.auth); //lets use the redux store
-    const URL = `http://52.90.96.133:5500/api/users/${authState.user_id}/friends`;
-    /* const URL = `http://localhost:5500/api/users/${authState.user_id}/friends`; */
+    /* const URL = `http://52.90.96.133:5500/api/users/${authState.user_id}/friends`; */
+    const URL = `http://localhost:5500/api/users/${authState.user_id}/friends`;
     
     const headers = {
         'Authorization': `Bearer ${authState.token}`

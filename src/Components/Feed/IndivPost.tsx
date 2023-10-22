@@ -46,10 +46,10 @@ const IndivPost: React.FC<IndivPostProps> = ({ username, profilePicUrl, useridfk
     return (
         <div className="ind_post_display">
             <div className="profile-link-container">
-                <div id="user-profile-image-containter">
+                <div id="indiv-profile-image-containter">
                     <img src={profilePicUrl} className='profile_pic'/>
                 </div>
-                <div id="user-profile-name-containter">
+                <div id="indiv-profile-name-containter">
                     <Link style={linkStyle} to={`/profile/${useridfk}`}>{username}</Link>
                     <span>  @ {useridfk}</span>
                 </div>

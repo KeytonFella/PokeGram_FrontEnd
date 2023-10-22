@@ -46,7 +46,7 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
     }, []);
     return (
         <div className='user_post_display'>
-            {arr.map( (item: PostDataObject, index: number) => (
+            {arr.reverse().map( (item: PostDataObject, index: number) => (
                 <IndivPost key={index} username={username} profilePicUrl={profilePic} useridfk={user_id} text_body={item.text_body}  image_s3_id={item.image_s3_id} tags={item.tags}/>
             ))}
         </div>

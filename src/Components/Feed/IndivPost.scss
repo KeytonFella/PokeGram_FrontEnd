@@ -19,13 +19,15 @@
     height: 40px ; /* Adjust the height as needed */
     background-color: #f0f0f0; /* Set a background color if desired */
 }
-.user-profile-name-containter{
+#indiv-profile-name-containter{
     height: 100%;
-    width: 100%;
+    align-items: center;
+
 }
-.user-profile-image-containter{
+#indiv-profile-image-containter{
     height : 100%;
-    width: 100%;
+
+    padding-right: 10px;
 }
 .profile_pic{
     height: auto;

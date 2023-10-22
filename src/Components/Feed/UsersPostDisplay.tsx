@@ -38,7 +38,7 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
                     setProfilePic(profileInfo.data.image_url)
                     console.log(postsInfoResponse)
                 } catch(err) {
-                    console.error("Can't get post Text:", err);
+                    console.error("Can't get post:", err);
                 }
             }
         }

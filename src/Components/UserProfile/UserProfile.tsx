@@ -7,17 +7,27 @@ import Feed from "../Feed/Feed";
 
 import './UserProfile.scss'
 import MessageModal from '../MessageModal/MessageModal';
+import Team from '../Team/Team';
 interface userProfileProps {
     postProfile: boolean;
 }
 //const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
 const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
-    const { profile_id } = useParams();
+    console.log(postProfile);
+    let { profile_id } = useParams();
+    const [profilePathState, setprofilePathStateState] = useState<string|null|undefined>(profile_id);
+  
     const AuthState = useSelector((state: RootState) => state.auth);
     const [profilePic, setProfilePic] = useState<string>("UserProfile Unavailable");
-    const [username, setUserName] = useState('Username not found');
+    const [username, setUserName] = useState<string | null>('Username not found');
+    const [bio, setBioState] = useState('');
     const [areFriends, setAreFriends] = useState(false);
     const [buttonState , setButtonState ] = useState('add-friend');
+    console.log(
+        "profilePic: ",profilePic,
+        "username: ",username,
+        "profilePathState: ",profilePathState,
+        "postProfile: ",postProfile)
 
     const on_hover_button = (e : React.MouseEvent<HTMLButtonElement>) => {
         e.currentTarget.style.background = '#034480';
@@ -39,13 +49,9 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
     }
     async function on_click_add(e: React.MouseEvent<HTMLButtonElement>){
         try{
-            console.log(AuthState.user_id);
-            console.log(profile_id);
-            console.log(AuthState.token);
-
             const url = `http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`;
             let body = {
-                friend_key: profile_id,
+                friend_key: profilePathState,
                 key_type: 'user_id'
             };
             let headers = {
@@ -54,21 +60,15 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
             }
             const response = await axios.put(url, body, {headers});
             setAreFriends(true);
-           
-            console.log(response);
-            console.log("Arefriend: ", areFriends);
         } catch(err){
             console.error(err);
         }
     }
-    
     async function on_click_remove(e: React.MouseEvent<HTMLButtonElement>){
         try{
-            console.log(profile_id);//21a4fe80-ce1d-42d0-8718-22e580940267
-            console.log(AuthState.user_id);//5cafef44-7453-4381-8815-cd73e3fd037b
             const url = `http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`;
             let body = {
-                friend_key: profile_id,
+                friend_key: profilePathState,
                 key_type: 'user_id'
             };
             let headers = {
@@ -78,102 +78,82 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
             const response = await axios.delete(url, { headers, data: body });
             //e.currentTarget.style.background = '#035096';
             setAreFriends(false);
-            console.log("Arefriend: ", areFriends);
-
-            console.log(response);
         } catch(err){
             console.error(err);
         }
     }
     useEffect(() => {
         async function getProfileInfo() {
-            if(profile_id && !postProfile) {
-                try {                
-                    const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${profile_id}`, {
-                        headers: { 
-                            'Authorization': `Bearer ${AuthState.token}`,
-                            'Content-Type': 'application/json'}
-                    })
-                    const usernameResponse = await axios.get(`http://52.90.96.133:5500/api/profiles/${profile_id}/username`, {
-                        headers: { 
-                            'Authorization': `Bearer ${AuthState.token}`,
-                            'Content-Type': 'application/json'}
-                    })
+            try{
+
+                if(postProfile){
+                    setAreFriends(false);
+                    setprofilePathStateState(AuthState.user_id)
+                }
+
+                if(profilePathState != AuthState.user_id && !postProfile) {// not our own profile, we can look for frineds
                     const friendsList = await axios.get(`http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`, {
                         headers: { 
                             'Authorization': `Bearer ${AuthState.token}`,
                             'Content-Type': 'application/json'}
                     });
-                    profileInfo.data.image_url ? setProfilePic(profileInfo.data.image_url) : setProfilePic(require("../../images/default_pp.jpg"));
                     for (const friend of friendsList.data.friendsList) {
-                        if(friend.user_id == profile_id) {
+                        if(friend.user_id == profilePathState) {
                             setAreFriends(true);
                         }
-                      }
-                    setUserName(usernameResponse.data.username);
-                } catch(err) {
-                    console.error("Can't get post Text:", err);
+                    }
                 }
+                const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${profilePathState}`, {
+                    headers: { 
+                        'Authorization': `Bearer ${AuthState.token}`,
+                        'Content-Type': 'application/json'}
+                })
+                const usernameResponse = await axios.get(`http://52.90.96.133:5500/api/profiles/${profilePathState}/username`, {
+                    headers: { 
+                        'Authorization': `Bearer ${AuthState.token}`,
+                        'Content-Type': 'application/json'}
+                })
+                console.log(profileInfo)
+                setBioState(profileInfo.data.bio)
+                setProfilePic(profileInfo.data.image_url);
+                setUserName(usernameResponse.data.username);
             }
-            else if(postProfile) {
-                try {                
-                    const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${AuthState.user_id}`, {
-                        headers: { 
-                            'Authorization': `Bearer ${AuthState.token}`,
-                            'Content-Type': 'application/json'}
-                    })
-                    profileInfo.data.image_url ? setProfilePic(profileInfo.data.image_url) : setProfilePic(require("../../images/default_pp.jpg"));
-                } catch(err) {
-                    console.error("Can't get post Text:", err);
-                }
+            catch(err){
+                console.error(err);
             }
         }
         getProfileInfo();
-    }, [postProfile]);
-    // useEffect(() => {
-    //     function changeButton() {
-    //         console.log("from change button Arefriend: ", areFriends);
+        console.log("getProfileInfo called")
 
-    //         if (AuthState.user_id != profile_id && !areFriends && !postProfile) {// add friend button
-    //             setFriendsButton(<div id="add-friend">
-    //                                 <button className="btn btn-info" id="add-friend-btn" onMouseOver={on_hover_button} onMouseLeave={on_leave_button} onClick={on_click_add}>+ Add Friend</button>
-    //                             </div>) ;
+    }, [postProfile, profilePathState]);
 
-    //         } else if (AuthState.user_id != profile_id && areFriends && !postProfile) {//remove friend button
-    //             setFriendsButton(<div id="add-friend">
-    //                                 <button className="btn btn-info" id="remove-friend-btn" onMouseOver={on_hover_remove} onMouseLeave={on_leave_remove} onClick={on_click_remove}> ✔ Friends</button>
-    //                             </div>);
-    //         } else {//empty
-    //             setFriendsButton(<></>);
-    //         } 
-    //     }
-    //     changeButton();
-    // }, [areFriends]);
-    //todo: add friends with checkmark on it. and have it change upon removing friend or adding them
     useEffect(() => {
         function changeButton() {
-            if (AuthState.user_id != profile_id && !areFriends && !postProfile) {// add friend button
+            if (AuthState.user_id != profilePathState && !areFriends && !postProfile) {// add friend button
                 setButtonState('add-friend');
-            } else if (AuthState.user_id != profile_id && areFriends && !postProfile) {//remove friend button
+            } else if (AuthState.user_id != profilePathState && areFriends && !postProfile) {//remove friend button
                 setButtonState('remove-friend');
             } else {//empty
                 setButtonState('empty');
             } 
         }
         changeButton();
-    }, [areFriends, postProfile ]);
+    }, [areFriends]);
     return (
         <div id = "user-profile-page-container">
             <div id='profile-top'>
                 <div id='profile-info-containter'>
-                    <div id="user-profile-image-containter">
-                        <img src={profilePic} alt={`pic not found for ${username}`} id='profile_pic'/>
+                    <div className="info user-profile-image-containter">
+                        <img key = {Date.now()} src={profilePic} alt={`pic not found for ${username}`} id='profile_pic'/>
                     </div>
-                    <div id="user-profile-name-containter">
+                    <div  className="info user-profile-name-containter">
                         <h2>{postProfile ? AuthState.username : username}</h2>
                     </div>
+                    <div key = {Date.now()}  className="info user-profile-bio-container">
+                        {bio ?`${bio}`: "No Bio"}
+                    </div>
                 </div>
-                <div id="add-friend-container">
+                <div  id="add-friend-container">
                 {buttonState === 'add-friend' && (
                     <div id="add-friend">
                         <button
@@ -204,10 +184,10 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
             </div>
             <div id="bottom_container">
                 <div id="team-container">
-
+                    <Team key = {Date.now()} team_user_id={profilePathState}/>
                 </div>
                 <div id="post-container">
-                    <Feed social_bool={!postProfile} user_id_in={postProfile ? AuthState.user_id : profile_id}/>
+                    <Feed key = {Date.now()} social_bool={false} user_id_in={profilePathState}/>
                 </div>
             </div>
         </div>

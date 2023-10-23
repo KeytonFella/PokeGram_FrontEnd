@@ -1,7 +1,75 @@
-/* Assuming the container for cards has a class of .card-container */
 .card {
-    display: flex;
-    align-items: stretch;
-    
-  }
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  max-width: 300;
   
+  
+
+  &:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-img-top {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .card-body {
+    padding: 20px;
+    color: #333333;
+
+    .card-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-subtitle {
+      font-size: 1rem;
+      color: #6c757d;
+      margin-bottom: 1rem;
+    }
+    
+    
+    .card-text {
+      font-size: 1.3rem; 
+      line-height: 1.6; 
+      margin-bottom: 1.5rem;
+    }
+
+    .card-link {
+      color: #007bff;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .card-footer {
+    background-color: #f9f9f9;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    .card-link, .btn-primary {
+      margin-right: 8px;
+      margin-left: 8px;  
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+}

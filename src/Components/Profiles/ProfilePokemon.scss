@@ -45,23 +45,22 @@
 .remove-btn {
     background-image: url('../../images/pokeball.png');
     background-repeat: no-repeat;
-    background-size: 100%;
-    border: black 1px solid;
-    border-radius: 100px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
+    background-size: contain;
+    background-color: rgb(240, 240, 240);
+    color: rgb(24, 24, 24);
+    // border: black 1px solid;
+    border-radius: 20px;
+    // margin-left: auto;
+    // margin-right: auto;
+    // margin-bottom: 10px;
     height: 90px;
-    width: 90px;
-    font-size: 0px;
+    width: 100%;
     display: block;
 }
 .remove-btn:hover{
-    background-color: rgb(255, 0, 0);
-    background-image: none;
+    background-image: url('../../images/openPokeball.png');
     cursor: pointer;
-    font-size: 20px;
-    font-family: fantasy;
     text-align: center;
-    border: black 4px solid;
+    background-color: #616161;
+    color: white;
 }

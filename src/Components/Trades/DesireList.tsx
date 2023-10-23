@@ -71,6 +71,8 @@ function DesireList() {
         <div className="pokemonListOuterContainer">
         <div className="row">
           <div className="tradeHeader text-center">Pokemon To Receive</div>
+          <button className="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#pokemonListContainerDesire">Collapse</button>
+          <div className="containerList collapse show" id='pokemonListContainerDesire'>
           <form className="pokemonSearch" method="post" onSubmit={addPokemon}>
             <div className="leftSearch">
               <label className="searchLabel">
@@ -81,7 +83,6 @@ function DesireList() {
             </div>
             <div className="searchInstructions">Search for a Pokemon by name or using its National Pokedex number</div>
           </form>
-        </div>
         <div className="pokemonList">
         {
           desireList.map((pokemon, index) => {
@@ -95,6 +96,8 @@ function DesireList() {
             )
           })
         }
+        </div>
+        </div>
         </div>
       </div>  
     </>

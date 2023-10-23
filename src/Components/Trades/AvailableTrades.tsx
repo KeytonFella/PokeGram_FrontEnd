@@ -73,6 +73,8 @@ function AvailableTrades() {
         <>
         <div className="tradesOuterContainer">
               <div className="tradeHeader text-center">Available Trades</div>
+              <button className="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#pokemonListContainerTrades">Collapse</button>
+              <div className="containerList collapse show" id='pokemonListContainerTrades'>
               <button className="tradesButton" onClick={getAvailableTrades}>See All Available Trades</button>
             <div className="pokemonList">
             {
@@ -118,7 +120,7 @@ function AvailableTrades() {
               })
             
           }
-
+            </div>
             </div>
           </div>  
         </>

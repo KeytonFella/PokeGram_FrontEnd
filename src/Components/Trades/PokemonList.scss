@@ -11,10 +11,10 @@
     flex: 0 0 100%;
     background-color: white;
     border-radius: 5%;
-    font-size: 36px;
+    font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
     color: rgba(50, 50, 50, 0.9);
-    padding: 12px;
+    padding: 6px;
 }
 
 .pokemonSearch {
@@ -22,7 +22,7 @@
     flex-wrap: wrap;
     background-color: rgba(50, 50, 50, 0.9);
     color: white;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .leftSearch {
@@ -30,8 +30,7 @@
     display: flex;
     flex-wrap: wrap;
     color: white;
-    font-size: 24px;
-    max-width: 400px;
+    font-size: 18px;
 }
 
 .searchLabel {
@@ -102,10 +101,14 @@
 
 }
 
-.pokemonId {
+.pokemonIdLevel {
+    display: flex;
     font-size: 12px;
     font-weight: bold;
-    color: rgba($color: #939393af, $alpha: 1.0)
+    color: rgba($color: #939393af, $alpha: 1.0);
+    justify-content: space-between;
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 .pokemonName {
@@ -185,6 +188,7 @@
     border-radius: 10px;
     font-weight: 2000;
     color: white;
+    width: 100%;
 }
 
 .tradesButton:hover {
@@ -199,3 +203,7 @@
     color: white;
 }
 
+.containerList {
+    margin: none;
+    padding: none;
+}

@@ -13,7 +13,7 @@ function Messages() {
 
     useEffect(() => {
         getMessageList();
-    },[sentMessages, receivedMessages],)
+    },[],)
 
     async function getMessageList() {
         axios.get(BASE_API, {headers: {Authorization: 'Bearer ' + AuthState.token}})
@@ -96,7 +96,7 @@ function Messages() {
                                 From: {message.sender}
                             </div>
                             <div className="message-text">{message.message_text}</div>
-                            <div className="buttons">
+                            <div className="buttons" onClick={getMessageList}>
                                 <MessageModal username={message.sender} buttonText={"Reply"}/>
                                 <button className="btn btn-secondary" onClick={deleteMessage} value={message.message_id} >Delete Message</button>
                             </div>

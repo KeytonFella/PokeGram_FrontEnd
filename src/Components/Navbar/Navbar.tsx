@@ -60,7 +60,7 @@ function Navbar() {
                 <h6>Trades</h6>
                 </div>
               </Link>
-              <Link className="nav-item nav-link" to="/users/:user_id/">
+              <Link className="nav-item nav-link" to="/friends">
                 <div className="container">
                 <img className="navImage" src= {require("../../images/friends.png")} width={"45px"} height={"40px"}/>
                 <h6>Friends</h6>

@@ -290,9 +290,7 @@ function Friends() {
         <div className='friends-header'>
             <div id='friend-div'>{authState.username}'s Friends</div>
 
-            <span className='error-message'>{errorMessage}</span>
-            {/* The code below renders only if userMessage.message has change */}
-            {userMessage.message && <span className='user-message'>{userMessage.message} for {userMessage.username}</span>}
+            
         </div>
 
         <div className='friends-flex-body'>

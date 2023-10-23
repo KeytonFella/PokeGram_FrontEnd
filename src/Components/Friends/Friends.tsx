@@ -46,6 +46,10 @@ function Friends() {
         });
         }
   }, [shouldUpdateFriends]);
+    
+    useEffect(() => {
+        getFriends();
+    }, []);
 
     //gets the users friends list in a get axios req
     async function getFriends() {
@@ -148,8 +152,8 @@ function Friends() {
         }
     }
 
-    async function removeFriendHandler(event: any) {
-        const friendId =  event?.target?.value;
+    async function removeFriendHandler(userId: string | null) {
+        const friendId =  userId;
         console.log(friendId);
         const localReqBody: ReqBody = { friend_key: friendId, key_type: "user_id" };
         const response = await deleteFriend(localReqBody);
@@ -259,7 +263,8 @@ function Friends() {
                 username: authState?.username
             });
         }
-
+        
+        setShouldUpdateFriends(true);
     }
 
     //handles input text change. Records textbox but only if theres a keystroke
@@ -282,37 +287,40 @@ function Friends() {
 
     return (
         <>
-            <div>Friends</div>
-            <p>Hello, {authState.username}</p>
-            <p>ID: {authState.user_id}</p><br />
-            <form>
-                <button type="button" name="get-friends" value="getFriends" onClick={handleFriendForm}>Get your friends list</button><br /><br />
-                <input type="text" name="friend_key" placeholder="Friends ID Or Username" onChange={handleFormInputChange}></input>
-                <button type="button" name="add-friend-id" value="addUserId" onClick={e => handleFriendForm(e)}>Add by Id</button>
-                <button type="button" name="add-friend-username" value="addUsername" onClick={e => handleFriendForm(e)} >Add by username</button><br />
-                <button type="button" name="delete-friend-username" value="deleteUsername" onClick={e => handleFriendForm(e)}>Delete by username</button>
-                <button type="button" name="delete-friend-id" value="deleteUserId" onClick={e => handleFriendForm(e)} >Delete by Id</button>
-                <button type="button" name="remove-friend" value="deleteUserId" onClick={e => removeFriendHandler(e)} >Remove Friend</button>
+        <div className='friends-header'>
+            <div id='friend-div'>{authState.username}'s Friends</div>
+
+            <span className='error-message'>{errorMessage}</span>
+            {/* The code below renders only if userMessage.message has change */}
+            {userMessage.message && <span className='user-message'>{userMessage.message} for {userMessage.username}</span>}
+        </div>
+
+        <div className='friends-flex-body'>
+
+        </div>
+
+            <form id="add-friend-form">
+               
+                <input type="text" id='friend-searchbar' name="friend_key" placeholder="Friends ID Or Username" onChange={handleFormInputChange}></input>
+                <div className='add-button-container'>
+                    <button type="button" name="add-friend-id" value="addUserId" onClick={e => handleFriendForm(e)}>Add by Id</button>
+                    <button type="button" name="add-friend-username" value="addUsername" onClick={e => handleFriendForm(e)} >Add by username</button><br />
+                </div>
+                <div className='delete-button-container'>
+                    <button type="button" name="delete-friend-username" value="deleteUsername" onClick={e => handleFriendForm(e)}>Delete by username</button>
+                    <button type="button" name="delete-friend-id" value="deleteUserId" onClick={e => handleFriendForm(e)} >Delete by Id</button>
+                </div>
             </form>
 
 
-            {errorMessage}
-            {/* The code below renders only if userMessage.message has change */}
-            {userMessage.message && <p>{userMessage.message} for {userMessage.username}</p>}
-
-            <div className='friend-cards-container'>
-                <div className="row row-cols-3 row-cols-md-4 row-cols-lg-5 g-7">
-                    <div className="col d-flex align-items-stretch">
+            <div id='friend-cards-container'>
+                <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
                         {friendList.map((friend, index) => (
                             <div className="col" key={index}>
-                                <FriendCard username={friend.username} userId={friend.user_id} imgSrc={friend.image_url} bio={friend.bio} />
-                                <button type="button" name="remove-friend" value={friend.user_id ?? "null"} onClick={e => removeFriendHandler(e)} >Remove Friend</button>
-
+                                <FriendCard username={friend.username} userId={friend.user_id} imgSrc={friend.image_url} bio={friend.bio} removeFriendHandler = {removeFriendHandler} />
                             </div>
                         ))}
-                    </div>
-                </div>
-
+                 </div>   
             </div>
 
         </>

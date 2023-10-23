@@ -86,7 +86,7 @@ function Register() {
             <input className="loginInput" type="text" name="username" placeholder='' onChange={handleFormInputChange}></input>
             <br/>
             <div className="loginSubtext">Password</div>
-            <input className="loginInput" type="text" name='password' placeholder='' onChange={handleFormInputChange}></input>
+            <input className="loginInput" type="password" name='password' placeholder='' onChange={handleFormInputChange}></input>
             <br/>
             <div className="loginSubtext">Email</div>
             <input className="loginInput" type="text" name='email' placeholder='' onChange={handleFormInputChange}></input>

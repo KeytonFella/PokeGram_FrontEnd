@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 import { useDisplayError } from '../../Hooks/DisplayError';
 import axios from 'axios';
 import { useShowUserMessage } from '../../Hooks/DisplayAndRedirect';
 import { Link } from 'react-router-dom';
+import FriendCard from '../FriendCard/FriendCard';
+import "./Friends.scss";
 
 function Friends() {
     interface ReqBody {
@@ -12,26 +14,83 @@ function Friends() {
         key_type?: string | null
     }
 
+    interface FriendProfile {
+        user_id: string | null,
+        username: string | null,
+        image_url: string | null,
+        bio: string | null
+    }
+
     const authState = useSelector((state: RootState) => state.auth); //lets use the redux store
-    /* const URL = `http://52.90.96.133:5500/api/users/${authState.user_id}/friends`; */
-    const URL = `http://localhost:5500/api/users/${authState.user_id}/friends`;
-    
+    const URL = `http://52.90.96.133:5500/api/users/${authState.user_id}/friends`;
+    /*     const URL = `http://localhost:5500/api/users/${authState.user_id}/friends`;
+     */
     const headers = {
         'Authorization': `Bearer ${authState.token}`
     }
     const [errorMessage, setErrorMessage] = useDisplayError();
     const [userMessage, setUserMessage] = useShowUserMessage();
-    const [friendsList, setFriendsList] = useState<any[]>([]);
+    const [friendList, setFriendsList] = useState<FriendProfile[]>([]);
+    const [shouldUpdateFriends, setShouldUpdateFriends] = useState(false);
 
     //might delete/modify
     let [state, setState] = useState({
-        friend_key : ""
+        friend_key: ""
     });
-   
+
+    // useEffect to fetch friends if shouldUpdateFriends is true
+    useEffect(() => {
+        if (shouldUpdateFriends) {
+        getFriends().then(() => {
+            setShouldUpdateFriends(false);  // Reset back to false
+        });
+        }
+  }, [shouldUpdateFriends]);
+
     //gets the users friends list in a get axios req
     async function getFriends() {
         try {
-            return await axios.get(URL, { headers });
+            const response = await axios.get(URL, { headers });
+            const friendsList = response?.data?.friendsList
+            console.log("friends list is ", friendsList);
+            if (Array.isArray(friendsList)) {
+
+
+                console.log("state friends list", friendsList)
+                const updatedFriendsList: FriendProfile[] = [];
+
+                try {
+
+                    //fill in the rest of the friendsList attributes using a map
+                    for (const friend of friendsList) {
+                        console.log("getting profile");
+                        if (friend.user_id) {
+                            const profile = await getFriendProfile(friend.user_id);
+                            console.log(profile?.data?.image_url);
+                            console.log("the Bio", profile?.data?.bio);
+                            const updatedFriend: FriendProfile = {
+                                user_id: friend.user_id,
+                                username: profile?.data?.username || friend.username,
+                                image_url: profile?.data?.image_url || friend.image_url,
+                                bio: profile?.data?.bio || friend.bio
+                            };
+                            updatedFriendsList.push(updatedFriend);
+                        }
+                    }
+                    console.log("updatefriendslist", updatedFriendsList);
+                    setFriendsList(JSON.parse(JSON.stringify(updatedFriendsList)));
+
+                    console.log("state friends list", friendsList)
+                } catch (error) {
+                    setErrorMessage("error setting friends profiles");
+                }
+
+                return friendsList;
+            } else {
+                setErrorMessage("error grabbing list");
+            }
+
+
         } catch (err) {
             const error = err as any;
             //console.error("printting axios error:", err);
@@ -41,6 +100,17 @@ function Friends() {
             }
             return null;
         }
+    }
+    //gets the users profile in a get axios req
+    async function getFriendProfile(uid: string) {
+        const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${uid}`, {
+            headers: {
+                'Authorization': `Bearer ${authState.token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        console.log("friends profile info is", profileInfo);
+        return profileInfo;
     }
 
     //adds the users to friends list in post axios req
@@ -78,6 +148,43 @@ function Friends() {
         }
     }
 
+    async function removeFriendHandler(event: any) {
+        const friendId =  event?.target?.value;
+        console.log(friendId);
+        const localReqBody: ReqBody = { friend_key: friendId, key_type: "user_id" };
+        const response = await deleteFriend(localReqBody);
+
+        //will print out the error if not successful 
+        if (response?.status !== 200 && response?.status !== 201) {
+            console.log("err response status is ", response?.status);
+            console.log("err the response data message", response?.data?.message);
+            setErrorMessage(response?.data?.message || "some error");
+            console.log(errorMessage)
+            return;
+        }
+
+        //Set the friends list so we can render and display a success message
+        const friends = response?.data?.friendsList;
+        console.log("friends list in remove handler", friends);
+        if (friends) {
+            console.log(friendList);
+            setUserMessage({
+                message: response?.data?.message,
+                username: authState?.username
+            });
+        }
+        setShouldUpdateFriends(true);
+    }
+
+    //checks to make sure global store is init
+    function authCheck(){
+        if (!(authState.user_id || authState.token || authState.username)) {
+            console.log("missing an AuthState value: token, user_id, or username");
+            setErrorMessage("missing an AuthState value: token, user_id, or username");
+            return;
+        }
+    }
+
     //handles all the buttons and executes corresponding action by calling a axios request
     // depending on the button value
     async function handleFriendForm(event: any) {
@@ -102,7 +209,8 @@ function Friends() {
         if (clickedButton === "getFriends") {
             console.log("get all friends");
             response = await getFriends();
-        } 
+            return;
+        }
 
         let localReqBody: ReqBody = {};
         if (clickedButton === "addUserId") {
@@ -116,18 +224,16 @@ function Friends() {
         }
 
         console.log("local reqbody", localReqBody);
-        
+
         // Perform the action based on the localReqBody.
-        
-        if (clickedButton === "getFriends") {
-            response = await getFriends();
-        } else if (["addUserId", "addUsername"].includes(clickedButton)) {
+
+        if (["addUserId", "addUsername"].includes(clickedButton)) {
             response = await postFriend(localReqBody);
         } else if (["deleteUsername", "deleteUserId"].includes(clickedButton)) {
             response = await deleteFriend(localReqBody);
         }
 
-        
+
         console.log("response", response);
         console.log("response status", response?.status);
 
@@ -144,16 +250,16 @@ function Friends() {
 
         //Set the friends list so we can render and display a success message
         const friends = response?.data?.friendsList;
-        console.log("friends list", friends);
+        console.log("friends list in forhandler", friends);
         if (friends) {
             setFriendsList(friends);
-            console.log(friendsList);
+            console.log(friendList);
             setUserMessage({
                 message: response?.data?.message,
                 username: authState?.username
             });
         }
-        
+
     }
 
     //handles input text change. Records textbox but only if theres a keystroke
@@ -162,6 +268,16 @@ function Friends() {
         setState(prevState => ({ ...prevState, [name]: value })); //spreading allows us to edit the properties we want without losing the ones we didnt
         console.log(state);
     }
+
+
+
+    /* async function getFriendsProfile(event: any){
+        const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${friendsList.user_id}`, {
+                    headers: { 
+                        'Authorization': `Bearer ${authState.token}`,
+                        'Content-Type': 'application/json'}
+                })
+    } */
 
 
     return (
@@ -176,6 +292,7 @@ function Friends() {
                 <button type="button" name="add-friend-username" value="addUsername" onClick={e => handleFriendForm(e)} >Add by username</button><br />
                 <button type="button" name="delete-friend-username" value="deleteUsername" onClick={e => handleFriendForm(e)}>Delete by username</button>
                 <button type="button" name="delete-friend-id" value="deleteUserId" onClick={e => handleFriendForm(e)} >Delete by Id</button>
+                <button type="button" name="remove-friend" value="deleteUserId" onClick={e => removeFriendHandler(e)} >Remove Friend</button>
             </form>
 
 
@@ -183,16 +300,21 @@ function Friends() {
             {/* The code below renders only if userMessage.message has change */}
             {userMessage.message && <p>{userMessage.message} for {userMessage.username}</p>}
 
+            <div className='friend-cards-container'>
+                <div className="row row-cols-3 row-cols-md-4 row-cols-lg-5 g-7">
+                    <div className="col d-flex align-items-stretch">
+                        {friendList.map((friend, index) => (
+                            <div className="col" key={index}>
+                                <FriendCard username={friend.username} userId={friend.user_id} imgSrc={friend.image_url} bio={friend.bio} />
+                                <button type="button" name="remove-friend" value={friend.user_id ?? "null"} onClick={e => removeFriendHandler(e)} >Remove Friend</button>
 
-            
-            <ul>
-                {friendsList.map((friend, index) => (
-                    <li key={index}>
-                        Username: <Link to={`/api/users/${friend.username}`}>{friend.username}</Link><br />
-                        User ID: <Link to={`/api/users/${friend.user_id}`}>{friend.user_id}</Link>
-                    </li>
-                ))}
-            </ul>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+            </div>
+
         </>
     )
 }

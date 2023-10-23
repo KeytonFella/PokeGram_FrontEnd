@@ -31,11 +31,14 @@ function AvailableTrades() {
     interface Trade {
         user_id: "",
         username: "",
-        give_pokemon: [number],
-        get_pokemon: [number]
+        give_pokemon: number[],
+        get_pokemon: number[]
     }
 
-    async function createTradesObj(trade: [Trade]){
+    async function createTradesObj(trade: Trade[]){
+      if (!Array.isArray(trade)) {
+        return; 
+      }
         let tradesArray = [];
         for(let i = 0; i < trade.length; i++){
             const username = trade[i].username;

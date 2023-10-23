@@ -17,7 +17,6 @@ interface IndivPostProps {
 
 
 const IndivPost: React.FC<IndivPostProps> = ({ username, profilePicUrl, useridfk, text_body, image_s3_id, tags }) => {
-
     const AuthState = useSelector((state: RootState) => state.auth);
     const linkStyle = {
         "fontWeight": "bold",

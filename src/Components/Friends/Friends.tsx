@@ -301,12 +301,12 @@ function Friends() {
                
                 <input type="text" id='friend-searchbar' name="friend_key" placeholder="Friends ID Or Username" onChange={handleFormInputChange}></input>
                 <div className='add-button-container'>
-                    <button type="button" name="add-friend-id" value="addUserId" onClick={e => handleFriendForm(e)}>Add by Id</button>
-                    <button type="button" name="add-friend-username" value="addUsername" onClick={e => handleFriendForm(e)} >Add by username</button><br />
+                    <button type="button" className="friendButton" name="add-friend-id" value="addUserId" onClick={e => handleFriendForm(e)}>Add by Id</button>
+                    <button type="button" className="friendButton" name="add-friend-username" value="addUsername" onClick={e => handleFriendForm(e)} >Add by username</button><br />
                 </div>
                 <div className='delete-button-container'>
-                    <button type="button" name="delete-friend-username" value="deleteUsername" onClick={e => handleFriendForm(e)}>Delete by username</button>
-                    <button type="button" name="delete-friend-id" value="deleteUserId" onClick={e => handleFriendForm(e)} >Delete by Id</button>
+                    <button type="button" className="friendButton" name="delete-friend-username" value="deleteUsername" onClick={e => handleFriendForm(e)}>Delete by username</button>
+                    <button type="button" className="friendButton" name="delete-friend-id" value="deleteUserId" onClick={e => handleFriendForm(e)} >Delete by Id</button>
                 </div>
             </form>
 

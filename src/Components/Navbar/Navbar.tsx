@@ -20,6 +20,7 @@ function Navbar() {
       bio: '',
       image_url: ''
   });
+  
   useEffect(() => {
     if(authState.token){
       const USER_ID = authState.user_id;

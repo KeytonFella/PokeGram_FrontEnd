@@ -20,6 +20,7 @@ function Navbar() {
       bio: '',
       image_url: ''
   });
+  
   useEffect(() => {
     if(authState.token){
       const USER_ID = authState.user_id;
@@ -28,7 +29,7 @@ function Navbar() {
       .then(response => setProfile(response.data))
       .catch(err => console.log(err))
     }
-  }, [authState.token, profile])
+  }, [authState.token])
    
   return (
       <nav className="navbar sticky-top navbar-expand-xl navbar-light bg-light" id='navbar'>
@@ -60,7 +61,7 @@ function Navbar() {
                 <h6>Trades</h6>
                 </div>
               </Link>
-              <Link className="nav-item nav-link" to="/users/:user_id/">
+              <Link className="nav-item nav-link" to="/friends">
                 <div className="container">
                 <img className="navImage" src= {require("../../images/friends.png")} width={"45px"} height={"40px"}/>
                 <h6>Friends</h6>

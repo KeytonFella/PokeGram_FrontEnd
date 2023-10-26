@@ -11,24 +11,15 @@ import Team from '../Team/Team';
 interface userProfileProps {
     postProfile: boolean;
 }
-//const BASE_API = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
 const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
-    console.log(postProfile);
     let { profile_id } = useParams();
     const [profilePathState, setprofilePathStateState] = useState<string|null|undefined>(profile_id);
-  
     const AuthState = useSelector((state: RootState) => state.auth);
     const [profilePic, setProfilePic] = useState<string>("UserProfile Unavailable");
     const [username, setUserName] = useState<string | null>('Username not found');
     const [bio, setBioState] = useState('');
     const [areFriends, setAreFriends] = useState(false);
     const [buttonState , setButtonState ] = useState('add-friend');
-    console.log(
-        "profilePic: ",profilePic,
-        "username: ",username,
-        "profilePathState: ",profilePathState,
-        "postProfile: ",postProfile)
-
     const on_hover_button = (e : React.MouseEvent<HTMLButtonElement>) => {
         e.currentTarget.style.background = '#034480';
       }
@@ -76,7 +67,6 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                 'Content-Type': 'application/json'
             }
             const response = await axios.delete(url, { headers, data: body });
-            //e.currentTarget.style.background = '#035096';
             setAreFriends(false);
         } catch(err){
             console.error(err);
@@ -85,12 +75,10 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
     useEffect(() => {
         async function getProfileInfo() {
             try{
-
                 if(postProfile){
                     setAreFriends(false);
                     setprofilePathStateState(AuthState.user_id)
                 }
-
                 if(profilePathState !== AuthState.user_id && !postProfile) {// not our own profile, we can look for frineds
                     const friendsList = await axios.get(`http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`, {
                         headers: { 
@@ -113,7 +101,6 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                         'Authorization': `Bearer ${AuthState.token}`,
                         'Content-Type': 'application/json'}
                 })
-                console.log(profileInfo)
                 setBioState(profileInfo.data.bio)
                 setProfilePic(profileInfo.data.image_url);
                 setUserName(usernameResponse.data.username);
@@ -123,8 +110,6 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
             }
         }
         getProfileInfo();
-        console.log("getProfileInfo called")
-
     }, [postProfile, profilePathState]);
 
     useEffect(() => {
@@ -183,7 +168,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                 </div>
                 )}
                 {buttonState === 'empty' && <></>}
-                {!postProfile || profilePathState !== AuthState.user_id ? <MessageModal username={profile_id}/> :<></>}
+                {!postProfile || profilePathState !== AuthState.user_id ? <MessageModal username={profile_id}/> : <></>}
             </div>
             </div>
             <div id="bottom_container">

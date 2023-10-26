@@ -18,8 +18,10 @@ function SurrenderList() {
   async function getSurrenderList() {
       axios.get(`${BASE_API}/data`, {headers: {Authorization: 'Bearer ' + AuthState.token}})
       .then(function (response) {
-        createPokemonObj(response.data.trades.surrender_list);
-      })
+        if (response.data && response.data.trades && response.data.trades.surrender_list) {
+          console.log(response.data.trades.surrender_list)
+          createPokemonObj(response.data.trades.surrender_list);
+        }      })
       .catch(function (error) {
         // handle error
         console.log(error);
@@ -28,10 +30,20 @@ function SurrenderList() {
 
   // Searches Poke API for each pokemon and creates an object with the name and sprite
   async function createPokemonObj(pokemon: any[]) {
+    if (!Array.isArray(pokemon)) {
+      return;
+    }
       let pokemonArray = [];
       for(let i = 0; i < pokemon.length; i++) {
           let pokeId = pokemon[i];
           let pokeInfo = await axios.get(POKE_API + pokeId);
+          if(!(pokeInfo.data && pokeInfo.data.species && pokeInfo.data.species.name && pokeInfo.data.sprites && pokeInfo.data.sprites.front_default)){
+            return;
+          }
+          console.log("pokeid: ",pokeId)
+          console.log("name: ", pokeInfo.data.species.name )
+          console.log("sprite: ", pokeInfo.data.sprites.front_default)
+
           let pokeObj = {
               id: pokeId,
               name: pokeInfo.data.species.name.charAt(0).toUpperCase() + pokeInfo.data.species.name.slice(1),
@@ -88,7 +100,7 @@ function SurrenderList() {
         {
           surrenderList.map((pokemon, index) => {
             return (
-              <div className="pokemonCard" key={pokemon.id}>
+              <div className="pokemonCard" key={index}>
                 <img className="pokemonImage" src={pokemon.image} alt="" />
                 <div className="pokemonId">#{("000" + pokemon.id).slice(-4)}</div>
                 <div className="pokemonName"><h5>{pokemon.name}</h5></div>               

@@ -31,13 +31,13 @@ export interface FeedProps {
     user_id_in: string | null | undefined;
 }
 const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
-    console.log(user_id_in);
     const AuthState = useSelector((state: RootState) => state.auth);
+    //console.log("AuthState: ", AuthState);
+
     const [userLists, setUsersLists] = useState([])
     useEffect(() => {
         async function getFriends() {
-
-            if(AuthState.token && social_bool) {
+            if(social_bool) {
                 try {
                     const response = await axios.get(`http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`, {
                         headers: { 
@@ -57,9 +57,14 @@ const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
     }, []);
     if(!social_bool){
         return (
+        <>
             <div id="feed_container">
-                <UsersPostDisplay user_id={user_id_in}/>
+               <UsersPostDisplay user_id={user_id_in}/>
             </div>
+            <div>
+                {UsersPostDisplay({ user_id: user_id_in }) ? null : 'No posts yet'}
+            </div>
+        </>
         );
     }else{
         return (

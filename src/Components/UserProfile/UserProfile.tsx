@@ -78,7 +78,8 @@ const UserProfile: React.FC = () => {
                             'Authorization': `${AuthState.token}`,
                             'Content-Type': 'application/json'}
                     });
-                    for (const friend of friendsList.data) {
+                    console.log("friendsList: ", friendsList);
+                    for (const friend of friendsList.data.friendsList) {
                         if(friend.user_id === profile_id) {
                             setAreFriends(true);
                         }

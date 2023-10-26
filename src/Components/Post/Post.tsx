@@ -48,15 +48,16 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
             const formData = new FormData();
             formData.append('image', imageFile);
             console.log(formData)
-            const response = await axios.post('http://52.90.96.133:5500/api/post/image/', formData, {
+            const image_name = AuthState.user_id + "time" + Date.now();
+            await axios.put(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/images/poke-post-image-bucket/${image_name}`, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
                 "Content-Disposition" : "form-data",
-                'Authorization': `Bearer ${AuthState.token}`
+                'Authorization': `${AuthState.token}`
               },   
             });
-            console.log('Image uploaded successfully:', response.data);
-            return response.data.image_id
+            console.log('Image uploaded successfully:', image_name);
+            return image_name
           } else {
             return null;
           }
@@ -70,18 +71,18 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
   async function on_click_submit(e: React.MouseEvent<HTMLButtonElement>){
     const image_id = await postImage();
     if(textareaValue) {
-      const url = 'http://52.90.96.133:5500/api/post';
+      const url = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/posts/${AuthState.user_id}`;
       const headers = {
-        Authorization: `Bearer ${AuthState.token}`,
+        Authorization: `${AuthState.token}`,
         'Content-Type':'application/json'
       };
       const body = {
-        current_userID: AuthState.user_id,
+        user_id_fk: AuthState.user_id,
         text_body: textareaValue,
         image_s3_id: image_id,
         tags: selected
       };
-      axios.post(url, body, { headers })
+      axios.put(url, body, { headers })
       .then((response) => {
         console.log('Post Successfully Uploaded\n post_id: ', response.data.post_id);
         setTextareaValue('');

@@ -44,9 +44,9 @@ const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
                             'Authorization': AuthState.token,
                             'Content-Type': 'application/json'}
                     });
-                    console.log(response);
+                    console.log("friendlist:",response);
 
-                    setUsersLists(response.data);
+                    setUsersLists(response.data.body.friendsList);
 
                 } catch(err){
                     console.error(err)

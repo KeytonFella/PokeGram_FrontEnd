@@ -6,21 +6,21 @@ import { RootState } from '../../utility/reduxTypes';
 import './PokemonList.scss';
 import MessageModal from '../MessageModal/MessageModal';
 
-const BASE_API = `http://52.90.96.133:5500/api/trades`;
-const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
-
 function AvailableTrades() {
     const [availableTrades, setAvailableTrades] = useState(Array<any>);
     const AuthState = useSelector((state: RootState) => state.auth);
+    const USER_ID = AuthState.user_id;
+    const BASE_API = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/trades/${USER_ID}`;
+    const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
 
     useEffect(() => {
         getAvailableTrades();
       },[]);
     
     async function getAvailableTrades() {
-        axios.get(BASE_API, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+        axios.get(BASE_API, {headers: {Authorization: AuthState.token}})
         .then(function (response) {
-            createTradesObj(response.data.trades);
+            createTradesObj(response.data.body.data);
         })
         .catch(function (error) {
             // handle error

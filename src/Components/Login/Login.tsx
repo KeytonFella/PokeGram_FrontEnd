@@ -101,7 +101,7 @@ function Login() {
                 <input className="loginInput" type="text" name='username' placeholder='' onChange={handleFormInputChange}></input>
                 <br/>
                 <div className="loginSubtext">Password</div>
-                <input className="loginInput" type="text" name='password' placeholder='' onChange={handleFormInputChange}></input>
+                <input className="loginInput" type="password" name='password' placeholder='' onChange={handleFormInputChange}></input>
                 <br/>
                 <button className="loginButton" type="submit" disabled={!state.username || !state.password}  >Login</button>
             </form>

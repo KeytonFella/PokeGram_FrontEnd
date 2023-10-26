@@ -29,11 +29,13 @@ function PokemonInTeam(props: {pokemon: Pokemon}) {
         return (
         <div className="pokemonCard">
             <img className="pokemonImage" src={pokemon.sprites.front_default} alt="pokemon sprite" />
-            <div className="pokemonId">#{("000" + pokemon.id).slice(-4)}</div>
-            <div>{props.pokemon.nickname ? <span>{props.pokemon.nickname} the </span>: <></>}{pokemon.name.charAt(0).toUpperCase() + pokemon.name.substr(1).toLowerCase()}</div>
+            <div className="pokemonIdLevel">
+                <div>#{("000" + pokemon.id).slice(-4)} </div><div>Lv. {props.pokemon.level}</div>
+            </div>
+            <div><h6>{props.pokemon.nickname ? <span>{props.pokemon.nickname} the </span>: <></>}{pokemon.name.charAt(0).toUpperCase() + pokemon.name.substr(1).toLowerCase()}</h6></div>
             <div id="sprite-wrapper">
             </div>
-            <div id="level">Lv. {props.pokemon.level}</div>
+            <div id="level"></div>
             
             
         </div>

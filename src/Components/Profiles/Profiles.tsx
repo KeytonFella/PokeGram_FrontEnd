@@ -120,7 +120,7 @@ function Profiles() {
           {editBio === true && 
           <form className='bio-form' onSubmit={submitBio}>
             <textarea className='bio-input' defaultValue={profile.bio} onChange={updateBio}/><br/>
-            <input type='text' className='bio-input' defaultValue={profile.bio} onChange={updateBio}/><br/>
+            {/* <input type='text' className='bio-input' defaultValue={profile.bio} onChange={updateBio}/><br/> */}
             <button type='button' className='bio-cancel-btn' onClick={() => setEditBio(false)}>Cancel</button>
             <button type='submit' className='profile-btn'>Submit</button>
           </form>

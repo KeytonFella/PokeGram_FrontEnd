@@ -80,12 +80,12 @@ const ProfilePokemon = (props:any) => {
             <button type="submit">Add Pokemon</button>
           </form>
         </div>
-        <div className="poke-container">
+        <div className="pokemonList">
             {pokemon.map((poke: any) => (
-            <div key={poke.name} className="entry">
-                <p className="names">{poke.name}</p>
-                <img src={poke.sprite} alt={poke.name} className="sprite"/>
-                <button className="remove-btn" onClick={removePokemon} value={poke.name} >Remove</button>
+            <div key={poke.name} className="pokemonCard">
+                <img src={poke.sprite} alt={poke.name} className="pokemonImage"/>
+                <div className="pokemonName"><h5>{poke.name}</h5></div>
+                <button className="remove-btn" onClick={removePokemon} value={poke.name} >Release</button>
             </div>
             ))}    
         </div>

@@ -83,6 +83,8 @@ function SurrenderList() {
     <div className="pokemonListOuterContainer">
         <div className="row">
           <div className="tradeHeader text-center">Pokemon To Trade</div>
+          <button className="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#pokemonListContainerSurrender">Collapse</button>
+          <div className="containerList collapse show" id='pokemonListContainerSurrender'>
           <form className="pokemonSearch" method="post" onSubmit={addPokemon}>
             <div className="leftSearch">
               <label className="searchLabel">
@@ -93,7 +95,7 @@ function SurrenderList() {
             </div>
             <div className="searchInstructions">Search for a Pokemon by name or using its National Pokedex number</div>
           </form>
-        </div>
+        
         <div className="pokemonList">
         {
           surrenderList.map((pokemon, index) => {
@@ -107,6 +109,8 @@ function SurrenderList() {
             )
           })
         }
+        </div>
+        </div>
         </div>
       </div>  
     </>

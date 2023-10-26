@@ -31,7 +31,7 @@ function Team(props: any) {
                     // User does not have a team
                     setState({...state, teamExists: false, loading: false})
                 }else{
-                    const team = response.data.body
+                    const team = response.data.body.Item
                     console.log('Team: ', team)
                     console.log("Pokemon list: " + team.pokemonList)
                     setState({...state, loading: false, team_name: team.teamName, pokemon_list: team.pokemonList})

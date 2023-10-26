@@ -100,8 +100,8 @@ function CreateTeam() {
         //const newTeam = {teamName: teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
         console.log('fetching...')
         const response = await postTeam(userInfo)
-        if(response?.status === 400) {
-            setErrorMessage(response.data.message || "error")
+        if(response?.status === 400 || response.data.errorMessage) {
+            setErrorMessage(response.data.errorMessage || "error")
             return
         }
         try {

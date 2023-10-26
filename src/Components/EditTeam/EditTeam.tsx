@@ -25,13 +25,13 @@ function EditTeam() {
         if(AuthState.user_id && AuthState.username && AuthState.token){
             setState({...state, logged_in: true})
             
-            const url = `http://52.90.96.133:5500/api/teams/${AuthState.user_id}`
+            const url = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/teams/${AuthState.user_id}`
             
             //Configured axios get request
-            axios.get(url, {headers: {Authorization: `Bearer ${AuthState.token}`}}).then((response) => {
+            axios.get(url, {headers: {Authorization: `${AuthState.token}`}}).then((response) => {
                 console.log('Data: ', response.data);
 
-                const team = response.data.body
+                const team = response.data.body.Item
                 console.log('Team: ', team)
                 console.log("Pokemon list: " + team.pokemonList)
                 setState({...state, loading: false, teamName: team.teamName})
@@ -119,10 +119,10 @@ function EditTeam() {
             const newTeam = {teamName: state.teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
             try { 
                 const headers = {
-                    'Authorization': `Bearer ${userInfo.token}`,
+                    'Authorization': `${userInfo.token}`,
                     'Content-Type': 'application/json'
                 }
-                const response = await axios.put(`http://52.90.96.133:5500/api/teams/${userInfo.user_id}`, newTeam, {headers: headers})
+                const response = await axios.put(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/teams/${userInfo.user_id}`, newTeam, {headers: headers})
                 console.log("Successfully posted data: ", JSON.stringify(response.data))
                 return response;
             } catch(err) {
@@ -136,11 +136,11 @@ function EditTeam() {
     async function putTeam(userInfo: any) {
         const team = {teamName: state.teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
         const headers = {
-            'Authorization': `Bearer ${userInfo.token}`,
+            'Authorization': `${userInfo.token}`,
             'Content-Type': 'application/json'
         }
         try{
-            const response = await axios.put(`http://52.90.96.133:5500/prod/teams/${userInfo.user_id}`, team, {headers: headers})
+            const response = await axios.put(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/teams/${userInfo.user_id}`, team, {headers: headers})
             
             return response;
         
@@ -168,8 +168,8 @@ function EditTeam() {
         //const newTeam = {teamName: state.teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
         console.log('fetching...')
         const response = await putTeam(userInfo)
-        if(response?.status === 400) {
-            setErrorMessage(response.data.message || "error")
+        if(response?.status === 400 || response.data.errorMessage) {
+            setErrorMessage(response.data.errorMessage || "error")
             return
         }
         try { 

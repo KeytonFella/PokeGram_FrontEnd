@@ -12,7 +12,7 @@ function Profiles() {
   const USER_ID = AuthState.user_id;
   // ID for testintg
   //const id = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
-  const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`;
+  const URL = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${USER_ID}`;
 
 
   let [profile, setProfile] = useState({
@@ -32,7 +32,7 @@ function Profiles() {
 
 
   useEffect(() => {
-    axios.get(URL, {headers: {'Authorization': 'Bearer ' + AuthState.token}})
+    axios.get(URL, {headers: {Authorization: AuthState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }, [])
@@ -67,7 +67,7 @@ function Profiles() {
   async function submitBio(event: any){
     event.preventDefault()
     console.log(profile.bio)
-    axios.put(`${URL}/bio`, {bio: profile.bio}, {headers: {'Authorization': 'Bearer ' + AuthState.token}})
+    axios.put(`${URL}/bio`, {bio: profile.bio}, {headers: {Authorization: AuthState.token}})
     .then(response => console.log(response))
     .catch(err => console.log(err))
     setEditBio(false)
@@ -81,10 +81,10 @@ function Profiles() {
     formData.append('image', file)
     await axios.put(`${URL}/photo`, formData, {headers:{
       'Content-Type': 'multipart/form-data',
-      'Authorization': 'Bearer ' + AuthState.token,
+      Authorization: AuthState.token,
     }})
 
-    axios.get(URL, {headers: {'Authorization': 'Bearer ' + AuthState.token}})
+    axios.get(URL, {headers: {Authorization: AuthState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }
@@ -92,7 +92,7 @@ function Profiles() {
   async function updateAddress(event: any){
     event.preventDefault();
     console.log(address)
-    await axios.put(`${URL}/address`, {address: address}, {headers: {'Authorization': 'Bearer ' + AuthState.token}})
+    await axios.put(`${URL}/address`, {address: address}, {headers: {Authorization: AuthState.token}})
     .then(response => alert('Address Updated!'))
     .catch(err => console.log(err))
     setAddress({

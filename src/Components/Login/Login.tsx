@@ -15,7 +15,7 @@ function Login() {
   const dispatch: AppDispatch = useDispatch(); // Use AppDispatch for dispatching actions
   const [errorMessage, setErrorMessage] = useDisplayError();
   const [userMessage, setUserMessage] = useShowUserMessage(undefined, "/", 6000);
-  const URL = "http://52.90.96.133:5500/api/login"
+  const URL = "https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/login"
   /* const URL = "http://localhost:5500/api/login"; */
   
   let [state, setState] = useState({
@@ -52,10 +52,10 @@ function Login() {
             dispatch(setUserInfo({
               user_id: tokenPayload.sub,
               name: tokenPayload?.name || "",
-              username: tokenPayload.username,
+              username: tokenPayload["cognito:username"],
               token: accessToken.jwtToken
             }));
-            setUserMessage({message:"Successful login!",username:tokenPayload.username})
+            setUserMessage({message:"Successful login!",username:tokenPayload["cognito:username"]})
             return;
           } else {
             console.log("Response is empty")

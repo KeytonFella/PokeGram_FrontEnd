@@ -7,14 +7,13 @@ import { Link } from 'react-router-dom';
 
 function FriendFinder() {
     const AuthState = useSelector((state: RootState) => state.auth);
-    const URL = `http://52.90.96.133:5500/api/addresses/user/${AuthState.user_id}/others`;
-
+    const URL = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/nearbyfriends/${AuthState.user_id}`;
     let [nearbyUsers, setNearbyUsers] = useState([] as any);
     let [distance, setDistance] = useState(0);
 
      function getUsers(e: any){
         e.preventDefault();
-        axios.post(URL, {distance: distance}, {headers: {Authorization: `Bearer ${AuthState.token}`}}).then((res) => {
+        axios.post(URL, {distance: distance}, {headers: {Authorization: AuthState.token}}).then((res) => {
             setNearbyUsers(res.data);
         }).catch((err) => {
             console.log(err);

@@ -40,7 +40,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
     }
     async function on_click_add(e: React.MouseEvent<HTMLButtonElement>){
         try{
-            const url = `http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`;
+            const url = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users/${AuthState.user_id}/friends`;
             let body = {
                 friend_key: profilePathState,
                 key_type: 'user_id'
@@ -57,7 +57,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
     }
     async function on_click_remove(e: React.MouseEvent<HTMLButtonElement>){
         try{
-            const url = `http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`;
+            const url = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users/${AuthState.user_id}/friends`;
             let body = {
                 friend_key: profilePathState,
                 key_type: 'user_id'
@@ -80,7 +80,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                     setprofilePathStateState(AuthState.user_id)
                 }
                 if(profilePathState !== AuthState.user_id && !postProfile) {// not our own profile, we can look for frineds
-                    const friendsList = await axios.get(`http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`, {
+                    const friendsList = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users/${AuthState.user_id}/friends`, {
                         headers: { 
                             'Authorization': `Bearer ${AuthState.token}`,
                             'Content-Type': 'application/json'}

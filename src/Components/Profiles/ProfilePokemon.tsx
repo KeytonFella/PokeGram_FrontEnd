@@ -10,9 +10,7 @@ const ProfilePokemon = (props:any) => {
     const AuthState = useSelector((state: RootState) => state.auth);
     const USER_ID = props.user_id;
 
-    // id for testing purposes
-    // const userID = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
-    const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}/pokemon`;
+    const URL = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${USER_ID}/pokemon`;
     const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
     let [pokemon, setPokemon] = useState([] as any);
 
@@ -23,7 +21,7 @@ const ProfilePokemon = (props:any) => {
 
     // Calls api for the list of pokemon and hands it to other helper function
     async function getPokemon() {
-        axios.get(URL, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+        axios.get(URL, {headers: {Authorization: AuthState.token}})
             .then(response => createPokemonObj(response.data.message))
             .catch(error => console.log(error));
     }
@@ -53,7 +51,7 @@ const ProfilePokemon = (props:any) => {
         const formJson = Object.fromEntries(formData.entries());
         let pokemon: String = formJson.myInput as String;
         pokemon = pokemon.toLowerCase();
-        await axios.put(URL, {action: "add", pokemon: pokemon}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+        await axios.put(URL, {action: "add", pokemon: pokemon}, {headers: {Authorization: AuthState.token}})
         .then(response => response.data.message)
         .catch(error => console.log(error));
         getPokemon();
@@ -63,7 +61,7 @@ const ProfilePokemon = (props:any) => {
         event.preventDefault();
         let pokemon = event.target.value;
         pokemon = pokemon.toLowerCase();
-        await axios.put(URL, {action: "remove", pokemon: pokemon}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+        await axios.put(URL, {action: "remove", pokemon: pokemon}, {headers: {Authorization: AuthState.token}})
         .then(response => response.data.message)
         .catch(error => console.log(error));
         getPokemon();

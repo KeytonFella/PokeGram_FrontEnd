@@ -22,6 +22,7 @@ const IndivPost: React.FC<IndivPostProps> = ({ username, profilePicUrl, useridfk
         "fontWeight": "bold",
         "color": 'black'
       };
+      
     return (
         <div className="ind_post_display">
             <div className="profile-link-container">

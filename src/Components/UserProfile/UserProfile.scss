@@ -27,6 +27,11 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width:75%
 }
+@media screen and (max-width: 1000px) {
+    #profile-top  {
+      flex-direction: column;
+    }
+}
 .info {
     flex: 1;
     display: flex;
@@ -88,6 +93,11 @@
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+@media screen and (max-width: 600px) {
+    #bottom_container-container {
+      flex-direction: column;
+    }
 }
 #team-container{
     display: flex;

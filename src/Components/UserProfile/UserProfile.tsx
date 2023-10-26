@@ -43,7 +43,7 @@ const UserProfile: React.FC = () => {
                 key_type: 'user_id'
             };
             let headers = {
-                'Authorization': `${AuthState.token}`,
+                'Authorization': AuthState.token,
                 'Content-Type': 'application/json'
             }
             const response = await axios.put(url, body, {headers});
@@ -60,7 +60,7 @@ const UserProfile: React.FC = () => {
                 key_type: 'user_id'
             };
             let headers = {
-                'Authorization': `${AuthState.token}`,
+                'Authorization': AuthState.token,
                 'Content-Type': 'application/json'
             }
             const response = await axios.delete(url, { headers, data: body });
@@ -75,10 +75,9 @@ const UserProfile: React.FC = () => {
                 if(profile_id !== AuthState.user_id) {// not our own profile, we can look for frineds
                     const friendsList = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users/${AuthState.user_id}/friends`, {
                         headers: { 
-                            'Authorization': `${AuthState.token}`,
+                            'Authorization': AuthState.token,
                             'Content-Type': 'application/json'}
                     });
-                    console.log("friendsList: ", friendsList);
                     for (const friend of friendsList.data.friendsList) {
                         if(friend.user_id === profile_id) {
                             setAreFriends(true);
@@ -89,16 +88,15 @@ const UserProfile: React.FC = () => {
                 }
                 const profileInfo = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${profile_id}`, {
                     headers: { 
-                        'Authorization': `${AuthState.token}`,
+                        'Authorization': AuthState.token,
                         'Content-Type': 'application/json'}
                 })
                 const usernameResponse = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${profile_id}/username`, {
                     headers: { 
-                        'Authorization': ` ${AuthState.token}`,
+                        'Authorization': AuthState.token,
                         'Content-Type': 'application/json'}
                 })
-                console.log("profile_id:", profile_id)
-                console.log("usernameResponse: ",usernameResponse)
+              
                 setBioState(profileInfo.data.bio)
                 setProfilePic(profileInfo.data.image_url);
                 setUserName(usernameResponse.data.username);
@@ -108,7 +106,7 @@ const UserProfile: React.FC = () => {
             }
         }
         getProfileInfo();
-    }, [profile_id, areFriends]);
+    }, [profile_id]);
 
     useEffect(() => {
         function changeButton() {

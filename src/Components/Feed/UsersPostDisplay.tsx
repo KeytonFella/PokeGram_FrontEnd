@@ -34,7 +34,8 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
                             'Content-Type': 'application/json'
                         }
                     })
-                    console.log("Username", usernameResponse);
+                    console.log("Userid: ", user_id);
+                    console.log("profileInfo", profileInfo);
                     setPosts((prevData)  => [...prevData, ...postsInfoResponse.data.body.data.Items]);
                     setUsername(usernameResponse.data.username);
                     setProfilePic(profileInfo.data.image_url)

@@ -8,14 +8,11 @@ import Feed from "../Feed/Feed";
 import './UserProfile.scss'
 import MessageModal from '../MessageModal/MessageModal';
 import Team from '../Team/Team';
-interface userProfileProps {
-    postProfile: boolean;
-}
-const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
-    let { profile_id } = useParams();
-    const [profilePathState, setprofilePathStateState] = useState<string|null|undefined>(profile_id);
+
+const UserProfile: React.FC = () => {
+    const { profile_id } = useParams();
     const AuthState = useSelector((state: RootState) => state.auth);
-    const [profilePic, setProfilePic] = useState<string>("UserProfile Unavailable");
+    const [profilePicUser, setProfilePic] = useState<string>("UserProfile Unavailable");
     const [username, setUserName] = useState<string | null>('Username not found');
     const [bio, setBioState] = useState('');
     const [areFriends, setAreFriends] = useState(false);
@@ -42,11 +39,11 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
         try{
             const url = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users/${AuthState.user_id}/friends`;
             let body = {
-                friend_key: profilePathState,
+                friend_key: profile_id,
                 key_type: 'user_id'
             };
             let headers = {
-                'Authorization': `Bearer ${AuthState.token}`,
+                'Authorization': `${AuthState.token}`,
                 'Content-Type': 'application/json'
             }
             const response = await axios.put(url, body, {headers});
@@ -59,11 +56,11 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
         try{
             const url = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users/${AuthState.user_id}/friends`;
             let body = {
-                friend_key: profilePathState,
+                friend_key: profile_id,
                 key_type: 'user_id'
             };
             let headers = {
-                'Authorization': `Bearer ${AuthState.token}`,
+                'Authorization': `${AuthState.token}`,
                 'Content-Type': 'application/json'
             }
             const response = await axios.delete(url, { headers, data: body });
@@ -75,35 +72,33 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
     useEffect(() => {
         async function getProfileInfo() {
             try{
-                if(postProfile){
-                    console.log("profilePathState:", profilePathState)
-
-                    setAreFriends(false);
-                    setprofilePathStateState(AuthState.user_id)
-                }
-                if(profilePathState !== AuthState.user_id && !postProfile) {// not our own profile, we can look for frineds
+                if(profile_id !== AuthState.user_id) {// not our own profile, we can look for frineds
                     const friendsList = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users/${AuthState.user_id}/friends`, {
                         headers: { 
                             'Authorization': `${AuthState.token}`,
                             'Content-Type': 'application/json'}
                     });
                     for (const friend of friendsList.data) {
-                        if(friend.user_id === profilePathState) {
+                        if(friend.user_id === profile_id) {
                             setAreFriends(true);
                         }
                     }
+                }else{
+                    setAreFriends(false);
                 }
-                const profileInfo = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${profilePathState}`, {
+                const profileInfo = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${profile_id}`, {
                     headers: { 
                         'Authorization': `${AuthState.token}`,
                         'Content-Type': 'application/json'}
                 })
-                const usernameResponse = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${profilePathState}/username`, {
+                const usernameResponse = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${profile_id}/username`, {
                     headers: { 
                         'Authorization': ` ${AuthState.token}`,
                         'Content-Type': 'application/json'}
                 })
-                
+                console.log("profilePathState:", profile_id)
+
+                console.log("profileInfo: ",profileInfo)
                 setBioState(profileInfo.data.bio)
                 setProfilePic(profileInfo.data.image_url);
                 setUserName(usernameResponse.data.username);
@@ -113,29 +108,29 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
             }
         }
         getProfileInfo();
-    }, [postProfile]);
+    }, [profile_id]);
 
     useEffect(() => {
         function changeButton() {
-            if (AuthState.user_id !== profilePathState && !areFriends && !postProfile) {// add friend button
+            if (AuthState.user_id != profile_id && !areFriends ) {// add friend button
                 setButtonState('add-friend');
-            } else if (AuthState.user_id !== profilePathState && areFriends && !postProfile) {//remove friend button
+            } else if (AuthState.user_id != profile_id && areFriends) {//remove friend button
                 setButtonState('remove-friend');
             } else {//empty
                 setButtonState('empty');
             } 
         }
         changeButton();
-    }, [areFriends]);
+    }, [areFriends, profile_id]);
     return (
         <div id = "user-profile-page-container">
             <div id='profile-top'>
                 <div id='profile-info-containter'>
                     <div className="info user-profile-image-containter">
-                        <img key = {Date.now()} src={profilePic} alt={`pic not found for ${username}`} id='profile_pic'/>
+                        <img key = {Date.now()} src={profilePicUser} alt={`pic not found for ${username}`} id='profile_pic'/>
                     </div>
                     <div  className="info user-profile-name-containter">
-                        <h2>{postProfile ? AuthState.username : username}</h2>
+                        <h2>{profile_id == AuthState.user_id ? AuthState.username : username}</h2>
                     </div>
                     <div key = {Date.now()}  className="info user-profile-bio-container">
                         {bio ?`${bio}`: "No Bio"}
@@ -171,15 +166,15 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
                 </div>
                 )}
                 {buttonState === 'empty' && <></>}
-                {!postProfile || profilePathState !== AuthState.user_id ? <MessageModal username={profile_id}/> : <></>}
+                {profile_id !== AuthState.user_id ? <MessageModal username={profile_id}/> : <></>}
             </div>
             </div>
             <div id="bottom_container">
                 <div id="team-container">
-                    <Team key = {Date.now()} team_user_id={profilePathState}/>
+                    <Team key = {Date.now()} team_user_id={profile_id}/>
                 </div>
                 <div id="post-container">
-                    <Feed key = {Date.now()} social_bool={false} user_id_in={profilePathState}/>
+                    <Feed key = {Date.now()} social_bool={false} user_id_in={profile_id}/>
                 </div>
             </div>
         </div>

@@ -55,8 +55,9 @@ function Friends() {
     async function getFriends() {
         try {
             const response = await axios.get(URL, { headers});
+            console.log(response);
             const friendsList = response?.data?.friendsList
-            console.log("friends list is ", friendsList);
+            console.log("friends list in get Friends is ", friendsList);
             if (Array.isArray(friendsList)) {
 
 
@@ -239,9 +240,7 @@ function Friends() {
 
 
         console.log("response", response);
-        console.log("response status", response?.status);
-
-        console.log("response data.friends", response?.data?.friendsList);
+        console.log("response data", response?.data);
 
         //will print out the error if not successful 
         if (response?.status !== 200 && response?.status !== 201) {
@@ -253,7 +252,7 @@ function Friends() {
         }
 
         //Set the friends list so we can render and display a success message
-        const friends = response?.data?.friendsList;
+        const friends = response?.data?.friendResponse;
         console.log("friends list in forhandler", friends);
         if (friends) {
             setFriendsList(friends);

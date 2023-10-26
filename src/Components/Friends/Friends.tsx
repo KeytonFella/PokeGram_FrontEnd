@@ -22,11 +22,11 @@ function Friends() {
     }
 
     const authState = useSelector((state: RootState) => state.auth); //lets use the redux store
-    const URL = `http://52.90.96.133:5500/api/users/${authState.user_id}/friends`;
+    const URL = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users/${authState.user_id}/friends`;
     /*     const URL = `http://localhost:5500/api/users/${authState.user_id}/friends`;
      */
     const headers = {
-        'Authorization': `Bearer ${authState.token}`
+        'Authorization': authState.token
     }
     const [errorMessage, setErrorMessage] = useDisplayError();
     const [userMessage, setUserMessage] = useShowUserMessage();
@@ -54,7 +54,7 @@ function Friends() {
     //gets the users friends list in a get axios req
     async function getFriends() {
         try {
-            const response = await axios.get(URL, { headers });
+            const response = await axios.get(URL, { headers});
             const friendsList = response?.data?.friendsList
             console.log("friends list is ", friendsList);
             if (Array.isArray(friendsList)) {
@@ -107,9 +107,9 @@ function Friends() {
     }
     //gets the users profile in a get axios req
     async function getFriendProfile(uid: string) {
-        const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${uid}`, {
+        const profileInfo = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${uid}`, {
             headers: {
-                'Authorization': `Bearer ${authState.token}`,
+                'Authorization': authState.token,
                 'Content-Type': 'application/json'
             }
         })

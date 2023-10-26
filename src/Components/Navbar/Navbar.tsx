@@ -8,27 +8,29 @@ import axios from 'axios';
 function Navbar() {
   //values from the global redux store
   const authState = useSelector((state: RootState) => state.auth);
-  const USER_ID = "21a4fe80-ce1d-42d0-8718-22e580940267";//authState.user_id;
-  const URL = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${USER_ID}`;
-
+  const [updateNavbar, setUpdateNavbar] = useState(0);
   let [profile, setProfile] = useState({
-      bio: '',
-      image_url: ''
+    bio: '',  
+    image_url: ''
   });
-  
+
+  function updatePic(){
+    setUpdateNavbar(updateNavbar + 1);
+  }
+
   useEffect(() => {
     if(authState.token){
       const USER_ID = authState.user_id;
       const URL = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${USER_ID}`
       axios.get(URL, {headers: {Authorization: authState.token}})
-      .then(response => setProfile(response.data))
+      .then(response => {setProfile(response.data); console.log(response.data)})
       .catch(err => console.log(err))
     }
-  }, [authState.token])
+  }, [authState.token, updateNavbar])
    
   return (
       <nav className="navbar sticky-top navbar-expand-xl navbar-light bg-light" id='navbar'>
-        <div className="container">
+        <div className="container" onClick={updatePic}>
           <Link className="navbar-brand" to="/">
           <img src= {require("../../images/pokegram.png")} alt ="pokegram logo" id="brand_img" width={"240px"} height={"60px"}/>
           </Link>

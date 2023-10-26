@@ -27,7 +27,7 @@ function Team(props: any) {
                 
                 
                 //check if user has a team created
-                if (Object.keys(response.data).length === 0) {
+                if (Object.keys(response.data.body).length === 0) {
                     // User does not have a team
                     setState({...state, teamExists: false, loading: false})
                 }else{
@@ -45,8 +45,9 @@ function Team(props: any) {
         }
     }, [])
 
-
-    if(state.loading) {
+    if(!AuthState.token) {
+        return(<h2>Please log in to view team</h2>)
+    } else if(state.loading) {
         return (<div>Loading...</div>)
     } else if(!state.teamExists){
         return (<h2>User has not created a pokemon team</h2>)

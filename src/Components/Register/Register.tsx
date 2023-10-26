@@ -12,7 +12,7 @@ function Register() {
         email: ""
     });
 
-    const URL = "http://52.90.96.133:5500/api/users"
+    const URL = "https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users"
     /* const URL = "http://localhost:5500/api/users" */
 
     const [userMessage, setUserMessage] = useShowUserMessage(undefined, "/login", 5000); //set the initial message, redirect path, timer duartion

@@ -18,9 +18,9 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
         async function getUsersPosts(user_id: string | null | undefined) {
             if(user_id) {
                 try {
-                    const postsInfoResponse = await axios.get(`http://52.90.96.133:5500/api/post/user?user_id=${user_id}`, {
+                    const postsInfoResponse = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/posts/${user_id}`, {
                         headers: { 
-                            'Authorization': `Bearer ${AuthState.token}`,
+                            'Authorization': `${AuthState.token}`,
                             'Content-Type': 'application/json'}
                     })
                     const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${user_id}`, {
@@ -33,7 +33,9 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
                             'Authorization': `Bearer ${AuthState.token}`,
                             'Content-Type': 'application/json'}
                     })
-                    setPosts((prevData)  => [...prevData, ...postsInfoResponse.data.data]);
+                    console.log(postsInfoResponse)
+
+                    setPosts((prevData)  => [...prevData, ...postsInfoResponse.data.body.data.Items]);
                     setUsername(usernameResponse.data.username);
                     setProfilePic(profileInfo.data.image_url)
                 } catch(err) {

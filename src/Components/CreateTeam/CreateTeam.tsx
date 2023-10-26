@@ -73,7 +73,7 @@ function CreateTeam() {
             'Content-Type': 'application/json'
         }
         try{
-            const response = await axios.post('http://52.90.96.133:5500/api/teams', team, {headers: headers})
+            const response = await axios.post('https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/teams', team, {headers: headers})
             
             return response;
         
@@ -100,8 +100,8 @@ function CreateTeam() {
         //const newTeam = {teamName: teamName, pokemonList: pokemonList, user_id: userInfo.user_id}
         console.log('fetching...')
         const response = await postTeam(userInfo)
-        if(response?.status === 400) {
-            setErrorMessage(response.data.message || "error")
+        if(response?.status === 400 || response.data.errorMessage) {
+            setErrorMessage(response.data.errorMessage || "error")
             return
         }
         try {

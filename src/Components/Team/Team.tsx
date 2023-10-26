@@ -18,7 +18,7 @@ function Team(props: any) {
         
         if(AuthState.user_id && AuthState.username && AuthState.token){
             
-            const url = `http://52.90.96.133:5500/api/teams/${props.team_user_id}`
+            const url = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/teams/${props.team_user_id}`
             
             
             //Configured axios get request
@@ -31,7 +31,7 @@ function Team(props: any) {
                     // User does not have a team
                     setState({...state, teamExists: false, loading: false})
                 }else{
-                    const team = response.data.body
+                    const team = response.data.body.Item
                     console.log('Team: ', team)
                     console.log("Pokemon list: " + team.pokemonList)
                     setState({...state, loading: false, team_name: team.teamName, pokemon_list: team.pokemonList})

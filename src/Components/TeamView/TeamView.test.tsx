@@ -19,8 +19,9 @@ describe('Team View', () =>  {
     beforeEach(() => {
         jest.restoreAllMocks()
     })
-    it('renders message to login if user is not logged in', () => {
-        render(
+    test('renders message to login if user is not logged in', () => {
+        const result = render(
+
             <Provider store={store}>
                 <BrowserRouter>
                     <TeamView />

@@ -38,26 +38,28 @@ function TeamView(props: any) {
             
             //setState({...state, logged_in: true})
             
-            const url = `http://52.90.96.133:5500/api/teams/${AuthState.user_id}`
+            const url = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/teams/${AuthState.user_id}`
             
             //Configured axios get request
-            axios.get(url, {headers: {Authorization: `Bearer ${AuthState.token}`}}).then((response) => {
+            axios.get(url, {headers: {
+                Authorization: `${AuthState.token}`
+            }}).then((response) => {
                 console.log('Data: ', response.data);
                 
                 
                 //check if user has a team created
-                if (Object.keys(response.data).length === 0) {
+                if (Object.keys(response.data.body).length === 0) {
                     // user does not have a team
                     setState({...state, teamExists: false, loading: false})
                 }else{
-                    const team = response.data.body
+                    const team = response.data.body.Item
                     console.log('Team: ', team)
                     console.log("Pokemon list: " + team.pokemonList)
                     setState({...state, loading: false, teamExists: true, team_name: team.teamName, pokemon_list: team.pokemonList})
                 } 
 
             }).catch((err) => {
-                console.error('Error:', err);
+                console.error('Team fetching error:', err);
             })
         } else {
             setState({...state, loading: false})

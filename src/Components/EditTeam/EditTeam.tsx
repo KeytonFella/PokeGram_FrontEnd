@@ -140,7 +140,7 @@ function EditTeam() {
             'Content-Type': 'application/json'
         }
         try{
-            const response = await axios.put(`http://52.90.96.133:5500/api/teams/${userInfo.user_id}`, team, {headers: headers})
+            const response = await axios.put(`http://52.90.96.133:5500/prod/teams/${userInfo.user_id}`, team, {headers: headers})
             
             return response;
         

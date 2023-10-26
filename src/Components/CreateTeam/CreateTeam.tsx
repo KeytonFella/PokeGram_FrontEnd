@@ -73,7 +73,7 @@ function CreateTeam() {
             'Content-Type': 'application/json'
         }
         try{
-            const response = await axios.post('http://52.90.96.133:5500/api/teams', team, {headers: headers})
+            const response = await axios.post('https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/teams', team, {headers: headers})
             
             return response;
         

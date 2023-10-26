@@ -38,7 +38,7 @@ function TeamView(props: any) {
             
             //setState({...state, logged_in: true})
             
-            const url = `http://52.90.96.133:5500/api/teams/${AuthState.user_id}`
+            const url = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/teams/${AuthState.user_id}`
             
             //Configured axios get request
             axios.get(url, {headers: {Authorization: `Bearer ${AuthState.token}`}}).then((response) => {
@@ -57,7 +57,7 @@ function TeamView(props: any) {
                 } 
 
             }).catch((err) => {
-                console.error('Error:', err);
+                console.error('Team fetching error:', err);
             })
         } else {
             setState({...state, loading: false})

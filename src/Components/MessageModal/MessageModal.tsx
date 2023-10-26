@@ -4,14 +4,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 import './MessageModal.scss';
 
-const BASE_API = `http://52.90.96.133:5500/api/messages`;
-
 function MessageModal(props: any) {
     const username = props.username;
     const buttonText = props.buttonText;
     const [recipient, setRecipient] = useState(username)
     const [message, setMessage] = useState("")
     const AuthState = useSelector((state: RootState) => state.auth);
+    const USER_ID = AuthState.user_id;
+    const BASE_API = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/messages/${USER_ID}`;
 
     const handleRecipientChange = (event: any) => {
         setRecipient(event.target.value);
@@ -24,7 +24,7 @@ function MessageModal(props: any) {
     async function sendMessage(event: any){
         event.preventDefault();
         
-        axios.put(BASE_API, {recipient_id: recipient, message_text: message}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+        axios.put(BASE_API, {recipient_id: recipient, message_text: message}, {headers: {Authorization: AuthState.token}})
         .then(response => alert('Message sent!'))
         .catch(err => console.log(err))
     }

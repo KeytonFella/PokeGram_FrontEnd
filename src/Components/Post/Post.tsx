@@ -49,7 +49,7 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
             await axios.put(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/posts/images/poke-post-image-bucket/${image_name}`, imageFile, {
               headers: {
                 'Content-Type': imageFile.type,
-                'Authorization': `${AuthState.token}`
+                'Authorization': AuthState.token
               },   
             });
             console.log('Image uploaded successfully:', image_name);
@@ -69,7 +69,7 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
     if(textareaValue) {
       const url = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/posts/${AuthState.user_id}`;
       const headers = {
-        Authorization: `${AuthState.token}`,
+        Authorization: AuthState.token,
         'Content-Type':'application/json'
       };
       const body = {

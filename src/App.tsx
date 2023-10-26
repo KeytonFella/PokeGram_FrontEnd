@@ -28,9 +28,9 @@ function App() {
         <Route path="/register" element={<Register/>}/>
         <Route path='/confirm' element={<Confirm/>}/>
         <Route path='/friends' element={<Friends/>}/>
-        <Route path="/profile/:profile_id" element={<UserProfile postProfile = {false} />} />
+        <Route path="/profile/:profile_id" element={<UserProfile/>} />
         <Route path="/users" element={<Register/>}/>
-        <Route path="/posts" element={<UserProfile postProfile={true}/>}/>
+        <Route path="/posts/:profile_id" element={<UserProfile/>}/>
         <Route path="/messages" element={<Messages/>}/>
     </Routes>
     </div>    

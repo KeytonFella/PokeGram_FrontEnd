@@ -46,7 +46,7 @@ function Navbar() {
                 <h6>Home</h6>
                 </div>
               </Link>
-              <Link className="nav-item nav-link" to="/posts">
+              <Link className="nav-item nav-link" to={`/posts/${authState.user_id}`}>
                 <div className="container">
                 <img className="navImage" src= {require("../../images/post.png")} width={"40px"} height={"40px"}/>
                 <h6>Posts</h6>

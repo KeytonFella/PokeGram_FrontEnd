@@ -22,13 +22,12 @@ const IndivPost: React.FC<IndivPostProps> = ({ username, profilePicUrl, useridfk
         "fontWeight": "bold",
         "color": 'black'
       };
-    const [imageData, setImageData] = useState(image_s3_id);
-    const [profilePic] = useState(profilePicUrl) 
+      
     return (
         <div className="ind_post_display">
             <div className="profile-link-container">
                 <div id="indiv-profile-image-containter">
-                    {profilePic && <img src={profilePic} className='profile_pic'/>}
+                    {profilePicUrl && <img src={profilePicUrl} className='profile_pic'/>}
                 </div>
                 <div id="indiv-profile-name-containter">
                     <Link style={linkStyle} to={`/profile/${useridfk}`}>{username}</Link>
@@ -41,7 +40,7 @@ const IndivPost: React.FC<IndivPostProps> = ({ username, profilePicUrl, useridfk
                 </div>
             </div>
             <div className="post-img-container">
-                {imageData && <img src={image_s3_id} alt="Downloaded" className="post_img"/>}
+                {image_s3_id && <img src={image_s3_id} alt="Downloaded" className="post_img"/>}
             </div>
             {<Tags tags = {tags}/>}
         </div>

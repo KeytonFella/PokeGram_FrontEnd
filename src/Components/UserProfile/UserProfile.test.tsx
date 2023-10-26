@@ -109,7 +109,7 @@ test('Renders UserProfile', async () => {
       <Provider store={testStore}>
         <MemoryRouter initialEntries={[`/profile/${mockProfileId}`]}>
           <Routes>
-              <Route path="profile/:profile_id" element = {<UserProfile postProfile={false}/>}/>
+              <Route path="profile/:profile_id" element = {<UserProfile/>}/>
           </Routes>
         </MemoryRouter>  
       </Provider>

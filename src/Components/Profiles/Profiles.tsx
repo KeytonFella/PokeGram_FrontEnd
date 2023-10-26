@@ -81,9 +81,11 @@ function Profiles() {
       Authorization: AuthState.token,
     }})
 
-    axios.put(`${URL}/photo`, {headers:{Authorization: AuthState.token }}).then(response => console.log(response))
+    await axios.put(`${URL}/photo`, {headers:{Authorization: AuthState.token }})
+    .then(response => console.log(response))
+    .catch(err => console.log(err))
       
-    axios.get(URL, {headers: {Authorization: AuthState.token}})
+    await axios.get(URL, {headers: {Authorization: AuthState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))
   }

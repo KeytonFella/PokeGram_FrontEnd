@@ -76,15 +76,13 @@ function Profiles() {
   // Function to upload profile picture
   async function uploadPhoto(event: any){
     event.preventDefault()
-
-    let formData = new FormData();
-    formData.append('image', file)
-    console.log(formData)
     await axios.put(`${URL}/photo/${BUCKET_NAME}/${USER_ID}.png`, file, {headers:{
       'Content-Type': 'image/png',
       Authorization: AuthState.token,
     }})
 
+    axios.put(`${URL}/photo`, {headers:{Authorization: AuthState.token }}).then(response => console.log(response))
+      
     axios.get(URL, {headers: {Authorization: AuthState.token}})
     .then(response => setProfile(response.data))
     .catch(err => console.log(err))

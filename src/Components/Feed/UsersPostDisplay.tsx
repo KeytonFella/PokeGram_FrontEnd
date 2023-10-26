@@ -45,7 +45,7 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
             }
         }
         getUsersPosts(user_id);
-    }, []);
+    }, [user_id]);
     return (
         <div className='user_post_display'>
             {posts.reverse().map( (item: PostDataObject, index: number) => (

@@ -96,9 +96,8 @@ const UserProfile: React.FC = () => {
                         'Authorization': ` ${AuthState.token}`,
                         'Content-Type': 'application/json'}
                 })
-                console.log("profilePathState:", profile_id)
-
-                console.log("profileInfo: ",profileInfo)
+                console.log("profile_id:", profile_id)
+                console.log("usernameResponse: ",usernameResponse)
                 setBioState(profileInfo.data.bio)
                 setProfilePic(profileInfo.data.image_url);
                 setUserName(usernameResponse.data.username);
@@ -108,7 +107,7 @@ const UserProfile: React.FC = () => {
             }
         }
         getProfileInfo();
-    }, [profile_id]);
+    }, [profile_id, areFriends]);
 
     useEffect(() => {
         function changeButton() {

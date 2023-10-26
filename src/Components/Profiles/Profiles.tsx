@@ -80,10 +80,10 @@ function Profiles() {
     let formData = new FormData();
     formData.append('image', file)
     console.log(formData)
-    // await axios.put(`${URL}/photo/${BUCKET_NAME}/`, formData, {headers:{
-    //   'Content-Type': 'multipart/form-data',
-    //   Authorization: AuthState.token,
-    // }})
+    await axios.put(`${URL}/photo/${BUCKET_NAME}/${AuthState.user_id}.png`, formData, {headers:{
+      'Content-Type': 'multipart/form-data',
+      Authorization: AuthState.token,
+    }})
 
     axios.get(URL, {headers: {Authorization: AuthState.token}})
     .then(response => setProfile(response.data))

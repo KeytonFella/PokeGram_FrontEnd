@@ -3,7 +3,6 @@ import './PokemonInTeam.scss'
 import { Pokemon } from '../../utility/PokemonType'
 
 function PokemonInTeam(props: {pokemon: Pokemon}) {
-    console.log(props)
     //let loading = true
     let [pokemon, setPokemon] = useState({} as any)
     let [loading, setLoading] = useState(true)
@@ -15,12 +14,10 @@ function PokemonInTeam(props: {pokemon: Pokemon}) {
         fetch(`${pokeUrl}${lower}`)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
                 setPokemon(result)
                 
                 setLoading(false)
             }).catch((err)=> {
-                console.log(err)
             })
         }, [])
     if (loading) {

@@ -23,7 +23,7 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
                             'Authorization': AuthState.token,
                             'Content-Type': 'application/json'}
                     })
-                    const profileInfo = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/posts/${user_id}`, {
+                    const profileInfo = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${user_id}`, {
                         headers: { 
                             'Authorization': AuthState.token,
                             'Content-Type': 'application/json'}

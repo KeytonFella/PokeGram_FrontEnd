@@ -43,7 +43,7 @@ function Login() {
           if(response && response.data) {
             const {message, ...data} = response?.data;
             console.log(data);
-            console.log(data.acessToken);
+            console.log(data.accessToken);
             const accessToken = data?.accessToken;
             const tokenPayload = accessToken?.payload;
             console.log("my acessToken ", accessToken);

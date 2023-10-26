@@ -42,14 +42,13 @@ const Post: React.FC<PostProps> = ({ isOpen, closeModal }) => {
     if(fileInputRef.current && fileInputRef.current.files) {
       try {
           let imageFile = fileInputRef.current.files[0];
-          console.log("The image file is:", imageFile);
           if(imageFile) {
-            console.log(imageFile)
             const formData = new FormData();
             formData.append('image', imageFile);
-            console.log(formData)
-            const image_name = AuthState.user_id + "time" + Date.now();
-            await axios.put(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/images/poke-post-image-bucket/${image_name}`, formData, {
+            console.log("image_file",imageFile)
+            const image_name = AuthState.user_id + "time" + Date.now() +"."+ imageFile.name.split('.')[1];
+            console.log("image name: ", image_name);
+            await axios.put(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/posts/images/poke-post-image-bucket/${image_name}`, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
                 "Content-Disposition" : "form-data",

@@ -46,7 +46,7 @@ const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
                     });
                     console.log("friendlist:",response);
 
-                    setUsersLists(response.data.body.friendsList);
+                    setUsersLists(response.data.friendsList);
 
                 } catch(err){
                     console.error(err)

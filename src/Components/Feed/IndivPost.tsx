@@ -22,26 +22,8 @@ const IndivPost: React.FC<IndivPostProps> = ({ username, profilePicUrl, useridfk
         "fontWeight": "bold",
         "color": 'black'
       };
-    const [imageData, setImageData] = useState('');
-    useEffect(() => {
-        async function getImage(image_s3_id: string) {
-            if(image_s3_id) {
-                try {
-                    const response = await axios.get(`http://52.90.96.133:5500/api/post/image?image_id=${image_s3_id}`, {
-                        headers: {
-                            Authorization: `Bearer ${AuthState.token}`,
-                        }
-                    });
-                const imageUrl = response.data.image_url;
-                setImageData(imageUrl);
-                } catch (error) {
-                    console.error('Error downloading image:', error);
-                }
-            }
-        };
-        getImage(image_s3_id);
-    }, []);
-    
+    const [imageData, setImageData] = useState(image_s3_id);
+ 
     return (
         <div className="ind_post_display">
             <div className="profile-link-container">
@@ -59,7 +41,7 @@ const IndivPost: React.FC<IndivPostProps> = ({ username, profilePicUrl, useridfk
                 </div>
             </div>
             <div className="post-img-container">
-                {imageData && <img src={imageData} alt="Downloaded" className="post_img"/>}
+                {imageData && <img src={image_s3_id} alt="Downloaded" className="post_img"/>}
             </div>
             {<Tags tags = {tags}/>}
         </div>

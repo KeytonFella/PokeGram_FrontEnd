@@ -4,23 +4,27 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 import './PokemonList.scss';
 
-const BASE_API = `http://52.90.96.133:5500/api/trades`;
-const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
+
 
 function DesireList() {
   const [desireList, setdesireList] = useState(Array<any>);
   const AuthState = useSelector((state: RootState) => state.auth);
+  const USER_ID = AuthState.user_id;
+  const BASE_API = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/trades/${USER_ID}`;
+  const POKE_API = 'https://pokeapi.co/api/v2/pokemon/';
 
   useEffect(() => {
     getDesireList();
   },[]);
 
   async function getDesireList() {
-      axios.get(`${BASE_API}/data`, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+      axios.get(`${BASE_API}/data`, {headers: {Authorization: AuthState.token}})
       .then(function (response) {
-        if (response.data && response.data.trades && response.data.trades.desire_list) {
-          createPokemonObj(response.data.trades.desire_list);
-        }      }) 
+        const userData = response.data.body.Item;
+        if (userData && userData.desire_list) {
+          createPokemonObj(userData.desire_list);
+        }      
+      }) 
       .catch(function (error) {
         // handle error
         console.log(error);
@@ -59,7 +63,7 @@ function DesireList() {
     const formJson = Object.fromEntries(formData.entries());
     const pokemon: String = formJson.myInput as String;
     
-    await axios.put(`${BASE_API}/desire-list`, {action: "add", pokemon: pokemon}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+    await axios.put(`${BASE_API}/desire-list`, {action: "add", pokemon: pokemon}, {headers: {Authorization: AuthState.token}})
 
     .then(response => response.data.message)
     .catch(error => console.log(error));
@@ -67,7 +71,7 @@ function DesireList() {
   }
 
   async function removePokemon(event: any) {
-    await axios.put(`${BASE_API}/desire-list`, {action: "remove", pokemon: event.target.value}, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+    await axios.put(`${BASE_API}/desire-list`, {action: "remove", pokemon: event.target.value}, {headers: {Authorization: AuthState.token}})
     .then(response => response.data.message)
     .catch(error => console.log(error));
     getDesireList();

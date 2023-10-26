@@ -76,31 +76,34 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
         async function getProfileInfo() {
             try{
                 if(postProfile){
+                    console.log("profilePathState:", profilePathState)
+
                     setAreFriends(false);
                     setprofilePathStateState(AuthState.user_id)
                 }
                 if(profilePathState !== AuthState.user_id && !postProfile) {// not our own profile, we can look for frineds
                     const friendsList = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users/${AuthState.user_id}/friends`, {
                         headers: { 
-                            'Authorization': `Bearer ${AuthState.token}`,
+                            'Authorization': `${AuthState.token}`,
                             'Content-Type': 'application/json'}
                     });
-                    for (const friend of friendsList.data.friendsList) {
+                    for (const friend of friendsList.data) {
                         if(friend.user_id === profilePathState) {
                             setAreFriends(true);
                         }
                     }
                 }
-                const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${profilePathState}`, {
+                const profileInfo = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${profilePathState}`, {
                     headers: { 
-                        'Authorization': `Bearer ${AuthState.token}`,
+                        'Authorization': `${AuthState.token}`,
                         'Content-Type': 'application/json'}
                 })
-                const usernameResponse = await axios.get(`http://52.90.96.133:5500/api/profiles/${profilePathState}/username`, {
+                const usernameResponse = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${profilePathState}/username`, {
                     headers: { 
-                        'Authorization': `Bearer ${AuthState.token}`,
+                        'Authorization': ` ${AuthState.token}`,
                         'Content-Type': 'application/json'}
                 })
+                
                 setBioState(profileInfo.data.bio)
                 setProfilePic(profileInfo.data.image_url);
                 setUserName(usernameResponse.data.username);
@@ -110,7 +113,7 @@ const UserProfile: React.FC<userProfileProps> = ({postProfile}) => {
             }
         }
         getProfileInfo();
-    }, [postProfile, profilePathState]);
+    }, [postProfile]);
 
     useEffect(() => {
         function changeButton() {

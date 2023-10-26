@@ -31,10 +31,10 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
                     const usernameResponse = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${user_id}}/username`, {
                         headers: { 
                             'Authorization': AuthState.token,
-                            'Content-Type': 'application/json'}
+                            'Content-Type': 'application/json'
+                        }
                     })
-                    console.log(postsInfoResponse)
-
+                    console.log("Username", usernameResponse);
                     setPosts((prevData)  => [...prevData, ...postsInfoResponse.data.body.data.Items]);
                     setUsername(usernameResponse.data.username);
                     setProfilePic(profileInfo.data.image_url)

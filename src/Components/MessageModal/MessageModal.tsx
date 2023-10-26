@@ -24,7 +24,7 @@ function MessageModal(props: any) {
     async function sendMessage(event: any){
         event.preventDefault();
         
-        axios.put(BASE_API, {recipient_id: recipient, message_text: message}, {headers: {Authorization: AuthState.token}})
+        axios.put(BASE_API, {recipient: recipient, message_text: message}, {headers: {Authorization: AuthState.token}})
         .then(response => alert('Message sent!'))
         .catch(err => console.log(err))
     }

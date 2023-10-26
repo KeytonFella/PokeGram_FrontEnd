@@ -20,17 +20,17 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
                 try {
                     const postsInfoResponse = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/posts/${user_id}`, {
                         headers: { 
-                            'Authorization': `${AuthState.token}`,
+                            'Authorization': AuthState.token,
                             'Content-Type': 'application/json'}
                     })
-                    const profileInfo = await axios.get(`http://52.90.96.133:5500/api/profiles/${user_id}`, {
+                    const profileInfo = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/posts/${user_id}`, {
                         headers: { 
-                            'Authorization': `Bearer ${AuthState.token}`,
+                            'Authorization': AuthState.token,
                             'Content-Type': 'application/json'}
                     })
-                    const usernameResponse = await axios.get(`http://52.90.96.133:5500/api/profiles/${user_id}/username`, {
+                    const usernameResponse = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${user_id}}/username`, {
                         headers: { 
-                            'Authorization': `Bearer ${AuthState.token}`,
+                            'Authorization': AuthState.token,
                             'Content-Type': 'application/json'}
                     })
                     console.log(postsInfoResponse)

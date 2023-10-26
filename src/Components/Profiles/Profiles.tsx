@@ -13,7 +13,7 @@ function Profiles() {
   // ID for testintg
   //const id = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
   const URL = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${USER_ID}`;
-  const BUCKET_NAME = 'pokegram-profile-profiles';
+  const BUCKET_NAME = 'pokegram-profile-photos';
 
   let [profile, setProfile] = useState({
       bio: '',
@@ -80,8 +80,8 @@ function Profiles() {
     let formData = new FormData();
     formData.append('image', file)
     console.log(formData)
-    await axios.put(`${URL}/photo/${BUCKET_NAME}/${AuthState.user_id}.png`, formData, {headers:{
-      'Content-Type': 'multipart/form-data',
+    await axios.put(`${URL}/photo/${BUCKET_NAME}/${USER_ID}.png`, file, {headers:{
+      'Content-Type': 'image/png',
       Authorization: AuthState.token,
     }})
 
@@ -129,11 +129,16 @@ function Profiles() {
         </div>
         <div className='picture-container'>
           <img src={profile.image_url} alt='profile-pic' className='profile-pic'/>
-          <form className='photo-form' onSubmit={uploadPhoto}>
+          {/* <form className='photo-form' onSubmit={uploadPhoto}>
             <h5>Choose a picture to update your profile with!</h5>
-            <input type='file' onChange={selectFile} className='profile-btn' /><br/>
+            <input type='file' accept='.png' onChange={selectFile} className='profile-btn' /><br/>
             <button type='submit' className='profile-btn'>Upload</button>
-          </form>
+          </form> */}
+          <div className='photo-form'>
+            <h5>Choose a picture to update your profile with!</h5>
+            <input type='file' onChange={selectFile} className='profile-btn' accept='.png' /><br/>
+            <button type='submit' className='profile-btn' onClick={uploadPhoto}>Upload</button>
+          </div>
         </div>
         <form id='address-form' className='address-container' onSubmit={updateAddress}>
             <p className='address-label'>Street Number:</p>

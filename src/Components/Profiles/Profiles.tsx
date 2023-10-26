@@ -148,7 +148,7 @@ function Profiles() {
             <button type='submit' className='profile-btn'>Update Address</button>
         </form>
       </div>
-      <Team team_user_id={AuthState.user_id}/>
+      {<Team team_user_id={AuthState.user_id}/>}
       <ProfilePokemon user_id={AuthState.user_id}/>
     </div>
   )

@@ -4,19 +4,20 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 import './Messages.scss'
 import MessageModal from '../MessageModal/MessageModal';
-const BASE_API = `http://52.90.96.133:5500/api/messages`;
 
 function Messages() {
     const AuthState = useSelector((state: RootState) => state.auth);
     const [sentMessages, setSentMessages] = useState(Array<any>);
     const [receivedMessages, setReceievedMessages] = useState(Array<any>);
+    const USER_ID = "21a4fe80-ce1d-42d0-8718-22e580940267"; //AuthState.user_id;
+    const BASE_API = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/messages`;
 
     useEffect(() => {
         getMessageList();
     },[],)
 
     async function getMessageList() {
-        axios.get(BASE_API, {headers: {Authorization: 'Bearer ' + AuthState.token}})
+        axios.get(`${BASE_API}/${USER_ID}`, {headers: {Authorization: AuthState.token}})
         .then(function (response) {
             createMessageObj(response.data.messages)
         })
@@ -31,16 +32,16 @@ function Messages() {
             let sentMessageArray = [];
             let receivedMessageArray = [];
             for(let i = 0; i < messages.length; i++) {
-                const senderData = await axios.get(`${BASE_API}/username/${messages[i].sender_id}`, {headers: {Authorization: 'Bearer ' + AuthState.token}})
-                const sender_username = senderData.data.username;
-                const recipientData = await axios.get(`${BASE_API}/username/${messages[i].recipient_id}`, {headers: {Authorization: 'Bearer ' + AuthState.token}}) 
-                const recipient_username = recipientData.data.username;
+
+                // const sender_username = senderData.data.username;
+
+                // const recipient_username = recipientData.data.username;
                 
                 const messageObj = {
                     message_id: messages[i].message_id,
-                    sender: sender_username,
+                    // sender: sender_username,
                     sender_id: messages[i].sender_id,
-                    recipient: recipient_username,
+                    // recipient: recipient_username,
                     recipient_id: messages[i].recipient_id,
                     message_text: messages[i].message_text
                 }
@@ -75,7 +76,7 @@ function Messages() {
                     return (
                         <div className="message collapse show" key={message.message_id} id="sentMessages">
                             <div className="messageHeader">
-                                To: {message.recipient}
+                                To: {message.recipient_id}
                             </div>
                             <div className="message-text">{message.message_text}</div>
                             <div className="buttonRight">        
@@ -93,7 +94,7 @@ function Messages() {
                     return (
                         <div className="message collapse show" key={message.message_id} id="incomingMessages">
                             <div className="messageHeader">
-                                From: {message.sender}
+                                From: {message.sender_id}
                             </div>
                             <div className="message-text">{message.message_text}</div>
                             <div className="buttons" onClick={getMessageList}>

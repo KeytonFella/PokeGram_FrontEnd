@@ -8,13 +8,8 @@ import axios from 'axios';
 function Navbar() {
   //values from the global redux store
   const authState = useSelector((state: RootState) => state.auth);
-  const USER_ID = authState.user_id;
-  const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`
-  
-
-  //local
-  /* const URL = `http://localhost:5500/api/profiles/${USER_ID}` */
-
+  const USER_ID = "21a4fe80-ce1d-42d0-8718-22e580940267";//authState.user_id;
+  const URL = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${USER_ID}`;
 
   let [profile, setProfile] = useState({
       bio: '',
@@ -24,8 +19,8 @@ function Navbar() {
   useEffect(() => {
     if(authState.token){
       const USER_ID = authState.user_id;
-      const URL = `http://52.90.96.133:5500/api/profiles/${USER_ID}`
-      axios.get(URL, {headers: {Authorization: 'Bearer ' + authState.token}})
+      const URL = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${USER_ID}`
+      axios.get(URL, {headers: {Authorization: authState.token}})
       .then(response => setProfile(response.data))
       .catch(err => console.log(err))
     }

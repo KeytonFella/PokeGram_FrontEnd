@@ -39,9 +39,9 @@ const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
         async function getFriends() {
             if(social_bool) {
                 try {
-                    const response = await axios.get(`http://52.90.96.133:5500/api/users/${AuthState.user_id}/friends`, {
+                    const response = await axios.get(`https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/users/${AuthState.user_id}/friends`, {
                         headers: { 
-                            'Authorization': `Bearer ${AuthState.token}`,
+                            'Authorization': AuthState.token,
                             'Content-Type': 'application/json'}
                     });
                     console.log(response);

@@ -13,7 +13,7 @@ function Profiles() {
   // ID for testintg
   //const id = '66efa9ce-6a6d-4466-a2ef-a48f00f82f40'
   const URL = `https://3oa690sz75.execute-api.us-east-1.amazonaws.com/prod/api/profiles/${USER_ID}`;
-
+  const BUCKET_NAME = 'pokegram-profile-profiles';
 
   let [profile, setProfile] = useState({
       bio: '',
@@ -79,10 +79,11 @@ function Profiles() {
 
     let formData = new FormData();
     formData.append('image', file)
-    await axios.put(`${URL}/photo`, formData, {headers:{
-      'Content-Type': 'multipart/form-data',
-      Authorization: AuthState.token,
-    }})
+    console.log(formData)
+    // await axios.put(`${URL}/photo/${BUCKET_NAME}/`, formData, {headers:{
+    //   'Content-Type': 'multipart/form-data',
+    //   Authorization: AuthState.token,
+    // }})
 
     axios.get(URL, {headers: {Authorization: AuthState.token}})
     .then(response => setProfile(response.data))

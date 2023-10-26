@@ -45,7 +45,6 @@ function Login() {
             console.log(data);
             console.log(data.acessToken);
             const accessToken = data?.accessToken;
-            let username = data.accessToken.payload["cognito:username"];
             const tokenPayload = accessToken?.payload;
             console.log("my acessToken ", accessToken);
             console.log("token payload:", tokenPayload);

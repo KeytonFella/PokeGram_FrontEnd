@@ -97,7 +97,7 @@ function Register() {
         <div className='showMessage'>
           {<p>{errorMessage} </p>}
           {<p>{userMessage?.message} </p>}
-          {userMessage.username && <p>Rediricting {userMessage.username} to the Confirmation page</p>}
+          {userMessage.username && <p>Redirecting {userMessage.username} to the Login page</p>}
         </div>
         <Link className="loginSubtext" to="/login">Already have an account? Login here!</Link>
         <div className="space"> </div>

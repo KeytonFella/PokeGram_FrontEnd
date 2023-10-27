@@ -1,4 +1,4 @@
-#friend-div {
+#friend-title-div {
   font-size: 36px;
   font-weight: bold;
   margin-bottom: 20px;
@@ -63,15 +63,4 @@
   text-align: center;
   margin-bottom: 30px;
   
-}
-
-#friend-cards-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  
-  .col {
-    padding-top: 1.8rem;
-    margin: 0 auto;  
-  }
 }

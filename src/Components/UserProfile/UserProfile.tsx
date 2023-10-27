@@ -172,7 +172,7 @@ const UserProfile: React.FC = () => {
                     <Team key= {Date.now()} team_user_id={profile_id}/>
                 </div>
                 <div id="post-container">
-                    <Feed social_bool={false} user_id_in={profile_id}/>
+                    <Feed  key= {Date.now()} social_bool={false} user_id_in={profile_id}/>
                 </div>
             </div>
         </div>

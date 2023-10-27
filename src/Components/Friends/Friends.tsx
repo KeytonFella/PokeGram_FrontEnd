@@ -296,7 +296,7 @@ function Friends() {
 
         </div>
 
-            <form id="add-friend-form">
+            <form id="add-friend-form" onSubmit={handleFriendForm}>
                
                 <input type="text" id='friend-searchbar' name="friend_key" placeholder="Friends ID Or Username" onChange={handleFormInputChange}></input>
                 <div className='add-button-container'>

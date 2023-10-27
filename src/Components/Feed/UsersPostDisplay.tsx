@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../utility/reduxTypes';
 import {PostDataObject, UsersObject} from './Feed'
 
-const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
+const UsersPostDisplay: React.FC<UsersObject> = ({user_id, social_bool}) => {
     const AuthState = useSelector((state: RootState) => state.auth);
     const [username, setUsername] = useState<string>("Username Unavailable");
     const [profilePic, setProfilePic] = useState<string>("Username Unavailable");
@@ -33,7 +33,6 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
                         'Authorization': AuthState.token,
                         'Content-Type': 'application/json'}
                 })
-                    console.log("Userid dispaly : ", user_id, usernameResponse);
                     setPosts((prevData)  => [...prevData, ...postsInfoResponse.data.body.data.Items]);
                     setUsername(usernameResponse.data.username);
                     setProfilePic(profileInfo.data.image_url)
@@ -47,7 +46,7 @@ const UsersPostDisplay: React.FC<UsersObject> = ({user_id}) => {
     return (
         <div className='user_post_display'>
             {posts.reverse().map( (item: PostDataObject, index: number) => (
-                <IndivPost key={index} username={username} profilePicUrl={profilePic} useridfk={user_id} text_body={item.text_body}  image_s3_id={item.image_s3_id} tags={item.tags}/>
+                <IndivPost key={index} username={username} post_id={item.post_id} profilePicUrl={profilePic} useridfk={user_id} text_body={item.text_body}  image_s3_id={item.image_s3_id} tags={item.tags} social_bool={social_bool}/>
             ))}
         </div>
     );

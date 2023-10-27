@@ -9,9 +9,14 @@
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
+.top-bar-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    height: fit-content;
+}
 .profile-link-container{
-    width:100%;
+    width: fit-content;
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -22,8 +27,20 @@
 #indiv-profile-name-containter{
     height: 100%;
     align-items: center;
+    display: flex;
+}
+#delete-button{
+    background-color: red;
 
 }
+#delete-button:hover {
+    background-color: darkred;
+}
+#deleteContainer{
+    width:fit-content;
+    margin-left: 15px;
+}
+
 #indiv-profile-image-containter{
     height : 100%;
 

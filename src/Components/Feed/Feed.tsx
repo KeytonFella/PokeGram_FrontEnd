@@ -21,6 +21,7 @@ export interface PostDataObject {
 }
 export interface UsersObject {
     user_id: string | null | undefined;
+    social_bool: boolean;
 }
 export interface Friend {
     user_id: string  | null | undefined;
@@ -59,10 +60,10 @@ const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
         return (
         <>
             <div id="feed_container">
-               <UsersPostDisplay user_id={user_id_in}/>
+               <UsersPostDisplay user_id={user_id_in} social_bool={social_bool}/>
             </div>
             <div>
-                {UsersPostDisplay({ user_id: user_id_in }) ? null : 'No posts yet'}
+                {UsersPostDisplay({ user_id: user_id_in , social_bool: social_bool}) ? null : 'No posts yet'}
             </div>
         </>
         );
@@ -70,7 +71,7 @@ const Feed: React.FC<FeedProps> = ({social_bool, user_id_in}) => {
         return (
             <div id="feed_container">
                 {userLists.map((friend :Friend , index) => (
-                    <UsersPostDisplay key={index} user_id={friend.user_id}/>
+                    <UsersPostDisplay key={index} user_id={friend.user_id} social_bool={social_bool}/>
                 ))}
             </div>
         );

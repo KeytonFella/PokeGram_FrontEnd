@@ -125,7 +125,7 @@ const UserProfile: React.FC = () => {
             <div id='profile-top'>
                 <div id='profile-info-containter'>
                     <div className="info user-profile-image-containter">
-                        <img key = {Date.now()} src={profilePicUser} alt={`pic not found for ${username}`} id='profile_pic'/>
+                        <img key = {Date.now()} src={profilePicUser} alt="...loading" id='profile_pic'/>
                     </div>
                     <div  className="info user-profile-name-containter">
                         <h2>{profile_id == AuthState.user_id ? AuthState.username : username}</h2>
@@ -169,10 +169,10 @@ const UserProfile: React.FC = () => {
             </div>
             <div id="bottom_container">
                 <div id="team-container">
-                    <Team key= {Date.now()} team_user_id={profile_id}/>
+                    <Team team_user_id={profile_id}/>
                 </div>
                 <div id="post-container">
-                    <Feed  key= {Date.now()} social_bool={false} user_id_in={profile_id}/>
+                    <Feed  social_bool={false} user_id_in={profile_id}/>
                 </div>
             </div>
         </div>

@@ -12,6 +12,8 @@ import EditTeam from './Components/EditTeam/EditTeam';
 import UserProfile from './Components/UserProfile/UserProfile';
 import Friends from './Components/Friends/Friends';
 import Messages from './Components/Messages/Messages';
+import PostProfile from './Components/Feed/PostProfile';
+
 
 
 function App() {
@@ -30,7 +32,7 @@ function App() {
         <Route path='/friends' element={<Friends/>}/>
         <Route path="/profile/:profile_id" element={<UserProfile/>} />
         <Route path="/users" element={<Register/>}/>
-        <Route path="/posts/:profile_id" element={<UserProfile/>}/>
+        <Route path="/posts/:profile_id" element={<PostProfile/>}/>
         <Route path="/messages" element={<Messages/>}/>
     </Routes>
     </div>    

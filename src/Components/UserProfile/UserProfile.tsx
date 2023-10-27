@@ -12,9 +12,9 @@ import Team from '../Team/Team';
 const UserProfile: React.FC = () => {
     const { profile_id } = useParams();
     const AuthState = useSelector((state: RootState) => state.auth);
-    const [profilePicUser, setProfilePic] = useState<string>("UserProfile Unavailable");
-    const [username, setUserName] = useState<string | null>('Username not found');
-    const [bio, setBioState] = useState('');
+    const [profilePicUser, setProfilePic] = useState<string>("...Loading");
+    const [username, setUserName] = useState<string | null>('...Loading');
+    const [bio, setBioState] = useState('...Loading');
     const [areFriends, setAreFriends] = useState(false);
     const [buttonState , setButtonState ] = useState('add-friend');
     const on_hover_button = (e : React.MouseEvent<HTMLButtonElement>) => {
@@ -169,7 +169,7 @@ const UserProfile: React.FC = () => {
             </div>
             <div id="bottom_container">
                 <div id="team-container">
-                    <Team team_user_id={profile_id}/>
+                    <Team key= {Date.now()} team_user_id={profile_id}/>
                 </div>
                 <div id="post-container">
                     <Feed social_bool={false} user_id_in={profile_id}/>

@@ -169,10 +169,10 @@ const UserProfile: React.FC = () => {
             </div>
             <div id="bottom_container">
                 <div id="team-container">
-                    <Team key = {Date.now()} team_user_id={profile_id}/>
+                    <Team team_user_id={profile_id}/>
                 </div>
                 <div id="post-container">
-                    <Feed key = {Date.now()} social_bool={false} user_id_in={profile_id}/>
+                    <Feed social_bool={false} user_id_in={profile_id}/>
                 </div>
             </div>
         </div>

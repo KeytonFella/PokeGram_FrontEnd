@@ -30,11 +30,16 @@
     display: flex;
 }
 #delete-button{
-    background-color: red;
-
+    background-color: rgb(124, 73, 73);
+    color:white;
+    border-color: grey;
 }
 #delete-button:hover {
-    background-color: darkred;
+    background-color: rgb(71, 2, 2);
+    color:white;
+    border-color: grey;
+
+
 }
 #deleteContainer{
     width:fit-content;

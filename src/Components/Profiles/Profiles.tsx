@@ -78,10 +78,10 @@ function Profiles() {
     event.preventDefault()
     await axios.put(`${URL}/photo/${BUCKET_NAME}/${USER_ID}.png`, file, {headers:{
       'Content-Type': 'image/png',
-      Authorization: AuthState.token,
+      Authorization: AuthState.token
     }})
 
-    await axios.put(`${URL}/photo`, {headers:{Authorization: AuthState.token }})
+    await axios.put(`${URL}/photo`, {}, {headers:{Authorization: AuthState.token }})
     .then(response => console.log(response))
     .catch(err => console.log(err))
       

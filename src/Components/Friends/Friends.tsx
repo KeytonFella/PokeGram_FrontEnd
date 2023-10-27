@@ -287,7 +287,7 @@ function Friends() {
     return (
         <>
         <div className='friends-header'>
-            <div id='friend-div'>{authState.username}'s Friends</div>
+            <div id='friend-title-div'>{authState.username}'s Friends</div>
 
             
         </div>
@@ -311,7 +311,7 @@ function Friends() {
 
 
             <div id='friend-cards-container'>
-                <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+                <div className="row justify-content-center row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
                         {friendList.map((friend, index) => (
                             <div className="col" key={index}>
                                 <FriendCard username={friend.username} userId={friend.user_id} imgSrc={friend.image_url} bio={friend.bio} removeFriendHandler = {removeFriendHandler} />
